@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>AWARE V2</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -16,10 +18,52 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>logincallback</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fitbit</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.513561083200-em3srmsc40a2q6cuh8o2hguvhd1umfll</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>For collecting your schedule, this application needs to access your calendar.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>For finding a QR Code, this application needs to access your camera.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>For collecting your contant information, this application needs to access your contants information.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>For collecting your activity, this application needs to access your location data.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>For collecting your activity, this application needs to access your location data.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>For collecting you enviromental noise level, this application need to access your mocirphone API.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>For collecting motion activity, this application needs to access your device motion API.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>fetch</string>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -31,8 +75,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

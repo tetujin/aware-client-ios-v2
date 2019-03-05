@@ -1,0 +1,6 @@
+framework module Pods_aware_client_ios_v2Tests {
+  umbrella header "Pods-aware-client-ios-v2Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
