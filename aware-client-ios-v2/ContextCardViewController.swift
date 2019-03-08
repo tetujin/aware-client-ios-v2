@@ -53,6 +53,7 @@ class ContextCardViewController: UIViewController {
     }
     
     func setupContextCards(){
+        self.removeAllContextCards()
         for name in getCurrentContextCardNames() {
             switch name {
             case SENSOR_ACCELEROMETER:
@@ -123,8 +124,8 @@ class ContextCardViewController: UIViewController {
                 }
                 return false
             }
-            UserDefaults.standard.synchronize()
             UserDefaults.standard.set(unwrappedCards, forKey: key)
+            UserDefaults.standard.synchronize()
         }
     }
     
@@ -137,7 +138,6 @@ class ContextCardViewController: UIViewController {
     }
     
     @IBAction func didPushReloadButton(_ sender: UIBarButtonItem) {
-        removeAllContextCards()
         setupContextCards()
     }
     
@@ -148,7 +148,6 @@ class ContextCardViewController: UIViewController {
         for item in possibleContextCards {
             alert.addAction(UIAlertAction(title: item, style: .default, handler: { (action) in
                 self.setContextCard(name: item)
-                self.removeAllContextCards()
                 self.setupContextCards()
             }))
         }
@@ -164,13 +163,15 @@ class ContextCardViewController: UIViewController {
                                       preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Remove All", style: .destructive, handler: { (action) in
-            UserDefaults.standard.set(Array<String>(), forKey: self.key)
+            UserDefaults.standard.removeObject(forKey: self.key)
+            UserDefaults.standard.synchronize()
+            
+            self.setupContextCards()
         }))
         
         for item in getCurrentContextCardNames() {
             alert.addAction(UIAlertAction(title: item, style: .default, handler: { (action) in
                 self.removeContextCard(name: item)
-                self.removeAllContextCards()
                 self.setupContextCards()
             }))
         }
