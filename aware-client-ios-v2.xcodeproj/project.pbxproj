@@ -15,6 +15,7 @@
 		4F1B11B322286E75006F3176 /* ScatterChartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B11AD22286E74006F3176 /* ScatterChartCard.swift */; };
 		4F1B11B422286E75006F3176 /* ContextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B11AE22286E74006F3176 /* ContextCard.swift */; };
 		4F1B11B522286E75006F3176 /* BarChartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B11AF22286E74006F3176 /* BarChartCard.swift */; };
+		4FFAC5EF2231089D00FE40B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FFAC5EE2231089D00FE40B0 /* QuartzCore.framework */; };
 		4FFE19772226A10B00C4715E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFE19762226A10B00C4715E /* AppDelegate.swift */; };
 		4FFE19792226A10B00C4715E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFE19782226A10B00C4715E /* ViewController.swift */; };
 		4FFE197C2226A10B00C4715E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FFE197A2226A10B00C4715E /* Main.storyboard */; };
@@ -62,6 +63,7 @@
 		4F1B11AE22286E74006F3176 /* ContextCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextCard.swift; sourceTree = "<group>"; };
 		4F1B11AF22286E74006F3176 /* BarChartCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarChartCard.swift; sourceTree = "<group>"; };
 		4FFAC5ED222F0D2A00FE40B0 /* aware-client-ios-v2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "aware-client-ios-v2.entitlements"; sourceTree = "<group>"; };
+		4FFAC5EE2231089D00FE40B0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4FFE19732226A10B00C4715E /* aware-client-ios-v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "aware-client-ios-v2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FFE19762226A10B00C4715E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FFE19782226A10B00C4715E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FFAC5EF2231089D00FE40B0 /* QuartzCore.framework in Frameworks */,
 				70074DE5B2BE8283B04A00A3 /* Pods_aware_client_ios_v2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,6 +122,7 @@
 		1BD07D752FCF16516FA57EDA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4FFAC5EE2231089D00FE40B0 /* QuartzCore.framework */,
 				6CCE11F5E2685A8DA8AAFF8C /* Pods_aware_client_ios_v2.framework */,
 				2844D0B93711319A66BF3A2A /* Pods_aware_client_ios_v2Tests.framework */,
 				8CB27E9CED2FA0C21104A04D /* Pods_aware_client_ios_v2UITests.framework */,

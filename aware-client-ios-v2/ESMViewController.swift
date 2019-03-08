@@ -15,14 +15,7 @@ class ESMViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        SVProgressHUD.setMaximumDismissTimeInterval(3)
-        SVProgressHUD.show(withStatus: "Prepearing ESM")
-        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { (timer) in
-            SVProgressHUD.setMaximumDismissTimeInterval(1)
-            SVProgressHUD.showSuccess(withStatus: "Ready")
-            self.checkESMSchedules()
-        }
+        // self.checkESMSchedules()
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -39,7 +39,7 @@ class ContextCardViewController: UIViewController {
         if let unwrappedSchedules = schedules {
             if(unwrappedSchedules.count > 0){
                 if !IOSESM.hasESMAppearedInThisSession(){
-                    self.tabBarController?.selectedIndex = 2
+                    self.tabBarController?.selectedIndex = 0
                 }
             }
         }
@@ -53,15 +53,87 @@ class ContextCardViewController: UIViewController {
     }
     
     func setupContextCards(){
-        addBatteryCard()
-        addBarometerCard()
-        addAmbientNoiseCard()
-        addActivityRecognitionCard()
-        addOpenWeatherChart()
-        addAccelereomterCard()
-        addGyroscopeCard()
-        addScreenEventCard()
-        addLocationCard()
+        for name in getCurrentContextCardNames() {
+            switch name {
+            case SENSOR_ACCELEROMETER:
+                addAccelereomterCard()
+                break
+            case SENSOR_GYROSCOPE:
+                addGyroscopeCard()
+                break
+            case SENSOR_BATTERY:
+                addBatteryCard()
+                break
+            case SENSOR_AMBIENT_NOISE:
+                addAmbientNoiseCard()
+                break
+            case SENSOR_BAROMETER:
+                addBarometerCard()
+                break
+            case SENSOR_IOS_ACTIVITY_RECOGNITION:
+                addActivityRecognitionCard()
+                break
+            case SENSOR_PLUGIN_OPEN_WEATHER:
+                addOpenWeatherChart()
+                break
+            case SENSOR_SCREEN:
+                addScreenEventCard()
+                break
+            case SENSOR_LOCATIONS:
+                addLocationCard()
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    var possibleContextCards = [SENSOR_BATTERY,
+                         SENSOR_BAROMETER,
+                         SENSOR_AMBIENT_NOISE,
+                         SENSOR_IOS_ACTIVITY_RECOGNITION,
+                         SENSOR_PLUGIN_OPEN_WEATHER,
+                         SENSOR_ACCELEROMETER,
+                         SENSOR_GYROSCOPE, SENSOR_SCREEN,
+                         SENSOR_LOCATIONS]
+    
+    let key = "com.yuukinishiyama.app.aware-client-ios-v2.context-cards"
+    
+    func setContextCard(name:String){
+        if var unwrappedCards = UserDefaults.standard.stringArray(forKey: key) {
+            for c in unwrappedCards {
+                if c == name {
+                    return
+                }
+            }
+            unwrappedCards.append(name)
+            UserDefaults.standard.set(unwrappedCards, forKey: key)
+            UserDefaults.standard.synchronize()
+        }else{
+            UserDefaults.standard.set([name], forKey: key)
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
+    func removeContextCard(name:String){
+        if var unwrappedCards = UserDefaults.standard.stringArray(forKey: key) {
+            unwrappedCards.removeAll { (string) -> Bool in
+                if string == name {
+                    return true
+                }
+                return false
+            }
+            UserDefaults.standard.synchronize()
+            UserDefaults.standard.set(unwrappedCards, forKey: key)
+        }
+    }
+    
+    func getCurrentContextCardNames() -> [String] {
+        if let unwrappedCards = UserDefaults.standard.stringArray(forKey: key) {
+            return unwrappedCards
+        }else{
+            return Array<String>()
+        }
     }
     
     @IBAction func didPushReloadButton(_ sender: UIBarButtonItem) {
@@ -69,11 +141,52 @@ class ContextCardViewController: UIViewController {
         setupContextCards()
     }
     
+    @IBAction func didPushAddButton(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Which context-card do you add?",
+                                      message: "Please select a context-card from the following items.",
+                                      preferredStyle: .alert)
+        for item in possibleContextCards {
+            alert.addAction(UIAlertAction(title: item, style: .default, handler: { (action) in
+                self.setContextCard(name: item)
+                self.removeAllContextCards()
+                self.setupContextCards()
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func didPushRemoveButton(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Which context-card do you remove?",
+                                      message: "Please select a context-card from the following items.",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Remove All", style: .destructive, handler: { (action) in
+            UserDefaults.standard.set(Array<String>(), forKey: self.key)
+        }))
+        
+        for item in getCurrentContextCardNames() {
+            alert.addAction(UIAlertAction(title: item, style: .default, handler: { (action) in
+                self.removeContextCard(name: item)
+                self.removeAllContextCards()
+                self.setupContextCards()
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
     func addAccelereomterCard(){
         if let sensor = AWARESensorManager.shared().getSensor(SENSOR_ACCELEROMETER) {
             let contextCard = ScatterChartCard.init(frame: CGRect.init(x:0, y:0, width: self.view.frame.width, height:250))
-            contextCard.yAxisMax = 6;
-            contextCard.yAxisMin = -6;
+            contextCard.yAxisMax = 6
+            contextCard.yAxisMin = -6
+            contextCard.granularitySecond = 1
             contextCard.setTodaysChart(sensor: sensor, keys: ["double_values_0","double_values_1","double_values_2"])
             contextCard.titleLabel.text = "Accelerometer"
             contextCard.isUserInteractionEnabled = false
@@ -87,6 +200,7 @@ class ContextCardViewController: UIViewController {
             let contextCard = ScatterChartCard.init(frame: CGRect.init(x:0, y:0, width: self.view.frame.width, height:250))
             contextCard.yAxisMax = 6;
             contextCard.yAxisMin = -6;
+            contextCard.granularitySecond = 1
             contextCard.setTodaysChart(sensor: sensor, keys: ["double_values_0","double_values_1","double_values_2"])
             contextCard.titleLabel.text = "Gyroscope"
             contextCard.isUserInteractionEnabled = false
@@ -116,6 +230,7 @@ class ContextCardViewController: UIViewController {
             //contextCard.yAxisMin = 800;
             contextCard.setTodaysChart(sensor: sensor, keys: ["double_values_0"])
             contextCard.titleLabel.text = "Air Pressure"
+            contextCard.granularitySecond = 60
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)

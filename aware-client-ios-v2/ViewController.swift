@@ -79,7 +79,7 @@ class ViewController: UIViewController {
         if let unwrappedSchedules = schedules {
             if(unwrappedSchedules.count > 0){
                 if !IOSESM.hasESMAppearedInThisSession(){
-                    self.tabBarController?.selectedIndex = 2
+                    self.tabBarController?.selectedIndex = 0
                 }
             }
         }

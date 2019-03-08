@@ -236,6 +236,18 @@
                         <viewLayoutGuide key="safeArea" id="xq7-wX-6O1"/>
                     </view>
                     <navigationItem key="navigationItem" title="Context Card" id="083-Ua-o6n">
+                        <leftBarButtonItems>
+                            <barButtonItem systemItem="trash" id="Szj-5K-Mor">
+                                <connections>
+                                    <action selector="didPushRemoveButton:" destination="JSO-m7-O2G" id="dCI-4d-VZf"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="3Oh-LJ-uw0">
+                                <connections>
+                                    <action selector="didPushAddButton:" destination="JSO-m7-O2G" id="bVv-zQ-crn"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" image="refresh" id="amK-Rh-Aih">
                             <connections>
                                 <action selector="didPushReloadButton:" destination="JSO-m7-O2G" id="yCY-9u-wgd"/>
@@ -340,9 +352,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="j4I-hF-7Mw" kind="relationship" relationship="viewControllers" id="58I-Zb-MW7"/>
-                        <segue destination="rgN-iV-Ty0" kind="relationship" relationship="viewControllers" id="x4w-u8-U1I"/>
                         <segue destination="C4k-NR-3bT" kind="relationship" relationship="viewControllers" id="fIe-Rc-Tmx"/>
+                        <segue destination="rgN-iV-Ty0" kind="relationship" relationship="viewControllers" id="x4w-u8-U1I"/>
+                        <segue destination="j4I-hF-7Mw" kind="relationship" relationship="viewControllers" id="58I-Zb-MW7"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YFh-60-N8t" userLabel="First Responder" sceneMemberID="firstResponder"/>

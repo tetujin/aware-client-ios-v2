@@ -24,11 +24,12 @@ class ScatterChartCard: ContextCard {
     var scatterColor:UIColor?
     
     var needsComposite = false
+    var granularitySecond:Double = 0
     
     var xAxisKey      = "timestamp";
     var xAxisLabels   = Array<String>();
     
-    public typealias ScatterChartFilterHadler = (_ data:Dictionary<String, Any>) -> Bool
+    public typealias ScatterChartFilterHadler = (_ key:String, _ data:Dictionary<String, Any>) -> Dictionary<String,Any>?
     var filterHandler:ScatterChartFilterHadler?
     
     override func setup() {
@@ -70,9 +71,11 @@ class ScatterChartCard: ContextCard {
             sensor.storage.fetchTodaysData(handler: { (name, results, start, end, error) in
                 if let unwrappedResults = results as? Array<Dictionary<String, Any>>,
                     let unwrappedName = name{
-                    DispatchQueue.main.async {
-                        self.setChart(sensor, keys: keys, name: unwrappedName, results: unwrappedResults, start: start, end: end, error: error)
-                    }
+                    self.setChart(sensor,
+                                  keys: keys,
+                                  name: unwrappedName,
+                                  results: unwrappedResults,
+                                  start:   start, end: end, error: error)
                 }
             })
         }
@@ -83,16 +86,14 @@ class ScatterChartCard: ContextCard {
         self.titleLabel.text = sensor.getName()
         let now = Date()
         let weekAgo = now.addingTimeInterval(-1*60*60*24*7)
-        DispatchQueue.global().async {
-            sensor.storage.fetchDataBetweenStart(weekAgo, andEnd: now) { (name, results, start, end, error) in
-                if let unwrappedResults = results as? Array<Dictionary<String, Any>>,
-                    let unwrappedName = name{
-                    DispatchQueue.main.async {
-                        self.setChart(sensor, keys: keys, name: unwrappedName, results: unwrappedResults, start: start, end: end, error: error)
-                    }
-                }
+        //DispatchQueue.global().async {
+        sensor.storage.fetchDataBetweenStart(weekAgo, andEnd: now) { (name, results, start, end, error) in
+            if let unwrappedResults = results as? Array<Dictionary<String, Any>>,
+                let unwrappedName = name{
+                self.setChart(sensor, keys: keys, name: unwrappedName, results: unwrappedResults, start: start, end: end, error: error)
             }
         }
+        //}
     }
     
     public func setChart(_ sensor:AWARESensor, keys:Array<String>, name:String, results:Array<Dictionary<String, Any>>, start:Date?, end:Date?, error:Error?){
@@ -133,19 +134,30 @@ class ScatterChartCard: ContextCard {
             for (index, key) in zip(results.indices, keys) {
                 var data = Array<ChartDataEntry>()
                 
+                var lastTimestamp:Double  = 0
+                
                 for result in results {
                     // filter the value if a handler exist
-                    var isPassedFilter = true;
+                    var fliteredData:Dictionary<String,Any>? = result;
                     if let unwrappedFilterHadler = filterHandler {
-                        isPassedFilter = unwrappedFilterHadler(result)
+                        fliteredData = unwrappedFilterHadler(key, result)
                     }
                     
-                    if isPassedFilter{
-                        if let value = result[key] as? Double {
-                            data.append(ChartDataEntry(x:result["timestamp"] as! Double, y:value))
-                        }else if let value = result[key] as? String {
+                    if let fd = fliteredData{
+                        if let value = fd[key] as? Double, let timestamp = fd["timestamp"] as? Double {
+                            if granularitySecond > 0 {
+                                if let timestamp = fd["timestamp"] as? Double {
+                                    if timestamp > lastTimestamp + granularitySecond * 1000.0 {
+                                        lastTimestamp = timestamp
+                                        data.append(ChartDataEntry(x:timestamp, y:value))
+                                    }
+                                }
+                            }else{
+                                data.append(ChartDataEntry(x:timestamp, y:value))
+                            }
+                        }else if let value = fd[key] as? String, let timestamp = fd["timestamp"] as? Double  {
                             if let doubleVal = Double(value){
-                                data.append(ChartDataEntry(x:result["timestamp"] as! Double, y:doubleVal))
+                                data.append(ChartDataEntry(x:timestamp, y:doubleVal))
                             }
                         }
                     }
@@ -167,38 +179,33 @@ class ScatterChartCard: ContextCard {
         data.setValueFont(.systemFont(ofSize: 3, weight: .light))
         
         DispatchQueue.main.async {
-            if let sc = self.scatterChart{
-                
-                sc.data = data
-                sc.xAxis.axisMaximum = AWAREUtils.getUnixTimestamp(end)   as! Double
-                sc.xAxis.axisMinimum = AWAREUtils.getUnixTimestamp(start) as! Double
+            if let chart = self.scatterChart{
+                chart.data = data
+                chart.xAxis.axisMaximum = AWAREUtils.getUnixTimestamp(end)   as! Double
+                chart.xAxis.axisMinimum = AWAREUtils.getUnixTimestamp(start) as! Double
                 if let yMin = self.yAxisMin, let yMax = self.yAxisMax{
-                    sc.leftAxis.axisMaximum = yMax
-                    sc.leftAxis.axisMinimum = yMin
+                    chart.leftAxis.axisMaximum = yMax
+                    chart.leftAxis.axisMinimum = yMin
                 }
                 self.indicatorView.isHidden = true
-                sc.isHidden = false
-            
+                chart.isHidden = false
+                
                 // hide right label
-                sc.rightAxis.drawLabelsEnabled = false
+                chart.rightAxis.drawLabelsEnabled = false
                 
                 // hide description text
-                sc.chartDescription?.text = ""
+                chart.chartDescription?.text = ""
                 
                 if self.xAxisLabels.count > 0 {
-//                    let chartFormatter =  (labels: self.xAxisLabels)
-//                    let xAxis = XAxis()
-//                    xAxis.valueFormatter = chartFormatter
-//                    self.xAxis.valueFormatter = xAxis.valueFormatter
-////                     sc.xAxis.labelCount = Int(self.xAxisLabels.count)
-                    sc.xAxis.valueFormatter = IndexAxisValueFormatter(values:self.xAxisLabels)
-                    sc.xAxis.setLabelCount(self.xAxisLabels.count, force: true)
-                    sc.xAxis.drawLabelsEnabled = true
+                    chart.xAxis.valueFormatter = IndexAxisValueFormatter(values:self.xAxisLabels)
+                    chart.xAxis.setLabelCount(self.xAxisLabels.count, force: true)
+                    chart.xAxis.drawLabelsEnabled = true
                 }else{
-                    sc.xAxis.drawLabelsEnabled = false
+                    chart.xAxis.drawLabelsEnabled = false
                 }
-
+                
             }
         }
+        
     }
 }
