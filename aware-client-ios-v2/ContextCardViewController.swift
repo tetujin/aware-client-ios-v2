@@ -47,6 +47,7 @@ class ContextCardViewController: UIViewController {
     
     func removeAllContextCards(){
         for card in contextCards {
+            card.baseStackView.isHidden = true
             self.mainStackView.removeArrangedSubview(card)
         }
         contextCards.removeAll()

@@ -57,6 +57,8 @@
 	<string>For collecting you enviromental noise level, this application need to access your mocirphone API.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>For collecting motion activity, this application needs to access your device motion API.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>For saving the taken photo into Photo Library, this application needs to access your photo library.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

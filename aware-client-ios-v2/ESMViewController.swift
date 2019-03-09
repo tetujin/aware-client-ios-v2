@@ -34,11 +34,10 @@ class ESMViewController: UIViewController {
     
     func checkESMSchedules(){
         self.tabBarController?.tabBar.isHidden = false
-        
         let esmManager = ESMScheduleManager.shared()
         let schedules = esmManager.getValidSchedules()
+        
         if let unwrappedSchedules = schedules {
-            print(unwrappedSchedules.count)
             if(unwrappedSchedules.count > 0){
                 if unwrappedSchedules.count  == 1 {
                     surveyButton.setTitle("Tap to answer \(unwrappedSchedules.count) survey", for: .normal)

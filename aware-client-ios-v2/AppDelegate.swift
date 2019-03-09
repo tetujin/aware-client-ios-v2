@@ -18,8 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let core = AWARECore.shared()
+        let core    = AWARECore.shared()
         let manager = AWARESensorManager.shared()
+        let study   = AWAREStudy.shared()
         
         manager.addSensors(with: AWAREStudy.shared())
         if manager.getAllSensors().count > 1 {
@@ -28,6 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         IOSESM.setESMAppearedState(false)
+        
+        let key = "aware-client-v2.setting.key.is-not-first-time"
+        if(UserDefaults.standard.bool(forKey:key)){
+            study.setCleanOldDataType(cleanOldDataTypeNever)
+            UserDefaults.standard.set(true, forKey: key)
+        }
         
         return true
     }
