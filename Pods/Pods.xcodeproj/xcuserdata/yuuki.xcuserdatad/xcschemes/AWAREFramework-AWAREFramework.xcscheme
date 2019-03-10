@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6E955230B74F72593FBF7F02529DAA4F"
+               BlueprintIdentifier = "359EF7B21D7DFF34DE853974A66B733C"
                BuildableName = "AWAREFramework.bundle"
                BlueprintName = "AWAREFramework-AWAREFramework"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6E955230B74F72593FBF7F02529DAA4F"
+            BlueprintIdentifier = "359EF7B21D7DFF34DE853974A66B733C"
             BuildableName = "AWAREFramework.bundle"
             BlueprintName = "AWAREFramework-AWAREFramework"
             ReferencedContainer = "container:Pods.xcodeproj">

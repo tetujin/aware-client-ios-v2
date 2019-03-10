@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "78823A07A1FD3172D4F28B34E61DC64D"
+               BlueprintIdentifier = "5867E46E26FE4BF4A36C637F1535936C"
                BlueprintName = "macros_blocks"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "macros_blocks">

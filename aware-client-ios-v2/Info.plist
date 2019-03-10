@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -49,6 +49,8 @@
 	<string>For finding a QR Code, this application needs to access your camera.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>For collecting your contant information, this application needs to access your contants information.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>For collecting your health information, this application needs to access HealthKit API.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>For collecting your activity, this application needs to access your location data.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

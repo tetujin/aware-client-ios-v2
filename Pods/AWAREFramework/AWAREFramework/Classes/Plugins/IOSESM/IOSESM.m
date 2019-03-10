@@ -239,6 +239,17 @@ NSString * const AWARE_PREFERENCES_PLUGIN_IOS_ESM_CONFIG_URL = @"plugin_ios_esm_
             return;
         }
         
+        if(esmArray == nil){
+            NSLog(@"ERROR: web esm array is null.");
+            if([AWAREUtils isForeground]){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // [AWAREUtils sendLocalNotificationForMessage:@"ERROR iOS ESM:\nESM list is empty." soundFlag:NO];
+                    [self sendAlertMessageWithTitle:@"Error iOS ESM" message:@"ESM list is empty." cancelButton:@"Close"];
+                });
+            }
+            return;
+        }
+        
         NSString * jsonStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"%@", jsonStr);
         
@@ -289,12 +300,19 @@ didReceiveResponse:(NSURLResponse *)response
          dataTask:(NSURLSessionDataTask *)dataTask
    didReceiveData:(NSData *)data {
     NSLog(@"iOS ESM Plugin: Did received Data");
+    // NSLog(@"%@", dataTask.currentRequest.URL);
+    
+    // NSString * log = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    // NSLog(@"%@",log);
+    
     if([session.configuration.identifier isEqualToString:currentHttpSessionId]){
         if(data != nil){
+            NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
             [receiveData appendData:data];
         }
     }else{
         NSLog(@"****** ios esm *******");
+        // [super URLSession:session dataTask:dataTask didReceiveData:data];
     }
 }
 
@@ -311,6 +329,8 @@ didReceiveResponse:(NSURLResponse *)response
                                         message:error.debugDescription
                                    cancelButton:@"Close"];
             }
+            NSString * message = [NSString stringWithFormat:@"[iOS ESM] Configuration File Download Error: %@", error.debugDescription];
+            // [self saveDebugEventWithText:message type:DebugTypeWarn label:@"iOS ESM"];
         });
         return;
     }
@@ -333,7 +353,7 @@ didReceiveResponse:(NSURLResponse *)response
             }
             if([AWAREUtils isForeground]){
                 //[AWAREUtils sendLocalNotificationForMessage:[NSString stringWithFormat:@"ERROR iOS ESM:\n%@",error.debugDescription] soundFlag:NO];
-                // [self sendAlertMessageWithTitle:@"Error iOS ESM" message:error.debugDescription cancelButton:@"Close"];
+                [self sendAlertMessageWithTitle:@"Error iOS ESM" message:error.debugDescription cancelButton:@"Close"];
             }
         }
     }else{
@@ -349,8 +369,10 @@ didReceiveResponse:(NSURLResponse *)response
     
     @try {
         dispatch_async( dispatch_get_main_queue() , ^{
+            AWAREDelegate *delegate=(AWAREDelegate*)[UIApplication sharedApplication].delegate;
             NSManagedObjectContext * context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
             context.persistentStoreCoordinator = [CoreDataHandler sharedHandler].persistentStoreCoordinator;
+            // context.persistentStoreCoordinator =  delegate.sharedCoreDataHandler.persistentStoreCoordinator;
             
             int number = 0;
             
@@ -498,14 +520,12 @@ didReceiveResponse:(NSURLResponse *)response
 
 
 - (void) sendAlertMessageWithTitle:(NSString*)title message:(NSString *) message cancelButton:(NSString *)closeButtonTitle{
-    if([AWAREStudy.sharedStudy isDebug]){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:closeButtonTitle
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:closeButtonTitle
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void) refreshNotifications {

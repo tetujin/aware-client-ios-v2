@@ -129,15 +129,22 @@ class ViewController: UIViewController {
         let manager = AWARESensorManager.shared()
         
         manager.stopAndRemoveAllSensors()
-        study.join(withURL: study.getURL()) { (settings, status, error) in
+        if study.getURL() == "" {
             manager.addSensors(with: study)
             manager.startAllSensors()
-            self.showReloadCompletionAlert()
-            for sensor in self.sensors {
-                sensor.syncProgress = 0
-                sensor.syncStatus = .unknown
+        } else {
+            study.join(withURL: study.getURL()) { (settings, status, error) in
+                manager.addSensors(with: study)
+                manager.startAllSensors()
+                self.showReloadCompletionAlert()
             }
         }
+        
+        for sensor in self.sensors {
+            sensor.syncProgress = 0
+            sensor.syncStatus = .unknown
+        }
+        
     }
 
     let sections = ["Study","Sensors"]
@@ -299,15 +306,25 @@ class ViewController: UIViewController {
                                 identifier: SENSOR_PLUGIN_STUDENTLIFE_AUDIO,
                                 icon: UIImage(named: "ic_action_conversation", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "iOS ESM",
-                                details: "ESM plugin for iOS",
-                                identifier: SENSOR_PLUGIN_IOS_ESM,
-                                icon: UIImage(named: "ic_action_web_esm", in: bundle, compatibleWith: nil)),
-                TableRowContent(type: .sensor,
                                 title: "Fused Location",
                                 details: "Locations API provider. This plugin provides the user's current location in an energy efficient way.",
                                 identifier: SENSOR_GOOGLE_FUSED_LOCATION,
-                                icon: UIImage(named: "ic_action_google_fused_location", in: bundle, compatibleWith: nil))
+                                icon: UIImage(named: "ic_action_google_fused_location", in: bundle, compatibleWith: nil)),
+                TableRowContent(type: .sensor,
+                                title: "HealthKit",
+                                details: "Collecting health related data from HealthKit API",
+                                identifier: SENSOR_HEALTH_KIT,
+                                icon: UIImage(named: "ic_action_health_kit", in: bundle, compatibleWith: nil)),
+                TableRowContent(type: .sensor,
+                                title: "iOS ESM",
+                                details: "Setup ESM based on JSON confiugration on any URL",
+                                identifier: SENSOR_PLUGIN_IOS_ESM,
+                                icon: UIImage(named: "ic_action_web_esm", in: bundle, compatibleWith: nil)),
+                TableRowContent(type: .sensor,
+                                title: "Google Calendar ESM",
+                                details: "Schedule ESM based on configurations on Google Calendar",
+                                identifier: SENSOR_PLUGIN_CALENDAR_ESM_SCHEDULER,
+                                icon: UIImage(named: "ic_action_google_cal", in: bundle, compatibleWith: nil)),
                 
             ]
             return contents

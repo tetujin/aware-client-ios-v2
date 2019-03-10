@@ -100,7 +100,6 @@ NSString* const AWARE_PREFERENCES_FREQUENCY_HZ_MAGNETOMETER = @"frequency_hz_mag
     [manager startMagnetometerUpdatesToQueue:[NSOperationQueue currentQueue]
                                  withHandler:^(CMMagnetometerData * _Nullable magnetometerData,
                                                NSError * _Nullable error) {
-                                     
                                      if( error ) {
                                          NSLog(@"%@:%ld", [error domain], [error code] );
                                      } else {

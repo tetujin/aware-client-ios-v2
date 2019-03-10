@@ -148,7 +148,7 @@ static AWAREStudy * sharedStudy;
  * @param completionHandler A handler for the joining process
  */
 - (void)joinStudyWithURL:(NSString *)url completion:(JoinStudyCompletionHandler)completionHandler{
-
+    
     [self setStudyURL:url];
     
     joinStudyCompletionHandler = completionHandler;
@@ -293,7 +293,7 @@ didCompleteWithError:(NSError *)error {
             }
         }
     }
-
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         NSString * url =  [self getStudyURL];
@@ -303,7 +303,7 @@ didCompleteWithError:(NSError *)error {
         if (!isExistDeviceId) {
             [self addNewDeviceToAwareServer:url withDeviceId:uuid];
         }
-
+        
         [self setStudyState:YES];
         
         [NSNotificationCenter.defaultCenter postNotificationName:ACTION_AWARE_UPDATE_STUDY_CONFIG object:nil];
@@ -497,9 +497,9 @@ didCompleteWithError:(NSError *)error {
     }
     
     return [self insertDeviceIdToAwareServerWithURL:url
-                                            deviceId:deviceId
-                                          deviceName:deviceName
-                                          completion:completionHandler];
+                                           deviceId:deviceId
+                                         deviceName:deviceName
+                                         completion:completionHandler];
 }
 
 
@@ -518,7 +518,7 @@ didCompleteWithError:(NSError *)error {
     NSString* release =  [NSString stringWithCString:systemInfo.release  encoding:NSUTF8StringEncoding]; // ok
     // NSString* systemName = [NSString stringWithCString:systemInfo.sysname encoding:NSUTF8StringEncoding];// ok
     NSString* version = [NSString stringWithCString:systemInfo.version encoding:NSUTF8StringEncoding];
-
+    
     NSString *systemVersion = [[UIDevice currentDevice] systemVersion];//ok
     NSString *localizeModel = [[UIDevice currentDevice] localizedModel];//
     NSString *model = [[UIDevice currentDevice] model]; //ok

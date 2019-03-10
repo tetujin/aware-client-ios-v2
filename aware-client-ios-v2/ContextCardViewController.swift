@@ -16,7 +16,6 @@ class ContextCardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupContextCards()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -24,6 +23,9 @@ class ContextCardViewController: UIViewController {
                                                selector: #selector(willEnterForegroundNotification(notification:)),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
+        if contextCards.count == 0 {
+            setupContextCards()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -188,7 +190,7 @@ class ContextCardViewController: UIViewController {
             let contextCard = ScatterChartCard.init(frame: CGRect.init(x:0, y:0, width: self.view.frame.width, height:250))
             contextCard.yAxisMax = 6
             contextCard.yAxisMin = -6
-            contextCard.granularitySecond = 1
+            contextCard.granularitySecond = 10
             contextCard.setTodaysChart(sensor: sensor, keys: ["double_values_0","double_values_1","double_values_2"])
             contextCard.titleLabel.text = "Accelerometer"
             contextCard.isUserInteractionEnabled = false
@@ -202,7 +204,7 @@ class ContextCardViewController: UIViewController {
             let contextCard = ScatterChartCard.init(frame: CGRect.init(x:0, y:0, width: self.view.frame.width, height:250))
             contextCard.yAxisMax = 6;
             contextCard.yAxisMin = -6;
-            contextCard.granularitySecond = 1
+            contextCard.granularitySecond = 10
             contextCard.setTodaysChart(sensor: sensor, keys: ["double_values_0","double_values_1","double_values_2"])
             contextCard.titleLabel.text = "Gyroscope"
             contextCard.isUserInteractionEnabled = false

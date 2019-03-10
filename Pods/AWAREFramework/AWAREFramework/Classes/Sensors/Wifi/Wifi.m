@@ -168,10 +168,9 @@ NSString* const AWARE_PREFERENCES_FREQUENCY_WIFI = @"frequency_wifi";
     [sensorWifi saveConnectedWifiInfo];
 }
     
-- (NSString *)getLatestValue {
+- (NSString *) getLatestValue {
     return [sensorWifi getLatestValue];
 }
-    
     ///////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
     

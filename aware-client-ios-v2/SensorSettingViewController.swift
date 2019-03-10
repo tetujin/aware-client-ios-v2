@@ -17,8 +17,6 @@ class SensorSettingViewController: UIViewController {
     
     public var settings = Array<SettingContent>()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -289,7 +287,16 @@ class SensorSettingViewController: UIViewController {
                 settings.append(SettingContent(type: .int,
                                                key: AWARE_PREFERENCES_FREQUENCY_GOOGLE_FUSED_LOCATION,
                                                defaultValue: "180"))
-                
+                break
+            case SENSOR_HEALTH_KIT:
+                settings.append(SettingContent(type: .bool,
+                                               key: STATUS_SENSOR_HEALTH_KIT,
+                                               defaultValue: "false"))
+                break
+            case SENSOR_PLUGIN_CALENDAR_ESM_SCHEDULER:
+                settings.append(SettingContent(type: .bool,
+                                               key: AWARE_PREFERENCES_STATUS_CALENDAR_ESM,
+                                               defaultValue: "false"))
                 break
             default:
                 break
@@ -326,13 +333,7 @@ extension SensorSettingViewController: UITableViewDataSource{
                             if let text = textField.text{
                                 let study = AWAREStudy.shared()
                                 study.setSetting(content.key, value: text as NSObject)
-                                self.tableView.reloadData()
-                                let manager = AWARESensorManager.shared()
-                                manager.stopAndRemoveAllSensors()
-                                manager.addSensors(with: AWAREStudy.shared())
-                                manager.startAllSensors()
-                                
-                                self.settings = self.getSettings()
+                                self.restartAllSensors()
                             }
                         }
                     }
@@ -344,12 +345,7 @@ extension SensorSettingViewController: UITableViewDataSource{
                 for item in items {
                     alert.addAction(UIAlertAction(title: item, style: .default, handler: { (action) in
                         AWAREStudy.shared().setSetting(content.key, value: item as NSObject)
-                        self.tableView.reloadData()
-                        let manager = AWARESensorManager.shared()
-                        manager.stopAndRemoveAllSensors()
-                        manager.addSensors(with: AWAREStudy.shared())
-                        manager.startAllSensors()
-                        self.settings = self.getSettings()
+                        self.restartAllSensors()
                     }))
                 }
             }
@@ -363,13 +359,7 @@ extension SensorSettingViewController: UITableViewDataSource{
                     }else{
                         AWAREStudy.shared().setSetting(content.key, value: false as NSObject)
                     }
-                    self.tableView.reloadData()
-                    let manager = AWARESensorManager.shared()
-                    manager.stopAndRemoveAllSensors()
-                    manager.addSensors(with: AWAREStudy.shared())
-                    manager.startAllSensors()
-                    
-                    self.settings = self.getSettings()
+                    self.restartAllSensors()
                 }))
             }
             break
@@ -394,6 +384,17 @@ extension SensorSettingViewController: UITableViewDataSource{
             cell.detailTextLabel?.text = setting.defaultValue
         }
         return cell
+    }
+    
+    func restartAllSensors(){
+        self.tableView.reloadData()
+        let manager = AWARESensorManager.shared()
+        manager.stopAndRemoveAllSensors()
+        manager.addSensors(with: AWAREStudy.shared())
+        manager.createDBTablesOnAwareServer()
+        manager.startAllSensors()
+        
+        self.settings = self.getSettings()
     }
 }
 
