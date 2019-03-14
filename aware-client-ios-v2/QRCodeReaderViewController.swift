@@ -149,6 +149,7 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
                 manager.stopAndRemoveAllSensors()
                 manager.addSensors(with: study)
                 manager.startAllSensors()
+                manager.createDBTablesOnAwareServer()
                 self.dismiss(animated: true, completion: nil)
             })
         }
