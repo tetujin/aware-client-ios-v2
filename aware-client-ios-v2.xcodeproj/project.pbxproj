@@ -295,6 +295,8 @@
 				TargetAttributes = {
 					4FFE19722226A10B00C4715E = {
 						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = FH352PYMNC;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.AccessWiFi = {
 								enabled = 1;
@@ -312,10 +314,14 @@
 					};
 					4FFE19892226A10D00C4715E = {
 						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = FH352PYMNC;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 4FFE19722226A10B00C4715E;
 					};
 					4FFE19942226A10D00C4715E = {
 						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = FH352PYMNC;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 4FFE19722226A10B00C4715E;
 					};
 				};
@@ -694,8 +700,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "aware-client-ios-v2/aware-client-ios-v2.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = FH352PYMNC;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "aware-client-ios-v2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -703,8 +712,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yuukinishiyama.app.aware-client-ios-v2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -714,8 +725,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "aware-client-ios-v2/aware-client-ios-v2.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = FH352PYMNC;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "aware-client-ios-v2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -723,8 +737,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yuukinishiyama.app.aware-client-ios-v2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};

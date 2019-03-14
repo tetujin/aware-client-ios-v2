@@ -42,6 +42,7 @@ enum AdvancedSettingsIdentifiers:String {
     case dbCleanInterval = "DB_CLEAN_INTERVAL"
     case dbFetchCount    = "DB_FETCH_COUNT"
     case autoSync        = "AUTO_SYNC"
+    case export          = "EXPORT"
     case version         = "VERSION"
     case quit = "QUIT"
     case team = "TEAM"
@@ -203,6 +204,25 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
+        case AdvancedSettingsIdentifiers.export.rawValue:
+            let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+            var activityItems = Array<URL>();
+            activityItems.append(URL(fileURLWithPath: documentPath))
+            
+            //            var fileNames: [String] {
+            //                do {
+            //                    return try FileManager.default.contentsOfDirectory(atPath: documentPath)
+            //                } catch {
+            //                    return []
+            //                }
+            //            }
+            //            for name in fileNames {
+            //                activityItems.append(URL(fileURLWithPath: "\(documentPath)/\(name)" ))
+            //            }
+            
+            let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+            self.present(activityVC, animated: true, completion: nil)
+            break
         default:
             break
         }
@@ -241,6 +261,10 @@ extension AdvancedSettingsViewController {
                                         title: "DB Clean Interval",
                                         details: getDBCleanModeAsString(),
                                         identifier: AdvancedSettingsIdentifiers.dbCleanInterval.rawValue),
+                        TableRowContent(type: .setting,
+                                        title: "Export DB",
+                                        details: "",
+                                        identifier: AdvancedSettingsIdentifiers.export.rawValue),
                         TableRowContent(type: .setting,
                                         title: "Quit Study",
                                         identifier: AdvancedSettingsIdentifiers.quit.rawValue),
@@ -285,3 +309,23 @@ extension AdvancedSettingsViewController {
     }
 }
 
+extension AdvancedSettingsIdentifiers {
+    
+    func getFiles() -> Array<URL>{
+        
+        let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        var activityItems = Array<URL>();
+    
+        var fileNames: [String] {
+            do {
+                return try FileManager.default.contentsOfDirectory(atPath: documentPath)
+            } catch {
+                return []
+            }
+        }
+        for name in fileNames {
+            activityItems.append(URL(fileURLWithPath: "\(documentPath)/\(name)" ))
+        }
+        return activityItems;
+    }
+}

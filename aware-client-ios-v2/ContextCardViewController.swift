@@ -93,13 +93,13 @@ class ContextCardViewController: UIViewController {
     }
     
     var possibleContextCards = [SENSOR_BATTERY,
-                         SENSOR_BAROMETER,
-                         SENSOR_AMBIENT_NOISE,
-                         SENSOR_IOS_ACTIVITY_RECOGNITION,
-                         SENSOR_PLUGIN_OPEN_WEATHER,
-                         SENSOR_ACCELEROMETER,
-                         SENSOR_GYROSCOPE, SENSOR_SCREEN,
-                         SENSOR_LOCATIONS]
+                                 SENSOR_BAROMETER,
+                                 SENSOR_AMBIENT_NOISE,
+                                 SENSOR_IOS_ACTIVITY_RECOGNITION,
+                                 SENSOR_PLUGIN_OPEN_WEATHER,
+                                 SENSOR_ACCELEROMETER,
+                                 SENSOR_GYROSCOPE, SENSOR_SCREEN,
+                                 SENSOR_LOCATIONS]
     
     let key = "com.yuukinishiyama.app.aware-client-ios-v2.context-cards"
     
@@ -298,8 +298,6 @@ class ContextCardViewController: UIViewController {
         }
     }
     
-    
-
     /*
     // MARK: - Navigation
 

@@ -40,9 +40,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>18</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>For collecting distance between your Bluetooth and iOS devices, this application needs to access Bluetooth API.</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>For collecting your schedule, this application needs to access your calendar.</string>
 	<key>NSCameraUsageDescription</key>
@@ -51,6 +53,8 @@
 	<string>For collecting your contant information, this application needs to access your contants information.</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>For collecting your health information, this application needs to access HealthKit API.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>For collecting your health information, this application needs to access Health API.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>For collecting your activity, this application needs to access your location data.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

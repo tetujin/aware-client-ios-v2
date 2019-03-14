@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IOSESM.setESMAppearedState(false)
         
         let key = "aware-client-v2.setting.key.is-not-first-time"
-        if(UserDefaults.standard.bool(forKey:key)){
+        if(!UserDefaults.standard.bool(forKey:key)){
             study.setCleanOldDataType(cleanOldDataTypeNever)
             UserDefaults.standard.set(true, forKey: key)
         }
