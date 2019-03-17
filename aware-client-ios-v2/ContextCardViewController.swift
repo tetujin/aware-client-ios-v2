@@ -86,6 +86,12 @@ class ContextCardViewController: UIViewController {
             case SENSOR_LOCATIONS:
                 addLocationCard()
                 break
+            case SENSOR_PLUGIN_PEDOMETER:
+                addPedometerCard()
+                break
+            case SENSOR_HEALTH_KIT:
+                addHealthKitCard();
+                break
             default:
                 break
             }
@@ -99,7 +105,9 @@ class ContextCardViewController: UIViewController {
                                  SENSOR_PLUGIN_OPEN_WEATHER,
                                  SENSOR_ACCELEROMETER,
                                  SENSOR_GYROSCOPE, SENSOR_SCREEN,
-                                 SENSOR_LOCATIONS]
+                                 SENSOR_LOCATIONS,
+                                 SENSOR_PLUGIN_PEDOMETER,
+                                 SENSOR_HEALTH_KIT]
     
     let key = "com.yuukinishiyama.app.aware-client-ios-v2.context-cards"
     
@@ -285,6 +293,62 @@ class ContextCardViewController: UIViewController {
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
+        }
+    }
+    
+    func addPedometerCard(){
+        if let sensor = AWARESensorManager.shared().getSensor(SENSOR_PLUGIN_PEDOMETER) {
+            let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
+            contextCard.xAxisLabels = ["0","6","12","18","24"];
+            contextCard.setTodaysChart(sensor: sensor, keys: ["number_of_steps"])
+            contextCard.titleLabel.text = "Pedometer"
+            contextCard.isUserInteractionEnabled = false
+            self.contextCards.append(contextCard)
+            self.mainStackView.addArrangedSubview(contextCard)
+        }
+    }
+    
+    func addHealthKitCard(){
+        if let sensor = AWARESensorManager.shared().getSensor(SENSOR_HEALTH_KIT) as? AWAREHealthKit{
+            // hr
+            if let quantity = sensor.awareHKQuantity {
+                let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
+                let unit = "count/min"
+                contextCard.setFilterHandler{(keyName, data) -> Dictionary<String, Any>? in
+                    if let type = data["type"] as? String {
+                        if type == "HKQuantityTypeIdentifierHeartRate"{
+                            return data
+                        }
+                    }
+                    return nil
+                }
+                contextCard.xAxisLabels = ["0","6","12","18","24"];
+                contextCard.setTodaysChart(sensor: quantity, keys: ["value"])
+                contextCard.titleLabel.text = "Heart Rate (\(unit))"
+                contextCard.isUserInteractionEnabled = false
+                self.contextCards.append(contextCard)
+                self.mainStackView.addArrangedSubview(contextCard)
+            }
+            
+            if let quantity = sensor.awareHKQuantity {
+                let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
+                let unit = "kcal"
+                contextCard.setFilterHandler{(keyName, data) -> Dictionary<String, Any>? in
+                    // print(data)
+                    if let type = data["type"] as? String {
+                        if type == "HKQuantityTypeIdentifierActiveEnergyBurned"{
+                            return data
+                        }
+                    }
+                    return nil
+                }
+                contextCard.xAxisLabels = ["0","6","12","18","24"];
+                contextCard.setTodaysChart(sensor: quantity, keys: ["value"])
+                contextCard.titleLabel.text = "Energy Burned (\(unit))"
+                contextCard.isUserInteractionEnabled = false
+                self.contextCards.append(contextCard)
+                self.mainStackView.addArrangedSubview(contextCard)
+            }
         }
     }
     

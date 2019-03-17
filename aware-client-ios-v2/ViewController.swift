@@ -454,7 +454,8 @@ extension ViewController {
     
     func startManualUpload(){
         let manager = AWARESensorManager.shared()
-        manager.setSyncProcessCallbackToAllSensorStorages { (sensorName, progress, error) in
+        
+        let callback = { (sensorName:String?, progress:Double, error:Error?) -> Void in
             
             var flag = false
             
@@ -465,6 +466,11 @@ extension ViewController {
                 } else if name == "location_gps" || name == "google_fused_location" {
                     if sensorName! == "locations" {
                         flag = true
+                    }
+                } else if name == "health_kit" {
+                    if sensorName! == "health_kit_quantity" {
+                        flag = true
+                        print(sensorName!)
                     }
                 }
                 
@@ -480,6 +486,9 @@ extension ViewController {
                         sensor.syncStatus = .error
                     }
                     if name == "location_gps" || name == "google_fused_location" {
+                        flag = false
+                        continue
+                    } else if name == "health_kit_quantity" {
                         flag = false
                         continue
                     }else{
@@ -502,7 +511,7 @@ extension ViewController {
             
             if complete {
                 let alert = UIAlertController(title: "Data upload is completed", message: nil, preferredStyle: .alert)
-                let close = UIAlertAction.init(title: "Close", style: .default, handler: { (action) in
+                let close = UIAlertAction(title: "Close", style: .default, handler: { (action) in
                     for sensor in self.sensors {
                         sensor.syncProgress = 0
                         sensor.syncStatus = .unknown
@@ -512,6 +521,12 @@ extension ViewController {
                 self.present(alert, animated: true, completion: nil)
             }
         }
+        
+        manager.setSyncProcessCallbackToAllSensorStorages(callback)
+//        if let healthKit = manager.getSensor(SENSOR_HEALTH_KIT) as? AWAREHealthKit {
+//           healthKit.awareHKQuantity.storage.syncProcessCallBack = callback
+//           healthKit.awareHKCategory.storage.syncProcessCallBack = callback
+//        }
         
         for sensor in self.sensors {
             sensor.syncProgress = 0
