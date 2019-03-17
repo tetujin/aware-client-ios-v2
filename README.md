@@ -26,9 +26,10 @@ AWARE Client iOS (Version 2) is developed by [Yuuki Nishiyama](http://www.yuukin
 
 ## Related links
 * [AWARE Framework Official Home Page](http://www.awareframewrok.com)
+* [aware-client-ios-v2 on AppStore](https://itunes.apple.com/jp/app/aware-client-v2/id1455986181)
+* [aware-library-ios](https://github.com/tetujin/AWAREFramework-iOS)
 * [aware-client-ios-v1](https://github.com/tetujin/aware-client-ios)
 * [aware-client-Android](https://github.com/denzilferreira/aware-client)
-* [aware-library-ios](https://github.com/tetujin/AWAREFramework-iOS)
 
 ## License
 Copyright (c) 2019 AWARE Mobile Context Instrumentation Middleware/Framework for iOS (http://www.awareframework.com)
