@@ -325,6 +325,11 @@ class ViewController: UIViewController {
                                 details: "Schedule ESM based on configurations on Google Calendar",
                                 identifier: SENSOR_PLUGIN_CALENDAR_ESM_SCHEDULER,
                                 icon: UIImage(named: "ic_action_google_cal", in: bundle, compatibleWith: nil)),
+                TableRowContent(type: .sensor,
+                                title: "Device Usage",
+                                details: "Device usage information based on smartphone lock/unlock events.",
+                                identifier: SENSOR_PLUGIN_DEVICE_USAGE,
+                                icon: UIImage(named: "ic_action_device_usage", in:bundle, compatibleWith: nil))
                 
             ]
             return contents

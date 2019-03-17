@@ -298,6 +298,11 @@ class SensorSettingViewController: UIViewController {
                                                key: AWARE_PREFERENCES_STATUS_CALENDAR_ESM,
                                                defaultValue: "false"))
                 break
+            case SENSOR_PLUGIN_DEVICE_USAGE:
+                settings.append(SettingContent(type: .bool,
+                                               key: AWARE_PREFERENCES_STATUS_DEVICE_USAGE,
+                                               defaultValue: "false"))
+                break
             default:
                 break
             }

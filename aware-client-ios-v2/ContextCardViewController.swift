@@ -90,7 +90,10 @@ class ContextCardViewController: UIViewController {
                 addPedometerCard()
                 break
             case SENSOR_HEALTH_KIT:
-                addHealthKitCard();
+                addHealthKitCard()
+                break
+            case SENSOR_PLUGIN_DEVICE_USAGE:
+                addDeviceUsageCard()
                 break
             default:
                 break
@@ -107,7 +110,8 @@ class ContextCardViewController: UIViewController {
                                  SENSOR_GYROSCOPE, SENSOR_SCREEN,
                                  SENSOR_LOCATIONS,
                                  SENSOR_PLUGIN_PEDOMETER,
-                                 SENSOR_HEALTH_KIT]
+                                 SENSOR_HEALTH_KIT,
+                                 SENSOR_PLUGIN_DEVICE_USAGE]
     
     let key = "com.yuukinishiyama.app.aware-client-ios-v2.context-cards"
     
@@ -275,12 +279,29 @@ class ContextCardViewController: UIViewController {
     
     func addAmbientNoiseCard() {
         if let sensor = AWARESensorManager.shared().getSensor(SENSOR_AMBIENT_NOISE) {
-            let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
-            contextCard.setTodaysChart(sensor: sensor, keys: ["double_rms"])
-            contextCard.titleLabel.text = "Ambient Noise"
-            contextCard.isUserInteractionEnabled = false
-            self.contextCards.append(contextCard)
-            self.mainStackView.addArrangedSubview(contextCard)
+            // double_rms
+            let rmsCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
+            rmsCard.setTodaysChart(sensor: sensor, keys: ["double_rms"])
+            rmsCard.titleLabel.text = "Ambient Noise | RMS"
+            rmsCard.isUserInteractionEnabled = false
+            self.contextCards.append(rmsCard)
+            self.mainStackView.addArrangedSubview(rmsCard)
+            
+            // double_decibels
+            let dbCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
+            dbCard.setTodaysChart(sensor: sensor, keys: ["double_decibels"])
+            dbCard.titleLabel.text = "Ambient Noise | Decibel"
+            dbCard.isUserInteractionEnabled = false
+            self.contextCards.append(dbCard)
+            self.mainStackView.addArrangedSubview(dbCard)
+            
+            // double_frequency
+            let frequencyCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
+            frequencyCard.setTodaysChart(sensor: sensor, keys: ["double_frequency"])
+            frequencyCard.titleLabel.text = "Ambient Noise | Frequency"
+            frequencyCard.isUserInteractionEnabled = false
+            self.contextCards.append(frequencyCard)
+            self.mainStackView.addArrangedSubview(frequencyCard)
         }
     }
     
@@ -290,6 +311,18 @@ class ContextCardViewController: UIViewController {
             contextCard.xAxisLabels = ["0","6","12","18","24"];
             contextCard.setTodaysChart(sensor: sensor, keys: ["temperature_min","temperature","temperature_max"])
             contextCard.titleLabel.text = "Temperature"
+            contextCard.isUserInteractionEnabled = false
+            self.contextCards.append(contextCard)
+            self.mainStackView.addArrangedSubview(contextCard)
+        }
+    }
+
+    func addDeviceUsageCard(){
+        if let sensor = AWARESensorManager.shared().getSensor(SENSOR_PLUGIN_DEVICE_USAGE) {
+            let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
+            contextCard.xAxisLabels = ["0","6","12","18","24"];
+            contextCard.setTodaysChart(sensor: sensor, keys: ["elapsed_device_on"])
+            contextCard.titleLabel.text = "Device Usage"
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
