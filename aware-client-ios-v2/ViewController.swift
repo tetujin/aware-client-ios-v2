@@ -31,7 +31,6 @@ class ViewController: UIViewController {
         tableView.dataSource = self
     }
     
-
     override func viewDidAppear(_ animated: Bool) {
         
         settings = getSettings()
@@ -342,12 +341,33 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return self.settings.count
+            switch AWAREStudy.shared().getUIMode(){
+            case AwareUIModeNormal:
+                return self.settings.count
+            case AwareUIModeHideSettings:
+                return self.settings.count - 1
+            case AwareUIModeHideAll:
+                break
+            case AwareUIModeHideSensors:
+                return self.settings.count
+            default:
+                break
+            }
         } else if section == 1 {
-            return self.sensors.count
-        } else {
-            return 0
+            switch AWAREStudy.shared().getUIMode(){
+            case AwareUIModeNormal:
+                return self.sensors.count
+            case AwareUIModeHideSettings:
+                break
+            case AwareUIModeHideAll:
+                break
+            case AwareUIModeHideSensors:
+                break
+            default:
+                break
+            }
         }
+        return 0
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -392,7 +412,19 @@ extension ViewController: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        // return sections.count
+        switch AWAREStudy.shared().getUIMode(){
+        case AwareUIModeNormal:
+            return sections.count
+        case AwareUIModeHideSettings:
+            return 1
+        case AwareUIModeHideAll:
+            return 0
+        case AwareUIModeHideSensors:
+            return 1
+        default:
+            return sections.count
+        }
     }
 
 }

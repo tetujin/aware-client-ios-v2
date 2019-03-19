@@ -47,6 +47,7 @@ enum AdvancedSettingsIdentifiers:String {
     case quit = "QUIT"
     case team = "TEAM"
     case aboutAware = "ABOUT_AWARE"
+    case uiMode          = "UI_MODE"
 }
 
 
@@ -223,6 +224,23 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
             self.present(activityVC, animated: true, completion: nil)
             break
+        case AdvancedSettingsIdentifiers.uiMode.rawValue:
+            let alert = UIAlertController(title: row.title, message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Normal", style: .default, handler: { (action) in
+                AWAREStudy.shared().setUIMode(AwareUIModeNormal)
+            }))
+            alert.addAction(UIAlertAction(title: "Hide Sensors", style: .default, handler: { (action) in
+                AWAREStudy.shared().setUIMode(AwareUIModeHideSensors)
+            }))
+            alert.addAction(UIAlertAction(title: "Hide Settings", style: .destructive, handler: { (action) in
+                AWAREStudy.shared().setUIMode(AwareUIModeHideSettings)
+            }))
+            alert.addAction(UIAlertAction(title: "Hide All", style: .destructive , handler: { (action) in
+                AWAREStudy.shared().setUIMode(AwareUIModeHideAll)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
         default:
             break
         }
@@ -253,6 +271,10 @@ extension AdvancedSettingsViewController {
                                         title: "Battery Charging Only",
                                         details: study.isAutoDBSyncOnlyBatterChargning() ? "On":"Off",
                                         identifier: AdvancedSettingsIdentifiers.batteryChargingOnly.rawValue),
+                        TableRowContent(type: .setting,
+                                        title: "UI Mode",
+                                        details: self.getUIModeAsString(),
+                                        identifier: AdvancedSettingsIdentifiers.uiMode.rawValue),
                         TableRowContent(type: .setting,
                                         title: "DB Fetch Count",
                                         details: "\(study.getMaximumNumberOfRecordsForDBSync())",
@@ -298,6 +320,22 @@ extension AdvancedSettingsViewController {
             break
         }
         return ""
+    }
+    
+    func getUIModeAsString() -> String {
+        let uiMode = AWAREStudy.shared().getUIMode()
+        switch uiMode {
+        case AwareUIModeNormal:
+            return "Normal"
+        case AwareUIModeHideSettings:
+            return "Hide Settings"
+        case AwareUIModeHideSensors:
+            return "Hide Sensors"
+        case AwareUIModeHideAll:
+            return "Hide All"
+        default:
+            return "Unknown"
+        }
     }
     
     func getAppVersion() -> String {
