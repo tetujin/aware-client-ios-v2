@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "899330D393F91BBCD0344A2DADBE629A"
+               BlueprintIdentifier = "6DDE8CB9955F7B326E2EB29CC0E4514F"
+               BuildableName = "TPCircularBuffer.framework"
                BlueprintName = "TPCircularBuffer"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "TPCircularBuffer.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -344,40 +344,11 @@ class ContextCardViewController: UIViewController {
     func addHealthKitCard(){
         if let sensor = AWARESensorManager.shared().getSensor(SENSOR_HEALTH_KIT) as? AWAREHealthKit{
             // hr
-            if let quantity = sensor.awareHKQuantity {
+            if let quantity = sensor.awareHKHeartRate {
                 let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
-                let unit = "count/min"
-                contextCard.setFilterHandler{(keyName, data) -> Dictionary<String, Any>? in
-                    if let type = data["type"] as? String {
-                        if type == "HKQuantityTypeIdentifierHeartRate"{
-                            return data
-                        }
-                    }
-                    return nil
-                }
                 contextCard.xAxisLabels = ["0","6","12","18","24"];
                 contextCard.setTodaysChart(sensor: quantity, keys: ["value"])
-                contextCard.titleLabel.text = "Heart Rate (\(unit))"
-                contextCard.isUserInteractionEnabled = false
-                self.contextCards.append(contextCard)
-                self.mainStackView.addArrangedSubview(contextCard)
-            }
-            
-            if let quantity = sensor.awareHKQuantity {
-                let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
-                let unit = "kcal"
-                contextCard.setFilterHandler{(keyName, data) -> Dictionary<String, Any>? in
-                    // print(data)
-                    if let type = data["type"] as? String {
-                        if type == "HKQuantityTypeIdentifierActiveEnergyBurned"{
-                            return data
-                        }
-                    }
-                    return nil
-                }
-                contextCard.xAxisLabels = ["0","6","12","18","24"];
-                contextCard.setTodaysChart(sensor: quantity, keys: ["value"])
-                contextCard.titleLabel.text = "Energy Burned (\(unit))"
+                contextCard.titleLabel.text = "Heart Rate"
                 contextCard.isUserInteractionEnabled = false
                 self.contextCards.append(contextCard)
                 self.mainStackView.addArrangedSubview(contextCard)

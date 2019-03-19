@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "372BDDEACD042F88219607FC44CBC3F0"
+               BlueprintIdentifier = "415E8E59FE20CDA83E0F6DE1AA70D68C"
+               BuildableName = "macros_blocks"
                BlueprintName = "macros_blocks"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "macros_blocks">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
