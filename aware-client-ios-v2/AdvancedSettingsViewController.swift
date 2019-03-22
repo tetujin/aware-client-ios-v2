@@ -44,9 +44,9 @@ enum AdvancedSettingsIdentifiers:String {
     case autoSync        = "AUTO_SYNC"
     case export          = "EXPORT"
     case version         = "VERSION"
-    case quit = "QUIT"
-    case team = "TEAM"
-    case aboutAware = "ABOUT_AWARE"
+    case quit            = "QUIT"
+    case team            = "TEAM"
+    case aboutAware      = "ABOUT_AWARE"
     case uiMode          = "UI_MODE"
 }
 
@@ -162,7 +162,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                         if let textField = textFields.first {
                             if let text = textField.text{
                                 let study = AWAREStudy.shared()
-                                study.setMaximumNumberOfRecordsForDBSync(Int(text) ?? 1000)
+                                study.setMaximumNumberOfRecordsForDBSync( Int(text) ?? 1000 )
                                 self.refresh()
                             }
                         }
@@ -209,18 +209,6 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
             var activityItems = Array<URL>();
             activityItems.append(URL(fileURLWithPath: documentPath))
-            
-            //            var fileNames: [String] {
-            //                do {
-            //                    return try FileManager.default.contentsOfDirectory(atPath: documentPath)
-            //                } catch {
-            //                    return []
-            //                }
-            //            }
-            //            for name in fileNames {
-            //                activityItems.append(URL(fileURLWithPath: "\(documentPath)/\(name)" ))
-            //            }
-            
             let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
             self.present(activityVC, animated: true, completion: nil)
             break
@@ -228,15 +216,19 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             let alert = UIAlertController(title: row.title, message: nil, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Normal", style: .default, handler: { (action) in
                 AWAREStudy.shared().setUIMode(AwareUIModeNormal)
+                self.refresh()
             }))
             alert.addAction(UIAlertAction(title: "Hide Sensors", style: .default, handler: { (action) in
                 AWAREStudy.shared().setUIMode(AwareUIModeHideSensors)
+                self.refresh()
             }))
             alert.addAction(UIAlertAction(title: "Hide Settings", style: .destructive, handler: { (action) in
                 AWAREStudy.shared().setUIMode(AwareUIModeHideSettings)
+                self.refresh()
             }))
             alert.addAction(UIAlertAction(title: "Hide All", style: .destructive , handler: { (action) in
                 AWAREStudy.shared().setUIMode(AwareUIModeHideAll)
+                self.refresh()
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)

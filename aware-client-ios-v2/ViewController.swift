@@ -505,7 +505,7 @@ extension ViewController {
                         flag = true
                     }
                 } else if name == "health_kit" {
-                    if sensorName! == "health_kit_quantity" {
+                    if sensorName! == "\(SENSOR_HEALTH_KIT)_heartrate"{
                         flag = true
                         print(sensorName!)
                     }
@@ -525,7 +525,7 @@ extension ViewController {
                     if name == "location_gps" || name == "google_fused_location" {
                         flag = false
                         continue
-                    } else if name == "health_kit_quantity" {
+                    } else if name == "\(SENSOR_HEALTH_KIT)_heartrate" {
                         flag = false
                         continue
                     }else{
