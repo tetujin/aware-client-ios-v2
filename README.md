@@ -23,11 +23,11 @@ Nothing is more stressful than to interrupt a mobile phone user at the most unfo
 
 ## How To Use
 * [Development | UI](http://www.awareframework.com/introduction-of-aware-ios-client/)
-* [Development | Sensors & Plugins](https://github.com/tetujin/AWAREFramework-iOS/tree/master/AWAREFramework/Classes/Plugins/CalendarESMScheduler)
+* [Development | Sensors & Plugins](https://github.com/tetujin/AWAREFramework-iOS)
 * [Distribution Methods](http://www.awareframework.com/distributing-methods-of-aware-ios/)
 * [ESM | URL](http://www.awareframework.com/schedule-esms-for-aware-ios-client/)
 * [ESM | Calendar Scheduler](https://github.com/tetujin/AWAREFramework-iOS/tree/master/AWAREFramework/Classes/Plugins/CalendarESMScheduler)
-* [ESM | Hard Coding](https://github.com/tetujin/AWAREFramework-iOS/tree/master/AWAREFramework/Classes/Plugins/CalendarESMScheduler)
+* [ESM | Hard Coding](https://github.com/tetujin/AWAREFramework-iOS)
 
 ## Author
 AWARE Client iOS (Version 2) is developed by [Yuuki Nishiyama](http://www.yuukinishiyama.com/) (Community Imaging Group, University of Oulu). Also, [AWARE framework](http://www.awareframework.com/) and [AWARE Framework client](https://github.com/denzilferreira/aware-client) (for Android) were created by [Denzil Ferreira](http://www.denzilferreira.com/) (Community Imaging Group, University of Oulu) and his group originally.
