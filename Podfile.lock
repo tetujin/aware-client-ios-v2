@@ -54,7 +54,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   AWAREFramework:
-    :commit: 198f97a26defbc91eb3848c3ce54992e7ee00f6d
+    :commit: bf87e5b5fde6010845c978e8792dcf636db67787
     :git: https://github.com/tetujin/AWAREFramework-iOS.git
 
 SPEC CHECKSUMS:
