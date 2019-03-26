@@ -20,13 +20,11 @@ class SensorSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        // self.title = sensor?.getName()
         if let content = selectedContent {
             self.title = content.title
         }
@@ -412,7 +410,12 @@ struct SettingContent {
     let detail:String?
     var currentValue:String?
     
-    init(type:SettingType, key:String, defaultValue:String? = nil, items:Array<String>? = nil, title:String?=nil, detail:String? = nil) {
+    init(type:SettingType,
+         key:String,
+         defaultValue:String? = nil,
+         items:Array<String>? = nil,
+         title:String?=nil,
+         detail:String? = nil) {
         self.type = type
         self.key = key
         self.defaultValue = defaultValue
@@ -421,7 +424,6 @@ struct SettingContent {
         self.detail = detail
         let study = AWAREStudy.shared()
         self.currentValue = study.getSetting(self.key)
-        
     }
 }
 

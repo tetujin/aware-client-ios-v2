@@ -263,7 +263,7 @@ class ViewController: UIViewController {
                                 title: "Ambient Noise",
                                 details: "Anbient noise sensing by using a microphone on a smartphone.",
                                 identifier: SENSOR_AMBIENT_NOISE,
-                                icon: UIImage(named: "ic_action_wifi", in: bundle, compatibleWith: nil)),
+                                icon: UIImage(named: "ic_action_ambient_noise", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
                                 title: "Heart Rate",
                                 details: "Collect heart rate data from an external heart rate sensor via BLE.",
@@ -315,6 +315,11 @@ class ViewController: UIViewController {
                                 identifier: SENSOR_HEALTH_KIT,
                                 icon: UIImage(named: "ic_action_health_kit", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
+                                title: "Device Usage",
+                                details: "Device usage information based on smartphone lock/unlock events.",
+                                identifier: SENSOR_PLUGIN_DEVICE_USAGE,
+                                icon: UIImage(named: "ic_action_device_usage", in:bundle, compatibleWith: nil)),
+                TableRowContent(type: .sensor,
                                 title: "iOS ESM",
                                 details: "Setup ESM based on JSON confiugration on any URL",
                                 identifier: SENSOR_PLUGIN_IOS_ESM,
@@ -323,12 +328,7 @@ class ViewController: UIViewController {
                                 title: "Google Calendar ESM",
                                 details: "Schedule ESM based on configurations on Google Calendar",
                                 identifier: SENSOR_PLUGIN_CALENDAR_ESM_SCHEDULER,
-                                icon: UIImage(named: "ic_action_google_cal", in: bundle, compatibleWith: nil)),
-                TableRowContent(type: .sensor,
-                                title: "Device Usage",
-                                details: "Device usage information based on smartphone lock/unlock events.",
-                                identifier: SENSOR_PLUGIN_DEVICE_USAGE,
-                                icon: UIImage(named: "ic_action_device_usage", in:bundle, compatibleWith: nil))
+                                icon: UIImage(named: "ic_action_google_cal", in: bundle, compatibleWith: nil))
                 
             ]
             return contents
@@ -389,18 +389,19 @@ extension ViewController: UITableViewDataSource {
         } else if indexPath.section == 1 {
             let sensor =  sensors[indexPath.row]
             cell.title.text  = sensor.title
-            cell.icon.image  = sensor.icon
             cell.showIcon()
             cell.showSyncProgress()
             
             if (sensorManager.isExist(sensor.identifier)){
+                cell.icon.image  = sensor.icon?.withRenderingMode(.alwaysTemplate)
                 let latestData = sensorManager.getLatestSensorValue(sensor.identifier)
                 if let data = latestData {
                     cell.detail.text = data
                 }
                 cell.progress.progress = sensor.syncProgress
-                cell.imageView?.tintColor = UIColor.system
+
             }else{
+                cell.icon.image  = sensor.icon
                 cell.detail.text = sensor.details
                 cell.hideSyncProgress()
             }

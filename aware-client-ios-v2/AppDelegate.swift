@@ -15,14 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         let core    = AWARECore.shared()
         let manager = AWARESensorManager.shared()
         let study   = AWAREStudy.shared()
         
-        manager.addSensors(with: AWAREStudy.shared())
+        manager.addSensors(with: study)
         if manager.getAllSensors().count > 1 {
             core.startBaseLocationSensor()
             core.activate()
@@ -68,8 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
         if url.scheme == "fitbit" {
-            let sensor = AWARESensorManager.shared().getSensor(SENSOR_PLUGIN_FITBIT)
-            if let fitbit = sensor as? Fitbit {
+            let manager = AWARESensorManager.shared()
+            if let fitbit = manager.getSensor(SENSOR_PLUGIN_FITBIT) as? Fitbit {
                 fitbit.handle(url, sourceApplication: nil, annotation: options)
             }
         }
