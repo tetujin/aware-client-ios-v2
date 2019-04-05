@@ -75,11 +75,9 @@ class ViewController: UIViewController {
     func checkESMSchedules(){
         let esmManager = ESMScheduleManager.shared()
         let schedules = esmManager.getValidSchedules()
-        if let unwrappedSchedules = schedules {
-            if(unwrappedSchedules.count > 0){
-                if !IOSESM.hasESMAppearedInThisSession(){
-                    self.tabBarController?.selectedIndex = 0
-                }
+        if(schedules.count > 0){
+            if !IOSESM.hasESMAppearedInThisSession(){
+                self.tabBarController?.selectedIndex = 0
             }
         }
     }
@@ -132,10 +130,12 @@ class ViewController: UIViewController {
             manager.addSensors(with: study)
             manager.startAllSensors()
         } else {
-            study.join(withURL: study.getURL()) { (settings, status, error) in
-                manager.addSensors(with: study)
-                manager.startAllSensors()
-                self.showReloadCompletionAlert()
+            if let studyURL = study.getURL() {
+                study.join(withURL: studyURL) { (settings, status, error) in
+                    manager.addSensors(with: study)
+                    manager.startAllSensors()
+                    self.showReloadCompletionAlert()
+                }
             }
         }
         
@@ -157,11 +157,11 @@ class ViewController: UIViewController {
                          identifier: TableRowIdentifier.studyId.rawValue),
          TableRowContent(type: .setting,
                          title: "Device ID",
-                         details: AWAREStudy.shared().getDeviceId() ?? "",
+                         details: AWAREStudy.shared().getDeviceId(),
                          identifier: TableRowIdentifier.deviceId.rawValue),
          TableRowContent(type: .setting,
                          title: "Device Name",
-                         details: AWAREStudy.shared().getDeviceName() ?? "",
+                         details: AWAREStudy.shared().getDeviceName(),
                          identifier: TableRowIdentifier.deviceName.rawValue),
          TableRowContent(type: .setting,
                          title: "Advanced Settings",

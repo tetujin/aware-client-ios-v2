@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-aware-client-ios-v2/Pods-aware-client-ios-v2-resources.sh
+${PODS_ROOT}/AWAREFramework/AWAREFramework/Assets/AWARE.xcdatamodeld
+${PODS_CONFIGURATION_BUILD_DIR}/AWAREFramework/AWAREFramework.bundle
+${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle

@@ -37,22 +37,20 @@ class ESMViewController: UIViewController {
         let esmManager = ESMScheduleManager.shared()
         let schedules = esmManager.getValidSchedules()
         
-        if let unwrappedSchedules = schedules {
-            if(unwrappedSchedules.count > 0){
-                if unwrappedSchedules.count  == 1 {
-                    surveyButton.setTitle("Tap to answer \(unwrappedSchedules.count) survey", for: .normal)
-                }else{
-                    surveyButton.setTitle("Tap to answer \(unwrappedSchedules.count) surveys", for: .normal)
-                }
-                surveyButton.layer.borderColor = UIColor.system.cgColor
-                surveyButton.layer.borderWidth  = 2
-                surveyButton.layer.cornerRadius = 5
-                //surveyButton.isEnabled = true
-            } else {
-                //surveyButton.isEnabled = false
-                surveyButton.setTitle("No Pending Survey(s)", for: .normal)
-                surveyButton.layer.borderColor = UIColor(white: 0, alpha: 0).cgColor
+        if(schedules.count > 0){
+            if schedules.count  == 1 {
+                surveyButton.setTitle("Tap to answer \(schedules.count) survey", for: .normal)
+            }else{
+                surveyButton.setTitle("Tap to answer \(schedules.count) surveys", for: .normal)
             }
+            surveyButton.layer.borderColor = UIColor.system.cgColor
+            surveyButton.layer.borderWidth  = 2
+            surveyButton.layer.cornerRadius = 5
+            //surveyButton.isEnabled = true
+        } else {
+            //surveyButton.isEnabled = false
+            surveyButton.setTitle("No Pending Survey(s)", for: .normal)
+            surveyButton.layer.borderColor = UIColor(white: 0, alpha: 0).cgColor
         }
         
         IOSESM.setESMAppearedState(true)
@@ -61,11 +59,9 @@ class ESMViewController: UIViewController {
     @IBAction func didPushSurveyButton(_ sender: UIButton) {
         let esmManager = ESMScheduleManager.shared()
         let schedules = esmManager.getValidSchedules()
-        if let unwrappedSchedules = schedules {
-            if(unwrappedSchedules.count > 0){
-                self.performSegue(withIdentifier: "toESMScrollView", sender: self)
-                self.tabBarController?.tabBar.isHidden = true
-            }
+        if( schedules.count > 0){
+            self.performSegue(withIdentifier: "toESMScrollView", sender: self)
+            self.tabBarController?.tabBar.isHidden = true
         }
         
     }

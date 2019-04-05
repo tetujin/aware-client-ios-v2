@@ -6,7 +6,7 @@ target 'aware-client-ios-v2' do
   use_frameworks!
 
   # Pods for aware-client-ios-v2
-  pod 'AWAREFramework', :git=>'https://github.com/tetujin/AWAREFramework-iOS.git'
+  pod 'AWAREFramework', :git=>'https://github.com/tetujin/AWAREFramework-iOS.git' #'~> 1.4.1'
   pod 'Charts'
 
   target 'aware-client-ios-v2Tests' do

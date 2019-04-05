@@ -11,7 +11,6 @@
 #endif
 
 #import "AWARECore.h"
-#import "AWAREDelegate.h"
 #import "AWAREMotionSensor.h"
 #import "AWARESensor.h"
 #import "AWARESensorManager.h"
@@ -118,6 +117,14 @@
 #import "AWAREHealthKitCategory.h"
 #import "AWAREHealthKitQuantity.h"
 #import "AWAREHealthKitWorkout.h"
+#import "EntityHealthKitCategory+CoreDataClass.h"
+#import "EntityHealthKitCategory+CoreDataProperties.h"
+#import "EntityHealthKitCategorySleep+CoreDataClass.h"
+#import "EntityHealthKitCategorySleep+CoreDataProperties.h"
+#import "EntityHealthKitQuantity+CoreDataClass.h"
+#import "EntityHealthKitQuantity+CoreDataProperties.h"
+#import "EntityHealthKitQuantityHR+CoreDataClass.h"
+#import "EntityHealthKitQuantityHR+CoreDataProperties.h"
 #import "EntityIOSActivityRecognition+CoreDataClass.h"
 #import "EntityIOSActivityRecognition+CoreDataProperties.h"
 #import "IOSActivityRecognition.h"

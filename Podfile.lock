@@ -1,5 +1,5 @@
 PODS:
-  - AWAREFramework (1.2.6):
+  - AWAREFramework (1.4.3):
     - GoogleSignIn
     - ios-ntp
     - SCNetworkReachability
@@ -54,11 +54,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   AWAREFramework:
-    :commit: bf87e5b5fde6010845c978e8792dcf636db67787
+    :commit: 0a3547ac3695a5bd236f51b533e32a3af4db5d39
     :git: https://github.com/tetujin/AWAREFramework-iOS.git
 
 SPEC CHECKSUMS:
-  AWAREFramework: f3d0e4b0bf4badb4095e90250da74d572dce2f73
+  AWAREFramework: aec52287d4a3fdd4159c47a80fbd0a5a0e56ae49
   Charts: f69cf0518b6d1d62608ca504248f1bbe0b6ae77e
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
@@ -69,6 +69,6 @@ SPEC CHECKSUMS:
   SCNetworkReachability: dbb0150b1a7a4579e148420132da19e718b955ce
   TPCircularBuffer: c13243556527551c4d320709c7b14a6d20cdc30a
 
-PODFILE CHECKSUM: 742523281dc1e40fc34c51180dae0ce016d1974a
+PODFILE CHECKSUM: 0f4094fb9ea044177cea1f9b064f9dd9fb7ceb75
 
-COCOAPODS: 1.6.0.beta.2
+COCOAPODS: 1.7.0.beta.3

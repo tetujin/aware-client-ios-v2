@@ -12,9 +12,11 @@
 
 #import "ESMScheduleManager.h"
 #import "EntityESMAnswerHistory+CoreDataClass.h"
-#import "AWAREDelegate.h"
 #import <UserNotifications/UserNotifications.h>
 #import "EntityESMAnswer.h"
+#import "CoreDataHandler.h"
+#import "AWAREUtils.h"
+#import "AWAREKeys.h"
 
 static ESMScheduleManager * sharedESMScheduleManager;
 
@@ -61,11 +63,11 @@ static ESMScheduleManager * sharedESMScheduleManager;
  @param schedule ESMSchdule
  @return A status of data saving operation
  */
-- (BOOL) addSchedule:(ESMSchedule *) schedule{
+- (BOOL) addSchedule:(ESMSchedule * _Nonnull) schedule{
     return [self addSchedule:schedule withNotification:YES];
 }
 
-- (BOOL) addSchedule:(ESMSchedule *) schedule withNotification:(BOOL)notification{
+- (BOOL) addSchedule:(ESMSchedule * _Nonnull) schedule withNotification:(BOOL)notification{
     // AWAREDelegate * delegate = (AWAREDelegate *) [UIApplication sharedApplication].delegate;
     
     NSManagedObjectContext * manageContext = [CoreDataHandler sharedHandler].managedObjectContext;
@@ -201,7 +203,7 @@ Transfer parameters in ESMSchdule to EntityESMSchedule instance.
  @param scheduleId Schdule ID
  @return A status of data deleting operation
  */
-- (BOOL) deleteScheduleWithId:(NSString *)scheduleId{
+- (BOOL) deleteScheduleWithId:(NSString * _Nonnull)scheduleId{
     // AWAREDelegate * delegate = (AWAREDelegate *) [UIApplication sharedApplication].delegate;
     NSManagedObjectContext * context = [CoreDataHandler sharedHandler].managedObjectContext;
     context.persistentStoreCoordinator = [CoreDataHandler sharedHandler].persistentStoreCoordinator;
@@ -276,7 +278,7 @@ Transfer parameters in ESMSchdule to EntityESMSchedule instance.
 
  @return Valid ESM schedules as an NSArray
  */
-- (NSArray *)getValidSchedules{
+- (NSArray * _Nonnull) getValidSchedules{
     return [self getValidSchedulesWithDatetime:[NSDate new]];
 }
 
@@ -287,7 +289,7 @@ Transfer parameters in ESMSchdule to EntityESMSchedule instance.
  @param datetime A NSDate for fetching valid ESMs from DB
  @return Valid ESM schedules as an NSArray from a paricular time
  */
-- (NSArray *)getValidSchedulesWithDatetime:(NSDate *)datetime{
+- (NSArray * _Nonnull) getValidSchedulesWithDatetime:(NSDate * _Nonnull)datetime{
     
     // NSMutableArray * fetchedESMSchedules = [[NSMutableArray alloc] init];
     // AWAREDelegate *delegate=(AWAREDelegate*)[UIApplication sharedApplication].delegate;
@@ -347,6 +349,7 @@ Transfer parameters in ESMSchdule to EntityESMSchedule instance.
         // NSNumber * weekday = schedule.weekday;
         
         bool isValidSchedule = NO;
+        
         /**  Hours Based ESM */
         if (hour.intValue != -1) {
             isValidSchedule = [self isValidHourBasedESMSchedule:schedule history:answerHistory targetDatetime:datetime];
@@ -459,7 +462,7 @@ Transfer parameters in ESMSchdule to EntityESMSchedule instance.
         return YES;
     }
     
-    NSLog(@"[id:%@][hour:%@][randomize:%@][expiration:%@]",scheduleId,fireHour,randomize,expiration);
+    if (_debug) NSLog(@"[id:%@][hour:%@][randomize:%@][expiration:%@]",scheduleId,fireHour,randomize,expiration);
     return YES;
 }
 
@@ -550,7 +553,7 @@ Transfer parameters in ESMSchdule to EntityESMSchedule instance.
             UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
             [center getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests) {
                 for (UNNotificationRequest * request in requests) {
-                    NSLog(@"%@",request.identifier);
+                    if(self->_debug) NSLog(@"%@",request.identifier);
                 }
             }];
         }
@@ -750,7 +753,7 @@ Transfer parameters in ESMSchdule to EntityESMSchedule instance.
 
             NSNumber * hour = schedule.fire_hour;
             NSDateComponents * timer = (NSDateComponents *)schedule.timer;
-            NSString * contexts = schedule.contexts;
+            // NSString * contexts = schedule.contexts;
             
             /**  Hours Based ESM */
             if (hour.intValue != -1) {

@@ -6,12 +6,15 @@
 //
 
 #import "SQLiteStorage.h"
-#import "AWAREDelegate.h"
 #import "SyncExecutor.h"
+#import "CoreDataHandler.h"
+#import "AWAREUtils.h"
+
+@import CoreData;
 
 @implementation SQLiteStorage{
     NSString * entityName;
-    InsertEntityCallBack inertEntityCallBack;
+    InsertEntityCallBack insertEntityCallBack;
     NSString * baseSyncDataQueryIdentifier;
     NSString * timeMarkerIdentifier;
     BOOL isUploading;
@@ -29,6 +32,19 @@
     return [self initWithStudy:study sensorName:name entityName:nil insertCallBack:nil];
 }
 
+- (instancetype)initWithStudy:(AWAREStudy *) study
+                   sensorName:(NSString *) name
+                   entityName:(NSString *) entity{
+    return [self initWithStudy:study sensorName:name entityName:entity dbHandler:[CoreDataHandler sharedHandler] insertCallBack:nil];
+}
+
+- (instancetype)initWithStudy:(AWAREStudy *) study
+                   sensorName:(NSString *) name
+                   entityName:(NSString *) entity
+                    dbHandler:(BaseCoreDataHandler *) dbHandler{
+    return [self initWithStudy:study sensorName:name entityName:entity dbHandler:dbHandler insertCallBack:nil];
+}
+
 - (instancetype)initWithStudy:(AWAREStudy *)study sensorName:(NSString *)name entityName:(NSString *)entity insertCallBack:(InsertEntityCallBack)insertCallBack{
 
     return [self initWithStudy:study sensorName:name entityName:entity dbHandler:[CoreDataHandler sharedHandler] insertCallBack:insertCallBack];
@@ -44,11 +60,11 @@
         self.retryLimit = 3;
         retryCurrentCount = 0;
         entityName = entity;
-        inertEntityCallBack = insertCallBack;
+        insertEntityCallBack = insertCallBack;
         baseSyncDataQueryIdentifier = [NSString stringWithFormat:@"sync_data_query_identifier_%@", name];
         timeMarkerIdentifier = [NSString stringWithFormat:@"uploader_coredata_timestamp_marker_%@", name];
         tempLastUnixTimestamp = @0;
-        // AWAREDelegate *delegate=(AWAREDelegate*)[UIApplication sharedApplication].delegate;
+        
         self.mainQueueManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [self.mainQueueManagedObjectContext setPersistentStoreCoordinator:dbHandler.persistentStoreCoordinator];
         previousUploadingProcessFinishUnixTime = [self getTimeMark];
@@ -104,8 +120,13 @@
     if (saveInMainThread) {
         // Save data in the main thread //
         for (NSDictionary * bufferedData in copiedArray) {
-            if(self->inertEntityCallBack != nil){
-                self->inertEntityCallBack(bufferedData,parentContext,self->entityName);
+            if(self->insertEntityCallBack != nil){
+                self->insertEntityCallBack(bufferedData,parentContext,self->entityName);
+            }else{
+                NSManagedObject * entitySample = [NSEntityDescription
+                                                      insertNewObjectForEntityForName:self->entityName
+                                                      inManagedObjectContext:parentContext];
+                [entitySample setValuesForKeysWithDictionary:bufferedData];
             }
         }
         NSError *error = nil;
@@ -126,8 +147,13 @@
             
             for (NSDictionary * bufferedData in copiedArray) {
                 // [self insertNewEntityWithData:bufferedData managedObjectContext:childContext entityName:entityName];
-                if(self->inertEntityCallBack != nil){
-                    self->inertEntityCallBack(bufferedData,childContext,self->entityName);
+                if(self->insertEntityCallBack != nil){
+                    self->insertEntityCallBack(bufferedData,childContext,self->entityName);
+                }else{
+                    NSManagedObject * entitySample = [NSEntityDescription
+                                                                   insertNewObjectForEntityForName:self->entityName
+                                                                   inManagedObjectContext:childContext];
+                    [entitySample setValuesForKeysWithDictionary:bufferedData];
                 }
             }
             

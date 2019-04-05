@@ -1,7 +1,7 @@
 CONFIGURATION_BUILD_DIR = ${PODS_CONFIGURATION_BUILD_DIR}/GoogleSignIn
 FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher" "${PODS_CONFIGURATION_BUILD_DIR}/GoogleToolboxForMac" "${PODS_ROOT}/GoogleSignIn/Frameworks"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-OTHER_LDFLAGS = $(inherited) -framework "CoreGraphics" -framework "CoreText" -framework "GTMSessionFetcher" -framework "GoogleSignIn" -framework "GoogleToolboxForMac" -framework "LocalAuthentication" -framework "SafariServices" -framework "Security" -framework "SystemConfiguration"
+OTHER_LDFLAGS = $(inherited) -framework "CoreGraphics" -framework "CoreText" -framework "LocalAuthentication" -framework "SafariServices" -framework "Security" -framework "SystemConfiguration"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_ROOT = ${SRCROOT}

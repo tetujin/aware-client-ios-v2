@@ -41,7 +41,7 @@ class BarChartCard: ContextCard {
         
         self.titleLabel.text = sensor.getName()
         
-        sensor.storage.fetchTodaysData(handler: { (name, result, start, end, error) in
+        sensor.storage?.fetchTodaysData(handler: { (name, result, start, end, error) in
 
             
         })
@@ -52,10 +52,9 @@ class BarChartCard: ContextCard {
         self.titleLabel.text = sensor.getName()
         let now = Date()
         let weekAgo = now.addingTimeInterval(-1*60*60*24*7)
-        sensor.storage.fetchDataBetweenStart(weekAgo, andEnd: now) { (name, results, start, end, error) in
-            if let unwrappedResults = results as? Array<Dictionary<String, Any>>,
-                let unwrappedName = name{
-                self.setChart(sensor, keys: keys, name: unwrappedName, results: unwrappedResults, start: start, end: end, error: error)
+        sensor.storage?.fetchDataBetweenStart(weekAgo, andEnd: now) { (name, results, start, end, error) in
+            if let unwrappedResults = results as? Array<Dictionary<String, Any>>{
+                self.setChart(sensor, keys: keys, name: name, results: unwrappedResults, start: start, end: end, error: error)
             }
         }
     }
@@ -63,7 +62,7 @@ class BarChartCard: ContextCard {
 
     
     public func setChart(_ sensor:AWARESensor, keys:Array<String>, name:String, results:Array<Dictionary<String, Any>>, start:Date?, end:Date?, error:Error?){
-        let results = sensor.storage.fetchTodaysData() as! Array<Dictionary<String, Any>>
+        let results = sensor.storage?.fetchTodaysData() as! Array<Dictionary<String, Any>>
         var datasets = Array<IChartDataSet>()
         var entries = Array<BarChartDataEntry>()
         

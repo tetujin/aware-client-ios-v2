@@ -38,11 +38,9 @@ class ContextCardViewController: UIViewController {
     @objc func willEnterForegroundNotification(notification: NSNotification) {
         let esmManager = ESMScheduleManager.shared()
         let schedules = esmManager.getValidSchedules()
-        if let unwrappedSchedules = schedules {
-            if(unwrappedSchedules.count > 0){
-                if !IOSESM.hasESMAppearedInThisSession(){
-                    self.tabBarController?.selectedIndex = 0
-                }
+        if(schedules.count > 0){
+            if !IOSESM.hasESMAppearedInThisSession(){
+                self.tabBarController?.selectedIndex = 0
             }
         }
     }
@@ -344,15 +342,14 @@ class ContextCardViewController: UIViewController {
     func addHealthKitCard(){
         if let sensor = AWARESensorManager.shared().getSensor(SENSOR_HEALTH_KIT) as? AWAREHealthKit{
             // hr
-            if let quantity = sensor.awareHKHeartRate {
-                let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
-                contextCard.xAxisLabels = ["0","6","12","18","24"];
-                contextCard.setTodaysChart(sensor: quantity, keys: ["value"])
-                contextCard.titleLabel.text = "Heart Rate"
-                contextCard.isUserInteractionEnabled = false
-                self.contextCards.append(contextCard)
-                self.mainStackView.addArrangedSubview(contextCard)
-            }
+            let quantity = sensor.awareHKHeartRate
+            let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
+            contextCard.xAxisLabels = ["0","6","12","18","24"];
+            contextCard.setTodaysChart(sensor: quantity, keys: ["value"])
+            contextCard.titleLabel.text = "Heart Rate"
+            contextCard.isUserInteractionEnabled = false
+            self.contextCards.append(contextCard)
+            self.mainStackView.addArrangedSubview(contextCard)
         }
     }
     
