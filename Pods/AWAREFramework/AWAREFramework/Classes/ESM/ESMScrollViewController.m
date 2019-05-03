@@ -10,7 +10,6 @@
 #import "ESMScheduleManager.h"
 #import "CoreDataHandler.h"
 /////////
-#import "EntityESMAnswer.h"
 #import "EntityESMAnswerHistory+CoreDataClass.h"
 
 ///////// views ////////
@@ -60,15 +59,19 @@
     NSObject * quickBtnObserver;
     
     NSNumber * sessionTimestamp;
+    
+    
+    ESMAnswerUploadStartHandler      _Nullable uploadStartHandler;
+    ESMAnswerUploadCompletionHandler _Nullable uploadCompletionHandler;
+    AllESMCompletionHandler          _Nullable answerCompletionHandler;
+    OriginalESMViewGenerationHandler _Nullable originalESMViewGenerationHandler;
+    ESMCompletionHandler             _Nullable esmCompletionHandler;
+
 }
 @end
 
 
 @implementation ESMScrollViewController
-
-@synthesize uploadStartHandler;
-@synthesize uploadCompletionHandler;
-@synthesize answerCompletionHandler;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     
@@ -192,7 +195,7 @@
                     [self addAnESM:esm];
                     // finalBtnLabel = esm.esm_submit;
                     _submitButtonText = esm.esm_submit;
-                    self.navigationItem.title = [NSString stringWithFormat:@"%@ (%d/%ld)",
+                    self.navigationItem.title = [NSString stringWithFormat:@"%@ (%d/%tu)",
                                                  esmSchedule.schedule_id,
                                                  currentESMNumber+1,
                                                  sortedEsms.count];
@@ -324,8 +327,8 @@
     } else if(esmType == AwareESMTypeVideo){ // video
         esmView = [[ESMVideoView alloc] initWithFrame:CGRectMake(0, totalHight, self.view.frame.size.width, 100) esm:esm viewController:self];
     } else {
-        if (_originalESMViewGenerationHandler != nil && self != nil) {
-            esmView = _originalESMViewGenerationHandler(esm, totalHight, self);
+        if (originalESMViewGenerationHandler != nil && self != nil) {
+            esmView = originalESMViewGenerationHandler(esm, totalHight, self);
         }
     }
 
@@ -445,13 +448,13 @@
             }else{
                 answer.timestamp = esm.timestamp;
             }
-            answer.device_id = deviceId;
-            answer.esm_json = esm.esm_json;
+            answer.device_id   = deviceId;
+            answer.esm_json    = esm.esm_json;
             answer.esm_trigger = esm.esm_trigger;
-            answer.esm_expiration_threshold = esm.esm_expiration_threshold;
+            answer.esm_expiration_threshold         = esm.esm_expiration_threshold;
             answer.double_esm_user_answer_timestamp = unixtime;
             answer.esm_user_answer = esmUserAnswer;
-            answer.esm_status = esmState;
+            answer.esm_status      = esmState;
             
             if (study.isDebug) {
                 NSLog(@"--------[%@]---------", esm.esm_trigger);
@@ -487,6 +490,10 @@
                     flowsFlag = YES;
                 }
             }
+            
+            if(self->esmCompletionHandler){
+                esmCompletionHandler(answer);
+            }
         }
         
     } @catch (NSException *exception) {
@@ -497,7 +504,7 @@
     
     // Save all data to SQLite
     bool success = false;
-    if (_isSaveAnswer) { // is save
+    if (_isSaveAnswer) {
         NSError * error = nil;
         success = [context save:&error];
         context.mergePolicy = originalMergePolicy;
@@ -642,7 +649,7 @@
         return NO;
     }
     
-    NSError *e = nil;
+    NSError * e = nil;
     NSArray * flowsArray = [NSJSONSerialization JSONObjectWithData:[flowsStr dataUsingEncoding:NSUTF8StringEncoding]
                                                            options:NSJSONReadingAllowFragments
                                                              error:&e];
@@ -659,9 +666,23 @@
     int number = 0;
     // NSMutableArray * tempESMs = [[NSMutableArray alloc] init];
     for (NSDictionary * aFlow in flowsArray) {
-        NSDictionary * nextESM   = [aFlow objectForKey:@"next_esm"];
-        NSString * triggerAnswer = [aFlow objectForKey:@"user_answer"];
+        NSDictionary * nextESM       = [aFlow objectForKey:@"next_esm"];
+        NSString     * triggerAnswer = [aFlow objectForKey:@"user_answer"];
         if (triggerAnswer != nil && answer.esm_user_answer != nil) {
+            
+            /// Regular Expression /////
+//            NSError* err = nil;
+//            NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:triggerAnswer
+//                                                              options:NSRegularExpressionCaseInsensitive
+//                                                                error:&err];
+//            if (err!=nil) {
+//                NSLog(@"%@", err.description);
+//                return NO;
+//            }
+//            NSTextCheckingResult *match = [regex firstMatchInString:answer.esm_user_answer
+//                                                            options:0
+//                                                              range:NSMakeRange(0, answer.esm_user_answer.length)];
+
             ////////// if the user_answer and key is the same, an esm in the flows is stored ///////////
             if([triggerAnswer isEqualToString:answer.esm_user_answer] || [triggerAnswer isEqualToString:@"*"]){
                 
@@ -719,6 +740,16 @@
 }
 
 ///////////////////////////////////////////
+- (void) insertNextESM:(ESMItem * _Nonnull) esm {
+    ESMScheduleManager * manager = [ESMScheduleManager sharedESMScheduleManager];
+    ESMSchedule * schedule = [[ESMSchedule alloc] init];
+    [schedule setTemporary:@(YES)];
+    [schedule addESM:esm];
+    [schedule setStartDate:[NSDate new]];
+    [schedule setExpirationThreshold:@0];
+    [manager addSchedule:schedule];
+    flowsFlag = YES;
+}
 
 - (NSArray *) getNextESMsFromDB {
     NSFetchRequest *req = [[NSFetchRequest alloc] init];
@@ -766,7 +797,7 @@
 }
 
 
-- (bool) removeTempESMsFromDB{
+- (bool) removeTempESMsFromDB {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([EntityESMSchedule class]) inManagedObjectContext:[CoreDataHandler sharedHandler].managedObjectContext];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporary==1"];
@@ -783,7 +814,7 @@
     if (error!= nil) {
         return YES;
     }else{
-        NSLog(@"%@",error.debugDescription);
+        if(study.isDebug) NSLog(@"%@",error.debugDescription);
         return NO;
     }
 }
@@ -829,6 +860,30 @@
             NSLog(@"Success to save data");
         }
     }
+}
+
+- (void) setESMAnswerUploadStartHandler:(ESMAnswerUploadStartHandler)handler{
+    uploadStartHandler = handler;
+}
+
+- (void) setESMAnswerUploadCompletionHandler:(ESMAnswerUploadCompletionHandler)handler{
+    uploadCompletionHandler = handler;
+}
+
+- (void) setESMAnswerCompletionHandler:(AllESMCompletionHandler)handler{
+    answerCompletionHandler = handler;
+}
+
+- (void) setAllESMCompletionHandler:(AllESMCompletionHandler)handler{
+    answerCompletionHandler = handler;
+}
+
+- (void) setOriginalESMViewGenerationHandler:(OriginalESMViewGenerationHandler)handler{
+    originalESMViewGenerationHandler = handler;
+}
+
+- (void) setESMCompletionHandler:(ESMCompletionHandler)handler{
+    esmCompletionHandler = handler;
 }
 
 @end

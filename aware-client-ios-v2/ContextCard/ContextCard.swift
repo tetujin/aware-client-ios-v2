@@ -36,7 +36,6 @@ import AWAREFramework
         self.addSubview(view)
         
         let height = frame.height - titleLabel.frame.height - spaceView.frame.height
-        // print(height)
         indicatorHeightLayoutConstraint.isActive = false
         self.heightAnchor.constraint(equalToConstant:height).isActive = true
         // indicatorView.frame = CGRect(x:0, y:0, width:frame.width, height:height)

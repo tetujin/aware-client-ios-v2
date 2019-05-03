@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.0</string>
+	<string>1.2.1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -40,7 +40,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>27</string>
+	<string>29</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
@@ -56,6 +56,8 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>For collecting your health information, this application needs to access Health API.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>For collecting your activity, this application needs to access your location data.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
 	<string>For collecting your activity, this application needs to access your location data.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>For collecting your activity, this application needs to access your location data.</string>

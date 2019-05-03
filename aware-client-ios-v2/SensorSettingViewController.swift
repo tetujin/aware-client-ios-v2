@@ -395,6 +395,9 @@ extension SensorSettingViewController: UITableViewDataSource{
         manager.stopAndRemoveAllSensors()
         manager.addSensors(with: AWAREStudy.shared())
         manager.createDBTablesOnAwareServer()
+        if let fitbit = manager.getSensor(SENSOR_PLUGIN_FITBIT) as? Fitbit {
+            fitbit.viewController = self
+        }
         manager.startAllSensors()
         
         self.settings = self.getSettings()

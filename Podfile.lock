@@ -1,12 +1,12 @@
 PODS:
-  - AWAREFramework (1.4.3):
+  - AWAREFramework (1.4.9):
     - GoogleSignIn
     - ios-ntp
     - SCNetworkReachability
     - TPCircularBuffer
-  - Charts (3.2.2):
-    - Charts/Core (= 3.2.2)
-  - Charts/Core (3.2.2)
+  - Charts (3.3.0):
+    - Charts/Core (= 3.3.0)
+  - Charts/Core (3.3.0)
   - CocoaAsyncSocket (7.6.3)
   - GoogleSignIn (4.4.0):
     - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
@@ -54,12 +54,12 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   AWAREFramework:
-    :commit: 0a3547ac3695a5bd236f51b533e32a3af4db5d39
+    :commit: e1de0b930ff5db2b35c2442a0b79f03de7135471
     :git: https://github.com/tetujin/AWAREFramework-iOS.git
 
 SPEC CHECKSUMS:
-  AWAREFramework: aec52287d4a3fdd4159c47a80fbd0a5a0e56ae49
-  Charts: f69cf0518b6d1d62608ca504248f1bbe0b6ae77e
+  AWAREFramework: a4c3575b9ea64659ee59f9390a9ef03e52d26840
+  Charts: ec1f57f9340054155691e84d4544a1d239d382c5
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
   GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d

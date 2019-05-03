@@ -26,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         manager.addSensors(with: study)
         if manager.getAllSensors().count > 1 {
             core.startBaseLocationSensor()
+            if let fitbit = manager.getSensor(SENSOR_PLUGIN_FITBIT) as? Fitbit {
+                fitbit.viewController = window?.rootViewController
+            }
             core.activate()
         }
         

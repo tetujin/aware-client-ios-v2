@@ -89,7 +89,7 @@ class BarChartCard: ContextCard {
                     }
                 }
             }
-            let set = BarChartDataSet(values: entries, label: key)
+            let set = BarChartDataSet(entries: entries, label: key)
             datasets.append(set)
         }
         let data:BarChartData = BarChartData(dataSets: datasets)

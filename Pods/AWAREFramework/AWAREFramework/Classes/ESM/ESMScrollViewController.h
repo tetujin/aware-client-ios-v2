@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseESMView.h"
+#import "EntityESMAnswer.h"
 
 //@protocol ESMScrollViewControllerDelegate <NSObject>
 //@required
@@ -16,10 +17,11 @@
 
 @interface ESMScrollViewController : UIViewController <UIImagePickerControllerDelegate, UIScrollViewDelegate, UITextViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
-typedef void (^ESMAnswerCompletionHandler)(void);
+typedef void (^AllESMCompletionHandler)(void);
 typedef void (^ESMAnswerUploadStartHandler)(void);
 typedef void (^ESMAnswerUploadCompletionHandler)(bool state);
 typedef BaseESMView * _Nullable (^OriginalESMViewGenerationHandler)(EntityESM * _Nonnull esm, double bottomESMViewPositionY, UIViewController * _Nonnull viewController);
+typedef void (^ESMCompletionHandler)(EntityESMAnswer * _Nonnull answer);
 
 // @property (nonatomic, weak) id<ESMScrollViewControllerDelegate> delegate;
 
@@ -41,9 +43,15 @@ typedef BaseESMView * _Nullable (^OriginalESMViewGenerationHandler)(EntityESM * 
 // @property bool showUploadingAlert;
 // @property NSString * uploadingAlertMessage;
 
-@property ESMAnswerUploadStartHandler      _Nullable uploadStartHandler;
-@property ESMAnswerUploadCompletionHandler _Nullable uploadCompletionHandler;
-@property ESMAnswerCompletionHandler       _Nullable answerCompletionHandler;
-@property OriginalESMViewGenerationHandler _Nullable originalESMViewGenerationHandler;
+- (void) setESMAnswerUploadStartHandler:(ESMAnswerUploadStartHandler _Nonnull)handler;
+- (void) setESMAnswerUploadCompletionHandler:(ESMAnswerUploadCompletionHandler _Nonnull)handler;
+
+- (void) setESMAnswerCompletionHandler:(AllESMCompletionHandler _Nonnull)handler;
+- (void) setAllESMCompletionHandler:(AllESMCompletionHandler _Nonnull)handler;
+
+- (void) setOriginalESMViewGenerationHandler:(OriginalESMViewGenerationHandler _Nonnull)handler;
+- (void) setESMCompletionHandler:(ESMCompletionHandler _Nonnull)handler;
+
+- (void) insertNextESM:(ESMItem * _Nonnull) esm;
 
 @end

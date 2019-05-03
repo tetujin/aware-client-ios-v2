@@ -26,7 +26,7 @@
 
 @property BOOL isNeedBackgroundSensing;
 
-+ (AWARECore * _Nonnull)sharedCore;
++ (AWARECore * _Nonnull) sharedCore;
 
 typedef void (^LocationAPIAuthorizationCompletionHandler)(void);
 
@@ -50,6 +50,5 @@ typedef void (^LocationAPIAuthorizationCompletionHandler)(void);
 - (void) requestPermissionForBackgroundSensingWithCompletion:(LocationAPIAuthorizationCompletionHandler _Nullable)completionHandler;
 
 - (void) requestBackgroundSensing;
-
 
 @end

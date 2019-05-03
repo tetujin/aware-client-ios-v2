@@ -138,19 +138,24 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
     
     @IBAction func didPushJoinButton(_ sender: UIButton) {
         if let qr = qrcode {
-            let study = AWAREStudy.shared()
+            let study   = AWAREStudy.shared()
             let manager = AWARESensorManager.shared()
-            let core = AWARECore.shared()
+            let core    = AWARECore.shared()
             
             study.join(withURL: qr, completion: { (settings, status, error) in
+                
                 core.requestPermissionForBackgroundSensing()
                 core.requestPermissionForPushNotification()
                 core.activate()
                 manager.stopAndRemoveAllSensors()
                 manager.addSensors(with: study)
+                if let fitbit = manager.getSensor(SENSOR_PLUGIN_FITBIT) as? Fitbit {
+                    fitbit.viewController = self
+                }
                 manager.startAllSensors()
                 manager.createDBTablesOnAwareServer()
                 self.dismiss(animated: true, completion: nil)
+                
             })
         }
     }
