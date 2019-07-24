@@ -128,11 +128,13 @@ class ViewController: UIViewController {
         manager.stopAndRemoveAllSensors()
         if study.getURL() == "" {
             manager.addSensors(with: study)
+            manager.createDBTablesOnAwareServer()
             manager.startAllSensors()
         } else {
             if let studyURL = study.getURL() {
                 study.join(withURL: studyURL) { (settings, status, error) in
                     manager.addSensors(with: study)
+                    manager.createDBTablesOnAwareServer()
                     manager.startAllSensors()
                     self.showReloadCompletionAlert()
                 }
@@ -590,7 +592,12 @@ extension UIViewController {
                         if let text = textField.text{
                             let study = AWAREStudy.shared()
                             study.setStudyURL(text)
-                            study.refreshStudySettings()
+                            study.join(withURL: text, completion: { (settings, study, error) in
+                                let sensorManager = AWARESensorManager.shared()
+                                sensorManager.addSensors(with: AWAREStudy.shared())
+                                sensorManager.createDBTablesOnAwareServer()
+                                sensorManager.startAllSensors()
+                            })
                         }
                     }
                 }

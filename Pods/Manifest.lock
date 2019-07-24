@@ -1,5 +1,5 @@
 PODS:
-  - AWAREFramework (1.4.16):
+  - AWAREFramework (1.4.18):
     - GoogleSignIn
     - ios-ntp
     - SCNetworkReachability
@@ -33,7 +33,7 @@ PODS:
   - TPCircularBuffer (1.6.1)
 
 DEPENDENCIES:
-  - AWAREFramework (~> 1.4.16)
+  - AWAREFramework (~> 1.4)
   - Charts
 
 SPEC REPOS:
@@ -50,7 +50,7 @@ SPEC REPOS:
     - TPCircularBuffer
 
 SPEC CHECKSUMS:
-  AWAREFramework: 2ce6dc798382079c5e6e112640717a770a59a9fe
+  AWAREFramework: a1f0a0d60629e2d49b762a176e8ba3c3d50cde71
   Charts: e0dd4cd8f257bccf98407b58183ddca8e8d5b578
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
@@ -61,6 +61,6 @@ SPEC CHECKSUMS:
   SCNetworkReachability: dbb0150b1a7a4579e148420132da19e718b955ce
   TPCircularBuffer: c13243556527551c4d320709c7b14a6d20cdc30a
 
-PODFILE CHECKSUM: c717a6c4de1cb9ae6a4db080fa25da6a5fd65697
+PODFILE CHECKSUM: ed747470fc2a7db9930e86cddd32685ae88dbfd3
 
 COCOAPODS: 1.7.0.beta.3
