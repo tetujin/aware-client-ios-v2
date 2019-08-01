@@ -330,7 +330,12 @@ class ViewController: UIViewController {
                                 title: "Google Calendar ESM",
                                 details: "Schedule ESM based on configurations on Google Calendar",
                                 identifier: SENSOR_PLUGIN_CALENDAR_ESM_SCHEDULER,
-                                icon: UIImage(named: "ic_action_google_cal", in: bundle, compatibleWith: nil))
+                                icon: UIImage(named: "ic_action_google_cal", in: bundle, compatibleWith: nil)),
+                TableRowContent(type: .sensor,
+                                title: "Significant Motion",
+                                details: "This sensor is used to track device significant motion",
+                                identifier: SENSOR_SIGNIFICANT_MOTION,
+                                icon: UIImage(named: "ic_action_significant", in: bundle, compatibleWith: nil))
                 
             ]
             return contents

@@ -301,6 +301,10 @@ class SensorSettingViewController: UIViewController {
                                                key: AWARE_PREFERENCES_STATUS_DEVICE_USAGE,
                                                defaultValue: "false"))
                 break
+            case SENSOR_SIGNIFICANT_MOTION:
+                settings.append(SettingContent(type: .bool,
+                                               key: AWARE_PREFERENCES_STATUS_SIGNIFICANT_MOTION,
+                                               defaultValue: "false"))
             default:
                 break
             }

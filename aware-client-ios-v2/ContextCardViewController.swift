@@ -93,6 +93,8 @@ class ContextCardViewController: UIViewController {
             case SENSOR_PLUGIN_DEVICE_USAGE:
                 addDeviceUsageCard()
                 break
+            case SENSOR_SIGNIFICANT_MOTION:
+                addSignificantMotionCard()
             default:
                 break
             }
@@ -109,7 +111,8 @@ class ContextCardViewController: UIViewController {
                                  SENSOR_LOCATIONS,
                                  SENSOR_PLUGIN_PEDOMETER,
                                  SENSOR_HEALTH_KIT,
-                                 SENSOR_PLUGIN_DEVICE_USAGE]
+                                 SENSOR_PLUGIN_DEVICE_USAGE,
+                                 SENSOR_SIGNIFICANT_MOTION]
     
     let key = "com.yuukinishiyama.app.aware-client-ios-v2.context-cards"
     
@@ -329,8 +332,10 @@ class ContextCardViewController: UIViewController {
     
     func addPedometerCard(){
         if let sensor = AWARESensorManager.shared().getSensor(SENSOR_PLUGIN_PEDOMETER) {
+            // let contextCard = BarChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
             let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
-            contextCard.xAxisLabels = ["0","6","12","18","24"];
+            contextCard.xAxisLabels = ["0","6","12","18","24"]
+            contextCard.yAxisMin = 0
             contextCard.setTodaysChart(sensor: sensor, keys: ["number_of_steps"])
             contextCard.titleLabel.text = "Pedometer"
             contextCard.isUserInteractionEnabled = false
@@ -339,9 +344,21 @@ class ContextCardViewController: UIViewController {
         }
     }
     
+    func addSignificantMotionCard(){
+        if let sensor = AWARESensorManager.shared().getSensor(SENSOR_SIGNIFICANT_MOTION) {
+            let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
+            contextCard.xAxisLabels = ["0","6","12","18","24"];
+            contextCard.setTodaysChart(sensor: sensor, keys: ["is_moving"])
+            contextCard.titleLabel.text = "Significant Motion"
+            contextCard.isUserInteractionEnabled = false
+            self.contextCards.append(contextCard)
+            self.mainStackView.addArrangedSubview(contextCard)
+        }
+    }
+    
     func addHealthKitCard(){
         if let sensor = AWARESensorManager.shared().getSensor(SENSOR_HEALTH_KIT) as? AWAREHealthKit{
-            // hr
+            // HKQuantityTypeIdentifierHeartRate
             let quantity = sensor.awareHKHeartRate
             let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
             contextCard.xAxisLabels = ["0","6","12","18","24"];
@@ -350,6 +367,12 @@ class ContextCardViewController: UIViewController {
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
+            
+//          HKQuantityTypeIdentifierActiveEnergyBurned
+//          HKQuantityTypeIdentifierStepCount
+//          HKQuantityTypeIdentifierDistanceWalkingRunning
+//          HKQuantityTypeIdentifierBasalEnergyBurned
+            
         }
     }
     
@@ -362,15 +385,5 @@ class ContextCardViewController: UIViewController {
             self.mainStackView.addArrangedSubview(contextCard)
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

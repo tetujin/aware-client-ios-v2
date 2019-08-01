@@ -42,7 +42,15 @@ class BarChartCard: ContextCard {
         self.titleLabel.text = sensor.getName()
         
         sensor.storage?.fetchTodaysData(handler: { (name, result, start, end, error) in
-
+            if let results = result as? Array<Dictionary<String, Any>>{
+                self.setChart(sensor,
+                              keys:  keys,
+                              name:  name,
+                              results: results,
+                              start: start,
+                              end:   end,
+                              error: error)
+            }
             
         })
     }
@@ -68,7 +76,6 @@ class BarChartCard: ContextCard {
         
         for key in keys {
             for (index, result) in zip(results.indices, results) {
-
 
                 // filter the value if a handler exist
                 var isPassedFilter = true;
