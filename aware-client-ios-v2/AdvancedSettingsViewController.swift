@@ -29,6 +29,7 @@ class AdvancedSettingsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         advancedSettings = self.getAdvancedSettings()
         self.tableView.reloadData()
+        hideContextViewIfNeeded()
     }
 
 }
@@ -48,6 +49,7 @@ enum AdvancedSettingsIdentifiers:String {
     case team            = "TEAM"
     case aboutAware      = "ABOUT_AWARE"
     case uiMode          = "UI_MODE"
+    case contextView     = "CONTEXT_VIEW"
 }
 
 
@@ -233,6 +235,25 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
+        case AdvancedSettingsIdentifiers.contextView.rawValue:
+            let alert = UIAlertController(title: "Hide Context View from TabBar?", message: "If you set Yes, the context view will be hidden.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                super.setHideContextView(status: true)
+                if UserDefaults.standard.synchronize(){
+                    super.hideContextViewIfNeeded()
+                }
+                self.refresh()
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action) in
+                super.setHideContextView(status: false)
+                if UserDefaults.standard.synchronize() {
+                    super.hideContextViewIfNeeded()
+                }
+                self.refresh()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
         default:
             break
         }
@@ -267,6 +288,10 @@ extension AdvancedSettingsViewController {
                                         title: "UI Mode",
                                         details: self.getUIModeAsString(),
                                         identifier: AdvancedSettingsIdentifiers.uiMode.rawValue),
+                        TableRowContent(type: .setting,
+                                        title: "Hide Context",
+                                        details: isHideContextView() ? "Yes":"No",
+                                        identifier: AdvancedSettingsIdentifiers.contextView.rawValue),
                         TableRowContent(type: .setting,
                                         title: "DB Fetch Count",
                                         details: "\(study.getMaximumNumberOfRecordsForDBSync())",
@@ -357,5 +382,42 @@ extension AdvancedSettingsIdentifiers {
             activityItems.append(URL(fileURLWithPath: "\(documentPath)/\(name)" ))
         }
         return activityItems;
+    }
+}
+
+extension UIViewController{
+    func hideContextViewIfNeeded(){
+        if isHideContextView() {
+            if let items = self.tabBarController?.tabBar.items {
+                items[1].isEnabled = false
+                items[1].image = nil
+                items[1].title = nil
+            }
+        }else{
+            if let items = self.tabBarController?.tabBar.items {
+                items[1].isEnabled = true
+                items[1].image = UIImage(named: "line_chart")
+                items[1].title = "Context"
+            }
+        }
+    }
+    
+    func isHideContextView() -> Bool{
+        let status = AWAREStudy.shared().getSetting("client_ios_hide_context_view")
+        if status == "1" {
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func setHideContextView(status:Bool){
+        let key = "client_ios_hide_context_view"
+        if status{
+            AWAREStudy.shared().setSetting(key, value: "1" as NSObject)
+        }else{
+            AWAREStudy.shared().setSetting(key, value: "0" as NSObject)
+        }
+        // print(AWAREStudy.shared().getSensorSettings())
     }
 }

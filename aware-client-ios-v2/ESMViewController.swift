@@ -22,6 +22,7 @@ class ESMViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForegroundNotification(notification:)), name: UIApplication.willEnterForegroundNotification, object: nil)
         self.checkESMSchedules()
+        self.hideContextViewIfNeeded()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

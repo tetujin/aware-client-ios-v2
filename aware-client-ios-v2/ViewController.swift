@@ -59,6 +59,8 @@ class ViewController: UIViewController {
         }else{
             uploadButton.tintColor = UIColor(white: 0, alpha: 0)
         }
+        
+        self.hideContextViewIfNeeded()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
