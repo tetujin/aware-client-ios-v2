@@ -118,10 +118,10 @@ class SensorSettingViewController: UIViewController {
                 break
             case SENSOR_PLUGIN_PEDOMETER:
                 settings.append(SettingContent(type: .bool,
-                                               key: "status_\(SENSOR_PLUGIN_PEDOMETER)",
+                                               key: AWARE_PREFERENCES_STATUS_PEDOMETER,
                                                defaultValue: "false"))
                 settings.append(SettingContent(type: .int,
-                                               key: "frequency_pedometer",
+                                               key: AWARE_PREFERENCES_FREQUENCY_PEDOMETER,
                                                defaultValue: "180"))
                 break
             case SENSOR_LOCATIONS:

@@ -208,7 +208,8 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         case AdvancedSettingsIdentifiers.export.rawValue:
-            let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+            var documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+            documentPath.append(contentsOf: "/AWARE.sqlite")
             var activityItems = Array<URL>();
             activityItems.append(URL(fileURLWithPath: documentPath))
             let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
