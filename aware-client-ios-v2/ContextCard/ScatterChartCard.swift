@@ -62,7 +62,7 @@ class ScatterChartCard: ContextCard {
 
     }
 
-    public func setTodaysChart(sensor:AWARESensor, keys:Array<String>){
+    public func setTodaysChart(sensor:AWARESensor, xKey:String="timestamp", yKeys:Array<String>){
 
         activityIndicatorView.isHidden = false;
         self.titleLabel.text = sensor.getName()
@@ -71,7 +71,8 @@ class ScatterChartCard: ContextCard {
             sensor.storage?.fetchTodaysData(handler: { (name, results, start, end, error) in
                 if let unwrappedResults = results as? Array<Dictionary<String, Any>>{
                     self.setChart(sensor,
-                                  keys: keys,
+                                  xKey: xKey,
+                                  yKeys: yKeys,
                                   name: name,
                                   results: unwrappedResults,
                                   start:   start, end: end, error: error)
@@ -80,7 +81,7 @@ class ScatterChartCard: ContextCard {
         }
     }
     
-    public func setWeeklyChart(sensor:AWARESensor, keys:Array<String>){
+    public func setWeeklyChart(sensor:AWARESensor, xKey:String="timestamp", yKeys:Array<String>){
         activityIndicatorView.isHidden = false
         self.titleLabel.text = sensor.getName()
         let now = Date()
@@ -88,28 +89,28 @@ class ScatterChartCard: ContextCard {
         //DispatchQueue.global().async {
         sensor.storage?.fetchDataBetweenStart(weekAgo, andEnd: now) { (name, results, start, end, error) in
             if let unwrappedResults = results as? Array<Dictionary<String, Any>>{
-                self.setChart(sensor, keys: keys, name: name, results: unwrappedResults, start: start, end: end, error: error)
+                self.setChart(sensor, xKey: xKey, yKeys: yKeys, name: name, results: unwrappedResults, start: start, end: end, error: error)
             }
         }
         //}
     }
     
-    public func setChart(_ sensor:AWARESensor, keys:Array<String>, name:String, results:Array<Dictionary<String, Any>>, start:Date?, end:Date?, error:Error?){
+    public func setChart(_ sensor:AWARESensor, xKey:String="timestamp", yKeys:Array<String>, name:String, results:Array<Dictionary<String, Any>>, start:Date?, end:Date?, error:Error?){
         // let results = sensor.storage.fetchTodaysData()
         var dataSets = Array<ScatterChartDataSet>()
         
-        if self.needsComposite && keys.count > 1 {
+        if self.needsComposite && yKeys.count > 1 {
             var data = Array<ChartDataEntry>()
             
             var keyName = "composit("
-            for key in keys {
+            for key in yKeys {
                 keyName = keyName + " " + key;
             }
             keyName += ")"
             
             for result in results {
                 var composedValue = 0.0
-                for key in keys {
+                for key in yKeys {
                     if let tempVal = result[key] as? Double{
                         composedValue += pow(tempVal, 2)
                     }
@@ -129,7 +130,7 @@ class ScatterChartCard: ContextCard {
             }
             dataSets.append(set)
         }else{
-            for (index, key) in zip(results.indices, keys) {
+            for (index, key) in zip(results.indices, yKeys) {
                 var data = Array<ChartDataEntry>()
                 
                 var lastTimestamp:Double  = 0
@@ -142,9 +143,9 @@ class ScatterChartCard: ContextCard {
                     }
                     
                     if let fd = fliteredData{
-                        if let value = fd[key] as? Double, let timestamp = fd["timestamp"] as? Double {
+                        if let value = fd[key] as? Double, let timestamp = fd[xKey] as? Double {
                             if granularitySecond > 0 {
-                                if let timestamp = fd["timestamp"] as? Double {
+                                if let timestamp = fd[xKey] as? Double {
                                     if timestamp > lastTimestamp + granularitySecond * 1000.0 {
                                         lastTimestamp = timestamp
                                         data.append(ChartDataEntry(x:timestamp, y:value))
@@ -153,7 +154,7 @@ class ScatterChartCard: ContextCard {
                             }else{
                                 data.append(ChartDataEntry(x:timestamp, y:value))
                             }
-                        }else if let value = fd[key] as? String, let timestamp = fd["timestamp"] as? Double  {
+                        }else if let value = fd[key] as? String, let timestamp = fd[xKey] as? Double  {
                             if let doubleVal = Double(value){
                                 data.append(ChartDataEntry(x:timestamp, y:doubleVal))
                             }

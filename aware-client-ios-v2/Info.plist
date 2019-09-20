@@ -40,9 +40,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>40</string>
+	<string>41</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>For collecting data from external sensor modules via Bluetooth, this application needs to access your Bluetooth module in the background.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>For collecting distance between your Bluetooth and iOS devices, this application needs to access Bluetooth API.</string>
 	<key>NSCalendarsUsageDescription</key>

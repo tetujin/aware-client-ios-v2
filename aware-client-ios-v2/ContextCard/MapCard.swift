@@ -35,33 +35,31 @@ class MapCard: ContextCard {
         }
     }
     
-    func setMap(sensor:FusedLocations) {
+    func setMap(locationSensor:Locations) {
         activityIndicatorView.isHidden = false;
         
-        self.titleLabel.text = sensor.getName()
-        if let locationSensor = sensor.locationSensor {
-            if let storage = locationSensor.storage {
-                storage.fetchTodaysData(handler: { (name, results, start, end, error) in
-                    DispatchQueue.main.sync {
-                        if let mv = self.mapView{
-                            self.indicatorView.isHidden = true
-                            mv.isHidden = false
-                            
-                            for result in results as! Array<Dictionary<String, Any>> {
-                                // double_latitude
-                                // double_longitude
-                                let latitude = result["double_latitude"] as! Double?
-                                let longitude = result["double_longitude"] as! Double?
-                                // show artwork on map
-                                let item = MKPointAnnotation.init()
-                                item.coordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
-                                mv.addAnnotation(item)
-                            }
-                            mv.showAnnotations(mv.annotations, animated: true)
+        self.titleLabel.text = locationSensor.getName()
+        if let storage = locationSensor.storage {
+            storage.fetchTodaysData(handler: { (name, results, start, end, error) in
+                DispatchQueue.main.sync {
+                    if let mv = self.mapView{
+                        self.indicatorView.isHidden = true
+                        mv.isHidden = false
+                        
+                        for result in results as! Array<Dictionary<String, Any>> {
+                            // double_latitude
+                            // double_longitude
+                            let latitude = result["double_latitude"] as! Double?
+                            let longitude = result["double_longitude"] as! Double?
+                            // show artwork on map
+                            let item = MKPointAnnotation.init()
+                            item.coordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
+                            mv.addAnnotation(item)
                         }
+                        mv.showAnnotations(mv.annotations, animated: true)
                     }
-                })
-            }
-        }
+                }
+            })
+        }        
     }
 }
