@@ -213,6 +213,10 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             var activityItems = Array<URL>();
             activityItems.append(URL(fileURLWithPath: documentPath))
             let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                activityVC.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)?.contentView
+                activityVC.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+            }
             self.present(activityVC, animated: true, completion: nil)
             break
         case AdvancedSettingsIdentifiers.uiMode.rawValue:
