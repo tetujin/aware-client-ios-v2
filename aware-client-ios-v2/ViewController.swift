@@ -667,8 +667,8 @@ enum TableRowType {
 }
 
 enum TableRowIdentifier:String {
-    case studyId = "STUDY_URL"
-    case deviceId = "DEVICE_ID"
-    case deviceName = "DEVICE_NAME"
+    case studyId          = "STUDY_URL"
+    case deviceId         = "DEVICE_ID"
+    case deviceName       = "DEVICE_NAME"
     case advancedSettings = "ADVANCED_SETTINGS"
 }

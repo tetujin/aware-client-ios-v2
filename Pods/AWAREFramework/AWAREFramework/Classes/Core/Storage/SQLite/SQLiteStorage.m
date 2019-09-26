@@ -634,9 +634,8 @@
             [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"double_esm_user_answer_timestamp >= %@ AND double_esm_user_answer_timestamp =< %@",
                                         startNum, endNum]];
         }else if([self->entityName isEqualToString:@"EntityHealthKitQuantityHR"] ){
-                [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"timestamp_start >= %@ AND timestamp_start <= %@",
-                                            startNum, endNum]];
-            // NSLog(@"timestamp_start >= %@ AND timestamp_start <= %@", startNum, endNum);
+            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"timestamp_start >= %@ AND timestamp_start <= %@",
+                                        startNum, endNum]];
         }else{
             [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"timestamp >= %@ AND timestamp <= %@", startNum, endNum]];
         }
