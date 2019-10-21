@@ -400,9 +400,10 @@ extension ViewController: UITableViewDataSource {
             cell.title.text  = sensor.title
             cell.showIcon()
             cell.showSyncProgress()
-            
+            cell.icon.image  = sensor.icon?.withRenderingMode(.alwaysTemplate)
+
             if (sensorManager.isExist(sensor.identifier)){
-                cell.icon.image  = sensor.icon?.withRenderingMode(.alwaysTemplate)
+                cell.icon.tintColor = .systemBlue
                 let latestData = sensorManager.getLatestSensorValue(sensor.identifier)
                 if let data = latestData {
                     cell.detail.text = data
@@ -410,7 +411,7 @@ extension ViewController: UITableViewDataSource {
                 cell.progress.progress = sensor.syncProgress
 
             }else{
-                cell.icon.image  = sensor.icon
+                cell.icon.tintColor = .dynamicColor(light: .black, dark: .white)
                 cell.detail.text = sensor.details
                 cell.hideSyncProgress()
             }
@@ -671,4 +672,19 @@ enum TableRowIdentifier:String {
     case deviceId         = "DEVICE_ID"
     case deviceName       = "DEVICE_NAME"
     case advancedSettings = "ADVANCED_SETTINGS"
+}
+
+extension UIColor {
+    public class func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
+        if #available(iOS 13, *) {
+            return UIColor { (traitCollection) -> UIColor in
+                if traitCollection.userInterfaceStyle == .dark {
+                    return dark
+                } else {
+                    return light
+                }
+            }
+        }
+        return light
+    }
 }
