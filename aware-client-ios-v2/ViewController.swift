@@ -400,9 +400,10 @@ extension ViewController: UITableViewDataSource {
             cell.title.text  = sensor.title
             cell.showIcon()
             cell.showSyncProgress()
-            
+            cell.icon.image  = sensor.icon?.withRenderingMode(.alwaysTemplate)
+
             if (sensorManager.isExist(sensor.identifier)){
-                cell.icon.image  = sensor.icon?.withRenderingMode(.alwaysTemplate)
+                cell.icon.tintColor = .systemBlue
                 let latestData = sensorManager.getLatestSensorValue(sensor.identifier)
                 if let data = latestData {
                     cell.detail.text = data
@@ -410,7 +411,7 @@ extension ViewController: UITableViewDataSource {
                 cell.progress.progress = sensor.syncProgress
 
             }else{
-                cell.icon.image  = sensor.icon
+                cell.icon.tintColor = .white
                 cell.detail.text = sensor.details
                 cell.hideSyncProgress()
             }
