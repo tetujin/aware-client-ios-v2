@@ -43,6 +43,11 @@
 	<string>43</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionAllowsInsecureHTTPLoads</key>
+		<true/>
+	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>For collecting data from external sensor modules via Bluetooth, this application needs to access your Bluetooth module in the background.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>

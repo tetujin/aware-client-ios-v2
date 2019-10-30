@@ -135,10 +135,13 @@ class ViewController: UIViewController {
         } else {
             if let studyURL = study.getURL() {
                 study.join(withURL: studyURL) { (settings, status, error) in
-                    manager.addSensors(with: study)
-                    manager.createDBTablesOnAwareServer()
-                    manager.startAllSensors()
-                    self.showReloadCompletionAlert()
+                    DispatchQueue.main.async {
+                        print(settings)
+                        manager.addSensors(with: study)
+                        manager.createDBTablesOnAwareServer()
+                        manager.startAllSensors()
+                        self.showReloadCompletionAlert()
+                    }
                 }
             }
         }
