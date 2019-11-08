@@ -50,6 +50,8 @@ enum AdvancedSettingsIdentifiers:String {
     case aboutAware      = "ABOUT_AWARE"
     case uiMode          = "UI_MODE"
     case contextView     = "CONTEXT_VIEW"
+    case complianceCheck = "COMPLIANCE_CHECK"
+    case statusMonitor   = "STATUS_MONITOR"
 }
 
 
@@ -259,6 +261,25 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
+        case AdvancedSettingsIdentifiers.statusMonitor.rawValue:
+            let alert = UIAlertController(title: "Monitor status of AWARE Client?", message: "If you set YES, the client records client's status every 1 minutue.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                AWAREStatusMonitor.shared().activate(withCheckInterval: 60)
+                UserDefaults.standard.set(true, forKey: AdvancedSettingsIdentifiers.statusMonitor.rawValue)
+                UserDefaults.standard.synchronize()
+                self.refresh()
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action) in
+                UserDefaults.standard.set(false, forKey: AdvancedSettingsIdentifiers.statusMonitor.rawValue)
+                UserDefaults.standard.synchronize()
+                AWAREStatusMonitor.shared().deactivate()
+                self.refresh()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        case AdvancedSettingsIdentifiers.complianceCheck.rawValue:
+            AWARECore.shared().checkCompliance(with: self, showDetail: true, showSummary: true)
         default:
             break
         }
@@ -309,6 +330,14 @@ extension AdvancedSettingsViewController {
                                         title: "Export DB",
                                         details: "",
                                         identifier: AdvancedSettingsIdentifiers.export.rawValue),
+                        TableRowContent(type: .setting,
+                                        title: "Status Monitoring",
+                                        details:  UserDefaults.standard.bool(forKey: AdvancedSettingsIdentifiers.statusMonitor.rawValue) ? "On":"Off",
+                                        identifier: AdvancedSettingsIdentifiers.statusMonitor.rawValue),
+                        TableRowContent(type: .setting,
+                                        title: "Compliance Check",
+                                        details: "",
+                                        identifier: AdvancedSettingsIdentifiers.complianceCheck.rawValue),
                         TableRowContent(type: .setting,
                                         title: "Quit Study",
                                         identifier: AdvancedSettingsIdentifiers.quit.rawValue),

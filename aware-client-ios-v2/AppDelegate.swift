@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fitbit.viewController = window?.rootViewController
             }
             core.activate()
+            manager.add(AWAREEventLogger.shared())
+            manager.add(AWAREStatusMonitor.shared())
         }
         
         IOSESM.setESMAppearedState(false)
@@ -39,6 +41,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             study.setCleanOldDataType(cleanOldDataTypeNever)
             UserDefaults.standard.set(true, forKey: key)
         }
+        
+        if UserDefaults.standard.bool(forKey: AdvancedSettingsIdentifiers.statusMonitor.rawValue){
+            AWAREStatusMonitor.shared().activate(withCheckInterval: 60)
+        }
+        
+        UNUserNotificationCenter.current().delegate = self
         
         return true
     }
@@ -66,6 +74,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
+        AWAREUtils.sendLocalPushNotification(withTitle: "Please do not close this app for recording your activity stably in the background.",
+                                             body: nil,
+                                             timeInterval: 0.1,
+                                             repeats: false)
         self.saveContext()
     }
     
@@ -126,5 +138,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+}
+
+extension AppDelegate : UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                openSettingsFor notification: UNNotification?) {
+        
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        
+    }
+    
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let push = PushNotification(awareStudy: AWAREStudy.shared())
+        push.saveDeviceToken(with: deviceToken)
+        push.startSyncDB()
+    }
 }
 

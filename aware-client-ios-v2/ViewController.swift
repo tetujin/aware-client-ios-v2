@@ -33,6 +33,8 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
+        AWARECore.shared().checkCompliance(with: self, showDetail: true)
+        
         settings = getSettings()
         
         refreshTimer = Timer.scheduledTimer(withTimeInterval: refreshInterval, repeats: true, block: { (timer) in
@@ -51,6 +53,7 @@ class ViewController: UIViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForegroundNotification(notification:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
         
         self.checkESMSchedules()
         
@@ -68,10 +71,21 @@ class ViewController: UIViewController {
         refreshTimer = nil
         NotificationCenter.default.removeObserver(googleLoginRequestObserver as Any)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
     @objc func willEnterForegroundNotification(notification: NSNotification) {
         self.checkESMSchedules()
+        if refreshTimer == nil {
+            refreshTimer = Timer.scheduledTimer(withTimeInterval: refreshInterval, repeats: true, block: { (timer) in
+                self.tableView.reloadData()
+            })
+        }
+    }
+    
+    @objc func didEnterBackgroundNotification(notification: NSNotification){
+        refreshTimer?.invalidate()
+        refreshTimer = nil
     }
     
     func checkESMSchedules(){
@@ -130,14 +144,17 @@ class ViewController: UIViewController {
         manager.stopAndRemoveAllSensors()
         if study.getURL() == "" {
             manager.addSensors(with: study)
+            manager.add(AWAREEventLogger.shared())
+            manager.add(AWAREStatusMonitor.shared())
             manager.createDBTablesOnAwareServer()
             manager.startAllSensors()
         } else {
             if let studyURL = study.getURL() {
                 study.join(withURL: studyURL) { (settings, status, error) in
                     DispatchQueue.main.async {
-                        print(settings)
                         manager.addSensors(with: study)
+                        manager.add(AWAREEventLogger.shared())
+                        manager.add(AWAREStatusMonitor.shared())
                         manager.createDBTablesOnAwareServer()
                         manager.startAllSensors()
                         self.showReloadCompletionAlert()
@@ -508,76 +525,73 @@ extension ViewController {
         
         let callback = { (sensorName:String?, progress:Double, error:Error?) -> Void in
             
-            var flag = false
-            
-            for sensor in self.sensors {
-                let name = sensor.identifier
-                if name == sensorName! {
-                    flag = true
-                } else if name == "location_gps" || name == "google_fused_location" {
-                    if sensorName! == "locations" {
+            DispatchQueue.main.async {
+                var flag = false
+                            
+                for sensor in self.sensors {
+                    let name = sensor.identifier
+                    if name == sensorName! {
                         flag = true
+                    } else if name == "location_gps" || name == "google_fused_location" {
+                        if sensorName! == "locations" {
+                            flag = true
+                        }
+                    } else if name == "health_kit" {
+                        if sensorName! == "\(SENSOR_HEALTH_KIT)_heartrate"{
+                            flag = true
+                            print(sensorName!)
+                        }
                     }
-                } else if name == "health_kit" {
-                    if sensorName! == "\(SENSOR_HEALTH_KIT)_heartrate"{
-                        flag = true
-                        print(sensorName!)
+                    
+                    if flag {
+                        sensor.syncProgress = Float(progress)
+                        if progress >= 1 {
+                            sensor.syncStatus = .done
+                        }else{
+                            sensor.syncStatus = .syncing
+                        }
+                        
+                        if let _ = error {
+                            sensor.syncStatus = .error
+                        }
+                        if name == "location_gps" || name == "google_fused_location" {
+                            flag = false
+                            continue
+                        } else if name == "\(SENSOR_HEALTH_KIT)_heartrate" {
+                            flag = false
+                            continue
+                        }else{
+                            break
+                        }
                     }
                 }
                 
-                if flag {
-                    sensor.syncProgress = Float(progress)
-                    if progress >= 1 {
-                        sensor.syncStatus = .done
-                    }else{
-                        sensor.syncStatus = .syncing
-                    }
-                    
-                    if let _ = error {
-                        sensor.syncStatus = .error
-                    }
-                    if name == "location_gps" || name == "google_fused_location" {
-                        flag = false
-                        continue
-                    } else if name == "\(SENSOR_HEALTH_KIT)_heartrate" {
-                        flag = false
-                        continue
-                    }else{
-                        break
+                // completion check
+                var complete = true
+                for sensor in self.sensors {
+                    if manager.isExist(sensor.identifier){
+                        // print(sensor.sensorName, sensor.syncProgress)
+                        if sensor.syncProgress < 1 {
+                            complete = false
+                            break
+                        }
                     }
                 }
-            }
-            
-            // completion check
-            var complete = true
-            for sensor in self.sensors {
-                if manager.isExist(sensor.identifier){
-                    // print(sensor.sensorName, sensor.syncProgress)
-                    if sensor.syncProgress < 1 {
-                        complete = false
-                        break
-                    }
+                
+                if complete {
+                    let alert = UIAlertController(title: "Data upload is completed", message: nil, preferredStyle: .alert)
+                    let close = UIAlertAction(title: "Close", style: .default, handler: { (action) in
+                        for sensor in self.sensors {
+                            sensor.syncProgress = 0
+                            sensor.syncStatus = .unknown
+                        }
+                    })
+                    alert.addAction(close)
+                    self.present(alert, animated: true, completion: nil)
                 }
-            }
-            
-            if complete {
-                let alert = UIAlertController(title: "Data upload is completed", message: nil, preferredStyle: .alert)
-                let close = UIAlertAction(title: "Close", style: .default, handler: { (action) in
-                    for sensor in self.sensors {
-                        sensor.syncProgress = 0
-                        sensor.syncStatus = .unknown
-                    }
-                })
-                alert.addAction(close)
-                self.present(alert, animated: true, completion: nil)
             }
         }
-        
         manager.setSyncProcessCallbackToAllSensorStorages(callback)
-//        if let healthKit = manager.getSensor(SENSOR_HEALTH_KIT) as? AWAREHealthKit {
-//           healthKit.awareHKQuantity.storage.syncProcessCallBack = callback
-//           healthKit.awareHKCategory.storage.syncProcessCallBack = callback
-//        }
         
         for sensor in self.sensors {
             sensor.syncProgress = 0

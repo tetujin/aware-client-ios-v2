@@ -6,8 +6,8 @@ target 'aware-client-ios-v2' do
   use_frameworks!
 
   # Pods for aware-client-ios-v2
-  pod 'AWAREFramework', '~> 1.5'
-  # pod 'AWAREFramework', :path => '../AWAREFramework-iOS'
+  pod 'AWAREFramework', '~> 1.6'
+#  pod 'AWAREFramework', :path => '../AWAREFramework-iOS'
   pod 'Charts'
   
   target 'aware-client-ios-v2Tests' do

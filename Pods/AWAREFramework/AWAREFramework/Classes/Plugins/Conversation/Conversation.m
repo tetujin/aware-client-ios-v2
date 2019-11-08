@@ -68,8 +68,10 @@ NSString * const AWARE_PREFERENCES_STATUS_CONVERSATION = @"status_plugin_student
     }
     
     self = [super initWithAwareStudy:study sensorName:SENSOR_PLUGIN_STUDENTLIFE_AUDIO storage:storage];
-    if (self) {
+    if (self != nil) {
         [self initKeys];
+        _conversationsDelay = 3;
+        _conversationsOffDudy = 1;
     }
     return self;
 }
@@ -108,7 +110,21 @@ NSString * const AWARE_PREFERENCES_STATUS_CONVERSATION = @"status_plugin_student
 }
 
 - (void)setParameters:(NSArray *)parameters{
+    int delay = [self getSensorSetting:parameters withKey:@"plugin_conversations_delay"];
+    if (delay > 0) {
+        _conversationsDelay = delay;
+    }
     
+    int off_duty = [self getSensorSetting:parameters withKey:@"plugin_conversations_off_duty"];
+    if (off_duty > 0) {
+        _conversationsOffDudy = off_duty;
+    }
+    
+    int length = [self getSensorSetting:parameters withKey:@"plugin_conversations_length"];
+    if (length > 0){
+        _conversationsLength = length;
+    }
+
 }
 
 
@@ -133,9 +149,16 @@ NSString * const AWARE_PREFERENCES_STATUS_CONVERSATION = @"status_plugin_student
                                                           userInfo:nil];
     }];
     
-    // [self.pipeline performSelector:@selector(startPipeline) withObject:nil afterDelay:3];
-    [self.pipeline startPipeline];
+    if (_conversationsDelay>0) {
+        [self.pipeline setTimeOfDutyCycleOffBySecond:_conversationsDelay * 60];
+    }
+
+    if (_conversationsOffDudy > 0) {
+        [self.pipeline setTimeOfDutyCycleOffInConversationBySecond:_conversationsOffDudy * 60];
+    }
+    
     [self setSensingState:YES];
+    [self.pipeline startPipeline];
     return YES;
 }
 

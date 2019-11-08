@@ -142,22 +142,66 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
             let manager = AWARESensorManager.shared()
             let core    = AWARECore.shared()
             
+            startIndicator()
+            
             study.join(withURL: qr, completion: { (settings, status, error) in
-                
-                core.requestPermissionForBackgroundSensing()
-                core.requestPermissionForPushNotification()
-                core.activate()
-                manager.stopAndRemoveAllSensors()
-                manager.addSensors(with: study)
-                if let fitbit = manager.getSensor(SENSOR_PLUGIN_FITBIT) as? Fitbit {
-                    fitbit.viewController = self
+                DispatchQueue.main.async {
+                    core.requestPermissionForPushNotification { (status, error) in
+                        core.requestPermissionForBackgroundSensing{ (status) in
+                            core.activate()
+                            manager.stopAndRemoveAllSensors()
+                            manager.addSensors(with: study)
+                            if let fitbit = manager.getSensor(SENSOR_PLUGIN_FITBIT) as? Fitbit {
+                                fitbit.viewController = self
+                            }
+                            manager.add(AWAREEventLogger.shared())
+                            manager.add(AWAREStatusMonitor.shared())
+                            manager.startAllSensors()
+                            manager.createDBTablesOnAwareServer()
+                            self.dismiss(animated: true) {
+                                self.dismissIndicator()
+                                if let vc = UIApplication.shared.keyWindow?.rootViewController {
+                                    core.openSettingsApp(vc,
+                                                         title: "Please check permissions for this app on Settings",
+                                                         message: "AWARE Client V2 requires `Location = Always` for a background sensing.")
+                                }
+                            }
+                        }
+                    }
                 }
-                manager.startAllSensors()
-                manager.createDBTablesOnAwareServer()
-                self.dismiss(animated: true, completion: nil)
-                
             })
         }
     }
-    
+}
+
+extension UIViewController {
+
+    func startIndicator() {
+
+        let loadingIndicator = UIActivityIndicatorView(style: .whiteLarge)
+
+        loadingIndicator.center = self.view.center
+        let grayOutView = UIView(frame: self.view.frame)
+        grayOutView.backgroundColor = .black
+        grayOutView.alpha = 0.6
+
+        loadingIndicator.tag = 999
+        grayOutView.tag = 999
+
+        self.view.addSubview(grayOutView)
+        self.view.addSubview(loadingIndicator)
+        self.view.bringSubviewToFront(grayOutView)
+        self.view.bringSubviewToFront(loadingIndicator)
+
+        loadingIndicator.startAnimating()
+    }
+
+    func dismissIndicator() {
+        self.view.subviews.forEach {
+            if $0.tag == 999 {
+                $0.removeFromSuperview()
+            }
+        }
+    }
+
 }

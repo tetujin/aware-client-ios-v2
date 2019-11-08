@@ -367,7 +367,7 @@ extension SensorSettingViewController: UITableViewDataSource{
                     }else{
                         AWAREStudy.shared().setSetting(content.key, value: false as NSObject)
                     }
-                    self.restartAllSensors()
+                    self.restartAllSensorsWithPermissionRequest()
                 }))
             }
             break
@@ -394,11 +394,22 @@ extension SensorSettingViewController: UITableViewDataSource{
         return cell
     }
     
-    func restartAllSensors(){
+    func restartAllSensorsWithPermissionRequest(){
         self.tableView.reloadData()
+        AWARECore.shared().requestPermissionForBackgroundSensing { (locationStatus) in
+            AWARECore.shared().requestPermissionForPushNotification { (notificationState, error) in
+                self.restartAllSensors()
+                AWARECore.shared().checkCompliance(with: self, showDetail: true)
+            }
+        }
+    }
+    
+    func restartAllSensors(){
+        AWARECore.shared().activate()
         let manager = AWARESensorManager.shared()
         manager.stopAndRemoveAllSensors()
         manager.addSensors(with: AWAREStudy.shared())
+        manager.add([AWAREEventLogger.shared(),AWAREStatusMonitor.shared()])
         manager.createDBTablesOnAwareServer()
         if let fitbit = manager.getSensor(SENSOR_PLUGIN_FITBIT) as? Fitbit {
             fitbit.viewController = self
@@ -406,6 +417,7 @@ extension SensorSettingViewController: UITableViewDataSource{
         manager.startAllSensors()
         
         self.settings = self.getSettings()
+        self.tableView.reloadData()
     }
 }
 

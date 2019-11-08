@@ -23,6 +23,8 @@ class ESMViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForegroundNotification(notification:)), name: UIApplication.willEnterForegroundNotification, object: nil)
         self.checkESMSchedules()
         self.hideContextViewIfNeeded()
+        
+        // AWARECore.shared().checkCompliance(with: self)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
