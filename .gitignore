@@ -81,3 +81,7 @@ fastlane
 
 iOSInjectionProject/
 
+*.p12
+*.pem
+*.pkey
+

@@ -330,7 +330,7 @@
 				};
 			};
 			buildConfigurationList = 4FFE196E2226A10B00C4715E /* Build configuration list for PBXProject "aware-client-ios-v2" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -677,10 +677,11 @@
 				CODE_SIGN_ENTITLEMENTS = "aware-client-ios-v2/aware-client-ios-v2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_TEAM = FH352PYMNC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "aware-client-ios-v2/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -703,10 +704,11 @@
 				CODE_SIGN_ENTITLEMENTS = "aware-client-ios-v2/aware-client-ios-v2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_TEAM = FH352PYMNC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "aware-client-ios-v2/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

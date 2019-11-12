@@ -18,11 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+
         let core    = AWARECore.shared()
         let manager = AWARESensorManager.shared()
         let study   = AWAREStudy.shared()
-        
+
         manager.addSensors(with: study)
         if manager.getAllSensors().count > 1 {
             core.startBaseLocationSensor()
@@ -33,20 +33,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             manager.add(AWAREEventLogger.shared())
             manager.add(AWAREStatusMonitor.shared())
         }
-        
+
         IOSESM.setESMAppearedState(false)
-        
+
         let key = "aware-client-v2.setting.key.is-not-first-time"
         if(!UserDefaults.standard.bool(forKey:key)){
             study.setCleanOldDataType(cleanOldDataTypeNever)
             UserDefaults.standard.set(true, forKey: key)
         }
-        
+
         if UserDefaults.standard.bool(forKey: AdvancedSettingsIdentifiers.statusMonitor.rawValue){
             AWAREStatusMonitor.shared().activate(withCheckInterval: 60)
         }
         
         UNUserNotificationCenter.current().delegate = self
+        
+        AWAREEventLogger.shared().logEvent(["class":"AppDelegate",
+                                            "event":"application:didFinishLaunchingWithOptions:launchOptions:"]);
         
         return true
     }
@@ -54,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        AWAREEventLogger.shared().logEvent(["class":"AppDelegate",
+                                            "event":"applicationWillResignActive:"]);
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -61,14 +66,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         IOSESM.setESMAppearedState(false)
         UIApplication.shared.applicationIconBadgeNumber = 0
+        AWAREEventLogger.shared().logEvent(["class":"AppDelegate",
+                                            "event":"applicationDidEnterBackground:"]);
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        AWAREEventLogger.shared().logEvent(["class":"AppDelegate",
+                                            "event":"applicationWillEnterForeground:"]);
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        AWAREEventLogger.shared().logEvent(["class":"AppDelegate",
+                                            "event":"applicationDidBecomeActive:"]);
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -78,10 +89,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                              body: nil,
                                              timeInterval: 0.1,
                                              repeats: false)
+        AWAREEventLogger.shared().logEvent(["class":"AppDelegate",
+                                            "event":"applicationWillTerminate:"]);
         self.saveContext()
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        AWAREEventLogger.shared().logEvent(["class":"AppDelegate",
+                                            "event":"application:open:options"]);
         
         if url.scheme == "fitbit" {
             let manager = AWARESensorManager.shared()
@@ -155,23 +171,31 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
+        if let userInfo = notification.request.content.userInfo as? [String:Any]{
+            print(userInfo)
+        }
+        completionHandler([])
     }
     
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        
-    }
-    
+
     func application(_ application: UIApplication,
                      didReceiveRemoteNotification userInfo: [AnyHashable : Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        
+         print(userInfo)
+         completionHandler(.noData)
     }
+
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let push = PushNotification(awareStudy: AWAREStudy.shared())
         push.saveDeviceToken(with: deviceToken)
         push.startSyncDB()
     }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        
+    }
+    
+    
 }
 
