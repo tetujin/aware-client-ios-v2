@@ -15,7 +15,11 @@ class ESMViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // self.checkESMSchedules()
+        
+        if OnboardingManager.isFirstTime() {
+            OnboardingManager().startOnboarding(with: self)
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -5,6 +5,7 @@ ${BUILT_PRODUCTS_DIR}/Charts/Charts.framework
 ${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework
 ${BUILT_PRODUCTS_DIR}/GTMAppAuth/GTMAppAuth.framework
 ${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework
+${BUILT_PRODUCTS_DIR}/Onboard/Onboard.framework
 ${BUILT_PRODUCTS_DIR}/SCNetworkReachability/SCNetworkReachability.framework
 ${BUILT_PRODUCTS_DIR}/TPCircularBuffer/TPCircularBuffer.framework
 ${BUILT_PRODUCTS_DIR}/ios-ntp/ios_ntp.framework

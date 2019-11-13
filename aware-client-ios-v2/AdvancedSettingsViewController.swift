@@ -52,6 +52,7 @@ enum AdvancedSettingsIdentifiers:String {
     case contextView     = "CONTEXT_VIEW"
     case complianceCheck = "COMPLIANCE_CHECK"
     case statusMonitor   = "STATUS_MONITOR"
+    case onboarding      = "ONBOARDING"
 }
 
 
@@ -280,6 +281,8 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             break
         case AdvancedSettingsIdentifiers.complianceCheck.rawValue:
             AWARECore.shared().checkCompliance(with: self, showDetail: true, showSummary: true)
+        case AdvancedSettingsIdentifiers.onboarding.rawValue:
+            OnboardingManager().startOnboarding(with: self)
         default:
             break
         }
@@ -334,6 +337,10 @@ extension AdvancedSettingsViewController {
                                         title: "Status Monitoring",
                                         details:  UserDefaults.standard.bool(forKey: AdvancedSettingsIdentifiers.statusMonitor.rawValue) ? "On":"Off",
                                         identifier: AdvancedSettingsIdentifiers.statusMonitor.rawValue),
+                        TableRowContent(type: .setting,
+                                        title: "Start Onboarding",
+                                        details: "",
+                                        identifier: AdvancedSettingsIdentifiers.onboarding.rawValue),
                         TableRowContent(type: .setting,
                                         title: "Compliance Check",
                                         details: "",

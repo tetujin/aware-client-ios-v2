@@ -9,6 +9,7 @@ target 'aware-client-ios-v2' do
   pod 'AWAREFramework', '~> 1.6'
   # pod 'AWAREFramework', :path => '../AWAREFramework-iOS'
   pod 'Charts'
+  pod 'Onboard'
   
   target 'aware-client-ios-v2Tests' do
     inherit! :search_paths
