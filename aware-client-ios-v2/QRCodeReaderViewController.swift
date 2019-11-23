@@ -146,8 +146,21 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
             
             study.join(withURL: qr, completion: { (settings, status, error) in
                 DispatchQueue.main.async {
-                    core.requestPermissionForPushNotification { (status, error) in
-                        core.requestPermissionForBackgroundSensing{ (status) in
+                    
+                    switch status {
+                    case AwareStudyStateError:
+                        let alert = UIAlertController(title: "Error", message: "Could not join this study \"\(qr)\" due to a network connection error. Please join this study again.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction.init(title: "Close", style: .cancel, handler: { (action) in
+                            self.dismissIndicator()
+                        }))
+                        self.present(alert, animated: true) { }
+                        return
+                    default:
+                        break
+                    }
+                    
+                    core.requestPermissionForPushNotification { (notifState, error) in
+                        core.requestPermissionForBackgroundSensing{ (locStatus) in
                             core.activate()
                             manager.stopAndRemoveAllSensors()
                             manager.addSensors(with: study)
@@ -162,8 +175,8 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
                                 self.dismissIndicator()
                                 if let vc = UIApplication.shared.keyWindow?.rootViewController {
                                     core.openSettingsApp(vc,
-                                                         title: "Please check permissions for this app on Settings",
-                                                         message: "AWARE Client V2 requires `Location = Always` for a background sensing.")
+                                                         title: "Please double-check permissions for this app on Settings",
+                                                         message: "AWARE Client V2 requires `Location = Always` for a background sensing. (Note: This alert might appear even if the setting is correct.)")
                                 }
                             }
                         }

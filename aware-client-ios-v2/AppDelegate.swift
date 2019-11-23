@@ -32,6 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             core.activate()
             manager.add(AWAREEventLogger.shared())
             manager.add(AWAREStatusMonitor.shared())
+            
+            core.requestPermissionForPushNotification { (status, error) in
+                
+            }
         }
 
         IOSESM.setESMAppearedState(false)
@@ -181,8 +185,14 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication,
                      didReceiveRemoteNotification userInfo: [AnyHashable : Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-         print(userInfo)
-         completionHandler(.noData)
+        if let userInfo = userInfo as? [String:Any]{
+            SilentPushManager().executeOperations(userInfo)
+        }
+        
+        let dispatchTime = DispatchTime.now() + 10
+        DispatchQueue.main.asyncAfter( deadline: dispatchTime ) {
+            completionHandler(.noData)
+        }
     }
 
     
@@ -195,7 +205,5 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         
     }
-    
-    
 }
 

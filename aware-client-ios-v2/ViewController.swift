@@ -503,18 +503,13 @@ extension ViewController {
         let alert = UIAlertController(title: "Completed reloading the study configuration from AWARE server.",
                                       message: study.getURL(),
                                       preferredStyle: .alert)
-        let close = UIAlertAction.init(title: "Close",
-                                       style: .default,
-                                       handler: { (action) in
-                                        for sensor in self.sensors {
-                                            sensor.syncProgress = 0
-                                            sensor.syncStatus = .unknown
-                                        
-//                                            let manager = AWARESensorManager.shared()
-//                                            manager.stopAndRemoveAllSensors()
-//                                            manager.addSensors(with: AWAREStudy.shared())
-//                                            manager.startAllSensors()
-                                        }
+        let close = UIAlertAction(title: "Close",
+                                   style: .default,
+                                   handler: { (action) in
+                                    for sensor in self.sensors {
+                                        sensor.syncProgress = 0
+                                        sensor.syncStatus = .unknown
+                                    }
         })
         alert.addAction(close)
         self.present(alert, animated: true, completion: nil)
