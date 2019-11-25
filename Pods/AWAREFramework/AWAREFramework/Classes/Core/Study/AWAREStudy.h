@@ -39,14 +39,16 @@ typedef enum: NSInteger{
     AwareStudyStateNoChange   = 0,
     AwareStudyStateNew        = 1,
     AwareStudyStateUpdate     = 2,
-    AwareStudyStateError      = 3
+    AwareStudyStateDataFormatError        = 3,
+    AwareStudyStateNetworkConnectionError = 4,
 } AwareStudyState;
 
 @interface AWAREStudy : NSObject <NSURLSessionDataDelegate, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^JoinStudyCompletionHandler)(NSArray * result, AwareStudyState state, NSError * _Nullable  error);
+typedef void (^JoinStudyCompletionHandler)(NSArray * config, AwareStudyState state, NSError * _Nullable  error);
+typedef void (^FetchStudyConfigurationCompletionHandler)(NSArray * config, NSError * _Nullable  error);
 
 @property (strong, nonatomic) NSString* getSettingIdentifier;
 @property (strong, nonatomic) NSString* makeDeviceTableIdentifier;
@@ -92,22 +94,17 @@ typedef void (^JoinStudyCompletionHandler)(NSArray * result, AwareStudyState sta
 - (int)  getCPUTheshold;
 - (BOOL) isAutoDBSync;
 
-///////////// [Remote Server Based Settings] /////////////////
-
-- (void) joinStudyWithURL:(NSString*)url completion:(JoinStudyCompletionHandler _Nullable)completionHandler;
+/// [Remote Server Based Settings]
+- (void) fetchStudyConfiguration:(NSString * _Nonnull)url completion:(FetchStudyConfigurationCompletionHandler _Nullable) completionHandler;
+- (NSArray *) getStudyConfiguration;
+- (void) joinStudyWithURL:(NSString* _Nonnull)url completion:(JoinStudyCompletionHandler _Nullable) completionHandler;
 - (void) refreshStudySettings;
 - (BOOL) clearStudySettings;
 
 - (NSString *) getStudyConfigurationAsText;
 
 - (void) setDeviceName:(NSString *) deviceName;
-- (BOOL) updateDeviceName:(NSString *)deviceName completion:(void (^)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 - (NSString * _Nonnull) getDeviceName;
-
-/// Sensor and plugin infromation
-//- (NSArray *) getSensors;
-//- (NSArray *) getPlugins;
-//- (NSArray *) getPluginSettingsWithKey:(NSString *) key;
 
 - (void) setSetting:(NSString * _Nonnull)key value:(NSObject * _Nonnull)value;
 - (void) setSetting:(NSString * _Nonnull)key value:(NSObject * _Nonnull)value packageName:(NSString * _Nullable) packageName;

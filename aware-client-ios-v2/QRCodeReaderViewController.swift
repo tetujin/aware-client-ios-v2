@@ -148,7 +148,7 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
                 DispatchQueue.main.async {
                     
                     switch status {
-                    case AwareStudyStateError:
+                    case AwareStudyStateNetworkConnectionError, AwareStudyStateDataFormatError:
                         let alert = UIAlertController(title: "Error", message: "Could not join this study \"\(qr)\" due to a network connection error. Please join this study again.", preferredStyle: .alert)
                         alert.addAction(UIAlertAction.init(title: "Close", style: .cancel, handler: { (action) in
                             self.dismissIndicator()

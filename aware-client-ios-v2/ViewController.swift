@@ -518,7 +518,7 @@ extension ViewController {
     func startManualUpload(){
         let manager = AWARESensorManager.shared()
         
-        let callback = { (sensorName:String?, progress:Double, error:Error?) -> Void in
+        let callback = { (sensorName:String?, syncState:AwareStorageSyncProgress, progress:Double, error:Error?) -> Void in
             
             DispatchQueue.main.async {
                 var flag = false
@@ -540,8 +540,12 @@ extension ViewController {
                     
                     if flag {
                         sensor.syncProgress = Float(progress)
-                        if progress >= 1 {
+                        if syncState == .complete {
                             sensor.syncStatus = .done
+                        }else if syncState == .error {
+                            sensor.syncStatus = .error
+                        }else if (syncState == .locked || syncState == .uploading || syncState == .unknown) {
+                            sensor.syncStatus = .unknown
                         }else{
                             sensor.syncStatus = .syncing
                         }

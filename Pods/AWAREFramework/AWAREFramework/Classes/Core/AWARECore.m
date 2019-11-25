@@ -145,7 +145,6 @@ static AWARECore * sharedCore;
                                                 @"event":@"start sync",
                                                 @"reason":@"battery state is changed"}];
             [[AWARESensorManager sharedSensorManager] syncAllSensors];
-            [[AWARESensorManager sharedSensorManager] runBatteryStateChangeEvents];
         }
     }
 }
@@ -190,9 +189,6 @@ static AWARECore * sharedCore;
         [_sharedLocationManager startUpdatingLocation];
         [_sharedLocationManager requestLocation];
     }
-//    AWARESensorManager * manager = [AWARESensorManager sharedSensorManager];
-//    [manager stopAllSensors];
-//    [manager startAllSensors];
 }
 
 
@@ -204,6 +200,7 @@ static AWARECore * sharedCore;
                                             @"reason":error.debugDescription}];
     }
 }
+
 /// This method is an initializers for a location sensor.
 /// On the iOS, we have to turn on the location sensor
 /// for using application in the background.
@@ -287,7 +284,6 @@ static AWARECore * sharedCore;
 
 - (void)requestPermissionForBackgroundSensingWithCompletion:(CoreLocationAuthCompletionHandler)completionHandler{
     self->coreLocationAuthCompletionHandler = completionHandler;
-    NSLog(@"%d",NSThread.isMainThread);
     CLAuthorizationStatus state = [CLLocationManager authorizationStatus];
     if(state == kCLAuthorizationStatusNotDetermined){
         if (_sharedLocationManager != nil){
@@ -306,22 +302,22 @@ static AWARECore * sharedCore;
 {
     [AWAREEventLogger.shared logEvent:@{@"class":@"AWARECore",@"event":@"didChangeAuthorizationStatus",@"status":@(status)}];
     if(status == kCLAuthorizationStatusNotDetermined ){
-        ////////////////// kCLAuthorizationStatusRestricted ///////////////////////
-    }else if (status == kCLAuthorizationStatusRestricted ){
-        ///////////////// kCLAuthorizationStatusDenied //////////////////////////////
-    }else if (status == kCLAuthorizationStatusDenied ){
-        //////////////////// kCLAuthorizationStatusAuthorized /////////////////////////
+        /// kCLAuthorizationStatusRestricted
+        return;
     }else if (status == kCLAuthorizationStatusAuthorizedAlways){
-        /////////////////// kCLAuthorizationStatusAuthorizedWhenInUse ///////////////////
+        /// kCLAuthorizationStatusAuthorizedWhenInUse
         if(_isNeedBackgroundSensing){
             [self startBaseLocationSensor];
         }
     }else if (status == kCLAuthorizationStatusAuthorizedWhenInUse){
-     
+        /// kCLAuthorizationStatusAuthorizedWhenInUse
+    }else if (status == kCLAuthorizationStatusRestricted ){
+        /// kCLAuthorizationStatusDenied
+    }else if (status == kCLAuthorizationStatusDenied ){
+        /// kCLAuthorizationStatusAuthorized
     }
     
     if (self->coreLocationAuthCompletionHandler) {
-        NSLog(@"%d",NSThread.isMainThread);
         self->coreLocationAuthCompletionHandler(status);
         self->coreLocationAuthCompletionHandler = nil;
     }
