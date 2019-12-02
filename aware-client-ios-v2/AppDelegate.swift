@@ -189,7 +189,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
             SilentPushManager().executeOperations(userInfo)
         }
         
-        let dispatchTime = DispatchTime.now() + 10
+        let dispatchTime = DispatchTime.now() + 20
         DispatchQueue.main.asyncAfter( deadline: dispatchTime ) {
             completionHandler(.noData)
         }

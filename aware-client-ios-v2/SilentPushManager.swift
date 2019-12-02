@@ -62,6 +62,8 @@ class SilentPushManager: NSObject {
                     AWARESensorManager.shared().stopAllSensors()
                 }else if cmd == "reactivate-core" {
                     AWARECore.shared().reactivate()
+                    AWARESensorManager.shared().stopAllSensors()
+                    AWARESensorManager.shared().startAllSensors()
                 }else if cmd == "push-msg" {
                     if let msg = op["msg"] as? [String:String]{
                         let title = msg["title"]

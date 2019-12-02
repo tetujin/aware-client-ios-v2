@@ -544,7 +544,7 @@ extension ViewController {
                             sensor.syncStatus = .done
                         }else if syncState == .error {
                             sensor.syncStatus = .error
-                        }else if (syncState == .locked || syncState == .uploading || syncState == .unknown) {
+                        }else if (syncState == .locked || syncState == .unknown) {
                             sensor.syncStatus = .unknown
                         }else{
                             sensor.syncStatus = .syncing
@@ -590,7 +590,19 @@ extension ViewController {
                 }
             }
         }
-        manager.setSyncProcessCallbackToAllSensorStorages(callback)
+        
+        /// setcallback into each sensor storage
+        for sensor in manager.getAllSensors(){
+            if let storage = sensor.storage {
+                if !storage.isSyncing() {
+                    storage.syncProcessCallBack = callback
+                    // print(storage.sensorName ?? "unknown", false)
+                }else{
+                    // print(storage.sensorName ?? "unknown", true)
+                }
+            }
+        }
+        // manager.setSyncProcessCallbackToAllSensorStorages()
         
         for sensor in self.sensors {
             sensor.syncProgress = 0
