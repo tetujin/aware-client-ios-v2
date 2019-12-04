@@ -17,8 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-
         let core    = AWARECore.shared()
         let manager = AWARESensorManager.shared()
         let study   = AWAREStudy.shared()
@@ -89,9 +87,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        AWAREUtils.sendLocalPushNotification(withTitle: "Please do not close this app for recording your activity stably in the background.",
-                                             body: nil,
-                                             timeInterval: 0.1,
+        AWAREUtils.sendLocalPushNotification(withTitle: "Please Re-open AWARE Client V2",
+                                             body: "For recording your activity stably, please do not remove this app from the background.",
+                                             timeInterval: 1,
                                              repeats: false)
         AWAREEventLogger.shared().logEvent(["class":"AppDelegate",
                                             "event":"applicationWillTerminate:"]);

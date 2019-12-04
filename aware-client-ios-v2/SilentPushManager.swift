@@ -64,6 +64,18 @@ class SilentPushManager: NSObject {
                     AWARECore.shared().reactivate()
                     AWARESensorManager.shared().stopAllSensors()
                     AWARESensorManager.shared().startAllSensors()
+                    if let lastSignal = AWAREStatusMonitor.shared().getLatestData() as? [String:Any] {
+                        if let lastTimestamp = lastSignal["timestamp"] as? Int64{
+                            let currentTimestamp = Int64(Date().timeIntervalSince1970*1000.0)
+                            let gap = Int64(currentTimestamp - lastTimestamp)
+                            if gap > Int64(60) * 10 * 1000 { // 10 min
+                                AWAREUtils.sendLocalPushNotification(withTitle: "[HELP] Please Open AWARE V2!",
+                                                                     body: "Sensors are suspended now due to an unexpected reason. For reactivating these sensors., please open AWARE Client iOS V2.",
+                                                                     timeInterval: 0.1,
+                                                                     repeats: false)
+                            }
+                        }
+                    }
                 }else if cmd == "push-msg" {
                     if let msg = op["msg"] as? [String:String]{
                         let title = msg["title"]

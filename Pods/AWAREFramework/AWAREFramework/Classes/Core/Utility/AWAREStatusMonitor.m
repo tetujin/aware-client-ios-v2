@@ -8,7 +8,6 @@
 #import "AWAREStatusMonitor.h"
 #import "AWARECore.h"
 #import "EntityAWAREStatus+CoreDataClass.h"
-#import "IOSActivityRecognition.h"
 
 @import CoreData;
 
@@ -113,6 +112,7 @@ static AWAREStatusMonitor * shared;
     
     [data setObject:strInfo forKey:@"info"];
     [self.storage saveDataWithDictionary:data buffer:NO saveInMainThread:YES];
+    [self setLatestData:data];
 }
 
 - (void) deactivate{
