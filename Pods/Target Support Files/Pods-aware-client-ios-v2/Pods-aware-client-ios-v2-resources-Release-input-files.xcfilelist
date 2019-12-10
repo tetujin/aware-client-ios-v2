@@ -1,4 +1,11 @@
 ${PODS_ROOT}/Target Support Files/Pods-aware-client-ios-v2/Pods-aware-client-ios-v2-resources.sh
 ${PODS_ROOT}/AWAREFramework/AWAREFramework/Assets/AWARE.xcdatamodeld
+${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Accelerometer/ObjectModels/AWARE_Accelerometer.xcdatamodeld
+${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Barometer/ObjectModels/AWARE_Barometer.xcdatamodeld
+${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Gravity/ObjectModels/AWARE_Gravity.xcdatamodeld
+${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Gyroscope/ObjectModels/AWARE_Gyroscope.xcdatamodeld
+${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/LinearAccelerometer/ObjectModels/AWARE_LinearAccelerometer.xcdatamodeld
+${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Magnetometer/ObjectModels/AWARE_Magnetometer.xcdatamodeld
+${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Rotation/ObjectModels/AWARE_Rotation.xcdatamodeld
 ${PODS_CONFIGURATION_BUILD_DIR}/AWAREFramework/AWAREFramework.bundle
 ${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle

@@ -211,10 +211,26 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         case AdvancedSettingsIdentifiers.export.rawValue:
-            var documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-            documentPath.append(contentsOf: "/AWARE.sqlite")
             var activityItems = Array<URL>();
-            activityItems.append(URL(fileURLWithPath: documentPath))
+            
+            // Get the document directory url
+            let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
+            do {
+                // Get the directory contents urls (including subfolders urls)
+                let directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil)
+                print(directoryContents)
+                
+                // if you want to filter the directory contents you can do like this:
+                let dbFiles = directoryContents.filter{ $0.pathExtension == "sqlite" || $0.pathExtension == "sqlite-shm" || $0.pathExtension == "sqlite-wal"}
+                print(dbFiles);
+                for url in dbFiles {
+                    activityItems.append(url)
+                }
+            } catch {
+                print(error)
+            }
+            
             let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 activityVC.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)?.contentView
@@ -291,6 +307,11 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
     func refresh(){
         AWAREStudy.shared().refreshStudySettings()
         self.viewDidAppear(false)
+    }
+    
+    func getFilePathOnDocument(with fileName:String) -> String {
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        return path.appending(fileName)
     }
 }
 

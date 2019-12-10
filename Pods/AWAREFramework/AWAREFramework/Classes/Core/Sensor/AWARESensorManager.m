@@ -338,7 +338,7 @@ static AWARESensorManager * sharedSensorManager;
  * Remove all sensors from the manager after stop the sensors
  */
 - (void) stopAndRemoveAllSensors {
-    [self lock];
+    // [self lock];
     if (![NSThread isMainThread]) {
         NSLog(@"[NOTE] Please call `-stopAndRemoveAllSensors` in the main thread.");
     }
@@ -347,7 +347,8 @@ static AWARESensorManager * sharedSensorManager;
             // message = [NSString stringWithFormat:@"[%@] Stop %@ sensor",[sensor getSensorName], [sensor getSensorName]];
             // NSLog(@"%@", message);
             bool state = [sensor stopSensor];
-            [sensor.storage cancelSyncStorage];
+            // [sensor.storage cancelSyncStorage];
+            [sensor stopSyncDB];
             [AWAREEventLogger.shared logEvent:@{@"class":@"AWARESensorManager",
                                                 @"event":@"stop and remove sensor",
                                                 @"sensor":sensor.getSensorName,
@@ -355,7 +356,7 @@ static AWARESensorManager * sharedSensorManager;
         }
         [awareSensors removeAllObjects];
     }
-    [self unlock];
+    // [self unlock];
 }
 
 - (AWARESensor * _Nullable) getSensorWithKey:(NSString * _Nonnull)sensorName {
@@ -411,8 +412,6 @@ static AWARESensorManager * sharedSensorManager;
  * @return A latest sensor value as
  */
 - (NSString*) getLatestSensorValue:(NSString * _Nonnull) sensorName {
-    if ([self isLocked]) return @"";
-    
     if([sensorName isEqualToString:@"location_gps"] || [sensorName isEqualToString:@"location_network"]){
         sensorName = @"locations";
     }
@@ -430,9 +429,6 @@ static AWARESensorManager * sharedSensorManager;
 
 
 - (NSDictionary *) getLatestSensorData:(NSString * _Nonnull) sensorName {
-    if ([self isLocked])
-        return [[NSDictionary alloc] init];
-    
     if([sensorName isEqualToString:@"location_gps"] || [sensorName isEqualToString:@"location_network"]){
         sensorName = @"locations";
     }
@@ -509,19 +505,12 @@ static AWARESensorManager * sharedSensorManager;
     [AWAREEventLogger.shared logEvent:@{@"class":@"AWARESensorManager",@"event":@"sync: syncAllSensorsForcefully"}];
     if (awareStudy.isDebug) NSLog(@"[AWARESensorManager] Start SyncDB forcefully");
     
-   
-    // int delaySec = 0;
     for (AWARESensor * sensor in awareSensors ) {
-        // if (awareStudy.isDebug) NSLog(@"%@",sensor.getSensorName);
         NSString * name = sensor.getSensorName;
         if (name != nil){
             [AWAREEventLogger.shared logEvent:@{@"class":@"AWARESensorManager", @"event":@"sync", @"sensor":name}];
         }
-        //dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delaySec * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [sensor startSyncDB];
-        //    if (self->awareStudy.isDebug) { NSLog(@"[AWARESensorManager|%@] sync + %d", name, delaySec); }
-        //});
-        //delaySec = delaySec + 1;
+        [sensor startSyncDB];
     }
 }
 
@@ -611,10 +600,6 @@ static AWARESensorManager * sharedSensorManager;
     return [fileManager removeItemAtPath:path error:NULL];
 }
 
-
-
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 - (BOOL) checkFileExistance:(NSString *)name {
     /**

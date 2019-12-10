@@ -6,13 +6,13 @@ target 'aware-client-ios-v2' do
   use_frameworks!
 
   # Pods for aware-client-ios-v2
-  pod 'AWAREFramework', '~> 1.7'
-  pod 'AWAREFramework/Microphone' , '~> 1.7'
-  pod 'AWAREFramework/MotionActivity', '~> 1.7'
-  pod 'AWAREFramework/Bluetooth', '~> 1.7'
-  pod 'AWAREFramework/Calendar', '~> 1.7'
-  pod 'AWAREFramework/Contact', '~> 1.7'
-  pod 'AWAREFramework/HealthKit', '~> 1.7'
+  pod 'AWAREFramework', '~> 1.8'
+  pod 'AWAREFramework/Microphone' , '~> 1.8'
+  pod 'AWAREFramework/MotionActivity', '~> 1.8'
+  pod 'AWAREFramework/Bluetooth', '~> 1.8'
+  pod 'AWAREFramework/Calendar', '~> 1.8'
+  pod 'AWAREFramework/Contact', '~> 1.8'
+  pod 'AWAREFramework/HealthKit', '~> 1.8'
   
 #  pod 'AWAREFramework'               , :path => '../AWAREFramework-iOS'
 #  pod 'AWAREFramework/Microphone'    , :path => '../AWAREFramework-iOS'

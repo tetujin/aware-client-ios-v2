@@ -4,24 +4,24 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.3.0)
   - AppAuth/Core (1.3.0)
   - AppAuth/ExternalUserAgent (1.3.0)
-  - AWAREFramework (1.7.1):
-    - AWAREFramework/Core (= 1.7.1)
-  - AWAREFramework/Bluetooth (1.7.1):
+  - AWAREFramework (1.8.2):
+    - AWAREFramework/Core (= 1.8.2)
+  - AWAREFramework/Bluetooth (1.8.2):
     - AWAREFramework/Core
-  - AWAREFramework/Calendar (1.7.1):
+  - AWAREFramework/Calendar (1.8.2):
     - AWAREFramework/Core
-  - AWAREFramework/Contact (1.7.1):
+  - AWAREFramework/Contact (1.8.2):
     - AWAREFramework/Core
-  - AWAREFramework/Core (1.7.1):
+  - AWAREFramework/Core (1.8.2):
     - GoogleSignIn (~> 5.0)
     - ios-ntp (~> 1.1)
     - SCNetworkReachability (~> 2.0)
     - TPCircularBuffer (~> 1.6)
-  - AWAREFramework/HealthKit (1.7.1):
+  - AWAREFramework/HealthKit (1.8.2):
     - AWAREFramework/Core
-  - AWAREFramework/Microphone (1.7.1):
+  - AWAREFramework/Microphone (1.8.2):
     - AWAREFramework/Core
-  - AWAREFramework/MotionActivity (1.7.1):
+  - AWAREFramework/MotionActivity (1.8.2):
     - AWAREFramework/Core
   - Charts (3.4.0):
     - Charts/Core (= 3.4.0)
@@ -52,13 +52,13 @@ PODS:
   - TPCircularBuffer (1.6.1)
 
 DEPENDENCIES:
-  - AWAREFramework (~> 1.7)
-  - AWAREFramework/Bluetooth (~> 1.7)
-  - AWAREFramework/Calendar (~> 1.7)
-  - AWAREFramework/Contact (~> 1.7)
-  - AWAREFramework/HealthKit (~> 1.7)
-  - AWAREFramework/Microphone (~> 1.7)
-  - AWAREFramework/MotionActivity (~> 1.7)
+  - AWAREFramework (~> 1.8)
+  - AWAREFramework/Bluetooth (~> 1.8)
+  - AWAREFramework/Calendar (~> 1.8)
+  - AWAREFramework/Contact (~> 1.8)
+  - AWAREFramework/HealthKit (~> 1.8)
+  - AWAREFramework/Microphone (~> 1.8)
+  - AWAREFramework/MotionActivity (~> 1.8)
   - Charts
   - Onboard
 
@@ -79,7 +79,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
-  AWAREFramework: bf86b384b7b0c77b00531b540be4b32c6c0e5daa
+  AWAREFramework: c050939d35240a7f713352b070834d59c0bf3bb0
   Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
@@ -91,6 +91,6 @@ SPEC CHECKSUMS:
   SCNetworkReachability: dbb0150b1a7a4579e148420132da19e718b955ce
   TPCircularBuffer: c13243556527551c4d320709c7b14a6d20cdc30a
 
-PODFILE CHECKSUM: 140f78685a19ec64c57f4a91c607cf68dd6bb810
+PODFILE CHECKSUM: 52ed601a0ed497721bc460625bc35b992ff86bce
 
 COCOAPODS: 1.8.4
