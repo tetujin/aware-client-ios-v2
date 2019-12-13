@@ -34,6 +34,12 @@ class ContextCardViewController: UIViewController {
                                                   object: nil)
     }
     
+    override func didReceiveMemoryWarning() {
+        if AWAREUtils.isBackground() {
+            self.removeAllContextCards()
+        }
+    }
+    
     
     @objc func willEnterForegroundNotification(notification: NSNotification) {
         let esmManager = ESMScheduleManager.shared()

@@ -594,7 +594,7 @@ extension ViewController {
         /// setcallback into each sensor storage
         for sensor in manager.getAllSensors(){
             if let storage = sensor.storage {
-                storage.syncProcessCallBack = callback
+                storage.syncProcessCallback = callback
             }
         }
         // manager.setSyncProcessCallbackToAllSensorStorages()
