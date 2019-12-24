@@ -17,10 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    
         let core    = AWARECore.shared()
         let manager = AWARESensorManager.shared()
         let study   = AWAREStudy.shared()
-
+        
+        // let esmManager = ESMScheduleManager.shared()
+        // esmManager.removeAllESMHitoryFromDB()
+        
         manager.addSensors(with: study)
         if manager.getAllSensors().count > 1 {
             core.startBaseLocationSensor()
@@ -184,11 +188,17 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
                      didReceiveRemoteNotification userInfo: [AnyHashable : Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         if let userInfo = userInfo as? [String:Any]{
-            SilentPushManager().executeOperations(userInfo)
+            // SilentPushManager().executeOperations(userInfo)
+            PushNotificationResponder().response(withPayload: userInfo)
         }
+        
+        if AWAREStudy.shared().isDebug(){ print("didReceiveRemoteNotification:start") }
         
         let dispatchTime = DispatchTime.now() + 20
         DispatchQueue.main.asyncAfter( deadline: dispatchTime ) {
+            
+            if AWAREStudy.shared().isDebug(){ print("didReceiveRemoteNotification:end") }
+            
             completionHandler(.noData)
         }
     }

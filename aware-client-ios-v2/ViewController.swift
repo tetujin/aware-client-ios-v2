@@ -196,7 +196,7 @@ class ViewController: UIViewController {
     lazy var sensors: [TableRowContent] = {
         let bundleUrl = Bundle.main.url(forResource: "AWAREFramework", withExtension: "bundle")
         if let url = bundleUrl {
-            let bundle = Bundle.init(url: url)
+            let bundle = Bundle(url: url)
             var contents = [
                 TableRowContent(type: .sensor,
                                 title: "Accelerometer",
@@ -357,7 +357,12 @@ class ViewController: UIViewController {
                                 title: "Significant Motion",
                                 details: "This sensor is used to track device significant motion",
                                 identifier: SENSOR_SIGNIFICANT_MOTION,
-                                icon: UIImage(named: "ic_action_significant", in: bundle, compatibleWith: nil))
+                                icon: UIImage(named: "ic_action_significant", in: bundle, compatibleWith: nil)),
+                TableRowContent(type: .sensor,
+                                title: "Push Notification",
+                                details: "",
+                                identifier: SENSOR_PUSH_NOTIFICATION,
+                                icon: UIImage(named: "ic_action_push_notification", in:bundle, compatibleWith: nil))
                 
             ]
             return contents

@@ -306,6 +306,13 @@ class SensorSettingViewController: UIViewController {
                 settings.append(SettingContent(type: .bool,
                                                key: AWARE_PREFERENCES_STATUS_SIGNIFICANT_MOTION,
                                                defaultValue: "false"))
+            case SENSOR_PUSH_NOTIFICATION:
+                settings.append(SettingContent(type: .bool,
+                                               key: AWARE_PREFERENCES_STATUS_PUSH_NOTIFICATION,
+                                               defaultValue: "false"))
+                settings.append(SettingContent(type: .string,
+                                               key: AWARE_PREFERENCES_SERVER_PUSH_NOTIFICATION,
+                                               defaultValue: ""))
             default:
                 break
             }
