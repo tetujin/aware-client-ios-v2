@@ -194,6 +194,8 @@ static AWARESensorManager * sharedSensorManager;
                 awareSensor = [[BasicSettings alloc] initWithAwareStudy:awareStudy dbType:dbType];
             }else if ([setting isEqualToString:AWARE_PREFERENCES_STATUS_SIGNIFICANT_MOTION]){
                 awareSensor = [[SignificantMotion alloc] initWithAwareStudy:awareStudy dbType:dbType];
+            }else if ([setting isEqualToString:AWARE_PREFERENCES_STATUS_PUSH_NOTIFICATION]){
+                awareSensor = [[PushNotification alloc] initWithAwareStudy:awareStudy dbType:dbType];
             }
             #ifdef IMPORT_MIC
             else if([setting isEqualToString:[NSString stringWithFormat:@"status_%@",SENSOR_AMBIENT_NOISE]]){
@@ -247,10 +249,6 @@ static AWARESensorManager * sharedSensorManager;
             }
         }
     }
-    
-    // Push Notification
-    AWARESensor * pushNotification = [[PushNotification alloc] initWithAwareStudy:awareStudy dbType:dbType];
-    [self addSensor:pushNotification];
     
     return YES;
 }
@@ -491,12 +489,8 @@ static AWARESensorManager * sharedSensorManager;
     [AWAREEventLogger.shared logEvent:@{@"class":@"AWARESensorManager",@"event":@"sync: pass all flags"}];
     if(awareStudy.isDebug) NSLog(@"[AWARESensorManager] Start SyncDB");
 
-//    int delaySec = 0;
     for (AWARESensor * sensor in awareSensors ) {
-        // dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delaySec * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [sensor startSyncDB];
-//        });
-//        delaySec = delaySec + 1;
+        [sensor startSyncDB];
     }
 }
 
@@ -510,6 +504,7 @@ static AWARESensorManager * sharedSensorManager;
         if (name != nil){
             [AWAREEventLogger.shared logEvent:@{@"class":@"AWARESensorManager", @"event":@"sync", @"sensor":name}];
         }
+        // sensor.storage.syncMode = AwareSyncModeQuick;
         [sensor startSyncDB];
     }
 }

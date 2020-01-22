@@ -22,9 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let manager = AWARESensorManager.shared()
         let study   = AWAREStudy.shared()
         
-        // let esmManager = ESMScheduleManager.shared()
-        // esmManager.removeAllESMHitoryFromDB()
-        
         manager.addSensors(with: study)
         if manager.getAllSensors().count > 1 {
             core.startBaseLocationSensor()

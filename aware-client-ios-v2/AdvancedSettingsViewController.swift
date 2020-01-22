@@ -53,6 +53,8 @@ enum AdvancedSettingsIdentifiers:String {
     case complianceCheck = "COMPLIANCE_CHECK"
     case statusMonitor   = "STATUS_MONITOR"
     case onboarding      = "ONBOARDING"
+    case storage         = "STORAGE"
+    case pushNotification = "PUSH_NOTIFICATION"
 }
 
 
@@ -96,6 +98,42 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             }))
             alert.addAction(UIAlertAction(title: "Off", style: .default, handler: { (action) in
                 AWAREStudy.shared().setDebug(false)
+                self.refresh()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        // auto sync
+        case AdvancedSettingsIdentifiers.storage.rawValue:
+            let alert = UIAlertController(title: "Which storage type do you prefer to use?", message: "The default setting is SQLite. NOTE: Some sensors do not support CSV and JSON-based Storage.", preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "SQLite", style: .default, handler: { (action) in
+                AWAREStudy.shared().setDBType(AwareDBTypeSQLite)
+                self.refresh()
+            }))
+            alert.addAction(UIAlertAction(title: "JSON", style: .default, handler: { (action) in
+                AWAREStudy.shared().setDBType(AwareDBTypeJSON)
+                self.refresh()
+            }))
+            alert.addAction(UIAlertAction(title: "CSV", style: .default, handler: { (action) in
+                AWAREStudy.shared().setDBType(AwareDBTypeCSV)
+                self.refresh()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+        case AdvancedSettingsIdentifiers.autoSync.rawValue:
+            let alert = UIAlertController(title: "Turn On or Off automatic data upload to a remote server?", message: "The current status is \(AWAREStudy.shared().isAutoDBSync() ? "On" :"Off" )", preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "On", style: .default, handler: { (action) in
+                AWAREStudy.shared().setAutoDBSync(true)
+                AWARECore.shared().deactivate()
+                AWARECore.shared().activate()
+                self.refresh()
+            }))
+            alert.addAction(UIAlertAction(title: "Off", style: .default, handler: { (action) in
+                AWAREStudy.shared().setAutoDBSync(false)
+                AWARECore.shared().deactivate()
+                AWARECore.shared().activate()
                 self.refresh()
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -220,23 +258,50 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 // Get the directory contents urls (including subfolders urls)
                 let directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil)
                 print(directoryContents)
+
+                let alert = UIAlertController(title: "Please select a file to export", message: nil, preferredStyle: .alert)
                 
                 // if you want to filter the directory contents you can do like this:
-                let dbFiles = directoryContents.filter{ $0.pathExtension == "sqlite" || $0.pathExtension == "sqlite-shm" || $0.pathExtension == "sqlite-wal"}
-                print(dbFiles);
-                for url in dbFiles {
-                    activityItems.append(url)
+                switch AWAREStudy.shared().getDBType() {
+                case AwareDBTypeSQLite:
+                    let dbFiles = directoryContents.filter{ $0.pathExtension == "sqlite" || $0.pathExtension == "sqlite-shm" || $0.pathExtension == "sqlite-wal"}
+                    for url in dbFiles {
+                        activityItems.append(url)
+                    }
+                break
+                case AwareDBTypeJSON:
+                    let dbFiles = directoryContents.filter{ $0.pathExtension == "json" || $0.pathExtension == "sqlite" || $0.pathExtension == "sqlite-shm" || $0.pathExtension == "sqlite-wal"}
+                    for url in dbFiles {
+                        activityItems.append(url)
+                    }
+                break
+                case AwareDBTypeCSV:
+                    let dbFiles = directoryContents.filter{ $0.pathExtension == "csv" || $0.pathExtension == "sqlite" || $0.pathExtension == "sqlite-shm" || $0.pathExtension == "sqlite-wal"}
+                    for url in dbFiles {
+                        activityItems.append(url)
+                    }
+                break
+                default: break
                 }
+                
+                for url in activityItems {
+                    let action = UIAlertAction(title: url.lastPathComponent, style: .default, handler: { (action) in
+                        
+                        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                        if UIDevice.current.userInterfaceIdiom == .pad {
+                            activityVC.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)?.contentView
+                            activityVC.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+                        }
+                        self.present(activityVC, animated: true, completion: nil)
+                    
+                    })
+                    alert.addAction(action)
+                }
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             } catch {
                 print(error)
             }
-            
-            let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                activityVC.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)?.contentView
-                activityVC.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
-            }
-            self.present(activityVC, animated: true, completion: nil)
             break
         case AdvancedSettingsIdentifiers.uiMode.rawValue:
             let alert = UIAlertController(title: row.title, message: nil, preferredStyle: .alert)
@@ -299,6 +364,18 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             AWARECore.shared().checkCompliance(with: self, showDetail: true, showSummary: true)
         case AdvancedSettingsIdentifiers.onboarding.rawValue:
             OnboardingManager().startOnboarding(with: self)
+        case AdvancedSettingsIdentifiers.pushNotification.rawValue:
+            let alert = UIAlertController(title: "Do you upload your push notification taken to a server?",
+                                          message: "You need to set up the server information on Push Notification sensor, and allow to receive the Push Notification on your phone.",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                let push = PushNotification()
+                if let token = push.getToken(), let server = push.getRemoteServerURL() {
+                    push.uploadToken(token, toProvider: server, forcefully: true)
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         default:
             break
         }
@@ -316,12 +393,21 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
 }
 
 extension AdvancedSettingsViewController {
+    
     func getAdvancedSettings() -> Array<TableRowContent>{
         let study = AWAREStudy.shared()
         let settings = [TableRowContent(type: .setting,
                                         title: "Debug Mode",
                                         details: study.isDebug() ? "On":"Off",
                                         identifier: AdvancedSettingsIdentifiers.debugMode.rawValue),
+                        TableRowContent(type: .setting,
+                                        title: "Storage",
+                                        details: "\(convertStorageTypeToString(study.getDBType()))",
+                                        identifier: AdvancedSettingsIdentifiers.storage.rawValue),
+                        TableRowContent(type: .setting,
+                                        title: "Auto Upload",
+                                        details: "\(AWAREStudy.shared().isAutoDBSync() ? "On" :"Off" )",
+                                        identifier: AdvancedSettingsIdentifiers.autoSync.rawValue),
                         TableRowContent(type: .setting,
                                         title: "Upload Interval",
                                         details: "\(study.getAutoDBSyncIntervalSecond()/60)",
@@ -355,6 +441,10 @@ extension AdvancedSettingsViewController {
                                         details: "",
                                         identifier: AdvancedSettingsIdentifiers.export.rawValue),
                         TableRowContent(type: .setting,
+                                        title: "Push Notification",
+                                        details: "",
+                                        identifier: AdvancedSettingsIdentifiers.pushNotification.rawValue),
+                        TableRowContent(type: .setting,
                                         title: "Status Monitoring",
                                         details:  UserDefaults.standard.bool(forKey: AdvancedSettingsIdentifiers.statusMonitor.rawValue) ? "On":"Off",
                                         identifier: AdvancedSettingsIdentifiers.statusMonitor.rawValue),
@@ -380,6 +470,19 @@ extension AdvancedSettingsViewController {
                                         identifier: AdvancedSettingsIdentifiers.team.rawValue)
         ]
         return settings;
+    }
+    
+    func convertStorageTypeToString(_ type:AwareDBType) -> String {
+        switch type {
+        case AwareDBTypeSQLite:
+            return "SQLite"
+        case AwareDBTypeJSON:
+            return "JSON"
+        case AwareDBTypeCSV:
+            return "CSV"
+        default:
+            return "Unknown"
+        }
     }
     
     func getDBCleanModeAsString() -> String {

@@ -7,6 +7,7 @@
 
 #import "SQLiteStorage.h"
 #import "SyncExecutor.h"
+#import "../Tools/QuickSyncExecutor.h"
 #import "CoreDataHandler.h"
 #import "AWAREUtils.h"
 
@@ -26,7 +27,8 @@
     BOOL isFetching;
     int retryCurrentCount;
     BaseCoreDataHandler * coreDataHandler;
-    SyncExecutor * executor;
+    // SyncExecutor * executor;
+    id<AWARESyncExecutorDelegate> executorDelegate;
 }
 
 - (instancetype)initWithStudy:(AWAREStudy *)study sensorName:(NSString *)name{
@@ -75,10 +77,14 @@
             [self setTimeMark:now];
         }
         coreDataHandler = dbHandler;
+        self.syncMode = AwareSyncModeBackground;
     }
     return self;
 }
 
+- (void) setDBHandler:(BaseCoreDataHandler *)handler{
+    coreDataHandler = handler;
+}
 
 - (BOOL)saveDataWithDictionary:(NSDictionary * _Nullable)dataDict buffer:(BOOL)isRequiredBuffer saveInMainThread:(BOOL)saveInMainThread {
     [self saveDataWithArray:@[dataDict] buffer:isRequiredBuffer saveInMainThread:saveInMainThread];
@@ -184,8 +190,7 @@
     return YES;
 }
 
-
-- (void)startSyncStorageWithCallBack:(SyncProcessCallback)callback{
+-(void)startSyncStorageWithCallback:(SyncProcessCallback)callback{
     self.syncProcessCallback = callback;
     [self startSyncStorage];
 }
@@ -215,12 +220,12 @@
 }
 
 - (void)cancelSyncStorage {
-    if (executor != nil) {
-        if ( executor.dataTask != nil ) {
-            [executor.dataTask cancel];
+    if (executorDelegate != nil) {
+        if ( executorDelegate.dataTask != nil ) {
+            [executorDelegate.dataTask cancel];
         }
-        if ( executor.session != nil){
-            [executor.session invalidateAndCancel];
+        if ( executorDelegate.session != nil){
+            [executorDelegate.session invalidateAndCancel];
         }
         [self dataSyncIsFinishedCorrectly];
         isCanceled = YES;
@@ -381,10 +386,14 @@
 
                     dispatch_async(dispatch_get_main_queue(), ^{
                         @try {
-                            self->executor = [[SyncExecutor alloc] initWithAwareStudy:self.awareStudy sensorName:self.sensorName];
+                            if (self.syncMode == AwareSyncModeQuick) {
+                                self->executorDelegate = [[QuickSyncExecutor alloc] initWithAwareStudy:self.awareStudy sensorName:self.sensorName];
+                            }else{
+                                self->executorDelegate = [[SyncExecutor alloc] initWithAwareStudy:self.awareStudy sensorName:self.sensorName];
+                            }
                             self->isFetching = NO;
-                            self->executor.debug = self.isDebug;
-                            [self->executor syncWithData:mutablePostData callback:^(NSDictionary *result) {
+                            self->executorDelegate.debug = self.isDebug;
+                            [self->executorDelegate syncWithData:mutablePostData callback:^(NSDictionary *result) {
                                 if (result!=nil) {
                                     if (self.isDebug) NSLog(@"%@",result.debugDescription);
                                     NSNumber * isSuccess = [result objectForKey:@"result"];
@@ -627,8 +636,11 @@
 - (void)fetchDataBetweenStart:(NSDate *)start andEnd:(NSDate *)end withHandler:(FetchDataHandler)handler{
     [self fetchDataFrom:start to:end handler:handler];
 }
-
 - (void)fetchDataFrom:(NSDate *)from to:(NSDate *)to handler:(FetchDataHandler)handler{
+    [self fetchDataFrom:from to:to granularity:0 handler:handler];
+}
+
+- (void)fetchDataFrom:(NSDate *)from to:(NSDate *)to granularity:(UInt64)granularity handler:(FetchDataHandler)handler{
     NSManagedObjectContext *private = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [private setParentContext:self.mainQueueManagedObjectContext];
     [private performBlock:^{
@@ -650,10 +662,15 @@
             [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"timestamp >= %@ AND timestamp <= %@", startNum, endNum]];
         }
         
+//        if (granularity > 0) {
+//            NSPredicate * granularityFilter = [NSPredicate predicateWithFormat:@"%K%%@ == 0", @"timestamp",granularity];
+//            [fetchRequest setPredicate:granularityFilter];
+//        }
+        
         //Set sort option
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
-        NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-        [fetchRequest setSortDescriptors:sortDescriptors];
+//        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
+//        NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+//        [fetchRequest setSortDescriptors:sortDescriptors];
         
         //Get NSManagedObject from managedObjectContext by using fetch setting
         NSError * error = nil;
