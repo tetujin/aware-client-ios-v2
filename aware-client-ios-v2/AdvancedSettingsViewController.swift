@@ -55,6 +55,7 @@ enum AdvancedSettingsIdentifiers:String {
     case onboarding      = "ONBOARDING"
     case storage         = "STORAGE"
     case pushNotification = "PUSH_NOTIFICATION"
+    case anchorAccuracy   = "ANCHOR_ACCURACY"
 }
 
 
@@ -376,6 +377,34 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
+            break
+        case AdvancedSettingsIdentifiers.anchorAccuracy.rawValue:
+            let alert = UIAlertController(title:"Anchor",
+                                          message: "Please select an accuracy of a base location sensor (=anchor) for collecting data in the background." ,
+                                          preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "3km", style: .default, handler: { (action) in
+                AWARECore.shared().setAnchorAccuracy(kCLLocationAccuracyThreeKilometers)
+                self.refresh()
+                AWARECore.shared().reactivate()
+            }))
+            alert.addAction(UIAlertAction(title: "1km", style: .default, handler: { (action) in
+                AWARECore.shared().setAnchorAccuracy(kCLLocationAccuracyKilometer)
+                self.refresh()
+                AWARECore.shared().reactivate()
+            }))
+            alert.addAction(UIAlertAction(title: "100m (default)", style: .default, handler: { (action) in
+                AWARECore.shared().setAnchorAccuracy(kCLLocationAccuracyHundredMeters)
+                self.refresh()
+                AWARECore.shared().reactivate()
+            }))
+            alert.addAction(UIAlertAction(title: "10m", style: .default, handler: { (action) in
+                AWARECore.shared().setAnchorAccuracy(kCLLocationAccuracyNearestTenMeters)
+                self.refresh()
+                AWARECore.shared().reactivate()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
         default:
             break
         }
@@ -444,6 +473,10 @@ extension AdvancedSettingsViewController {
                                         title: "Push Notification",
                                         details: "",
                                         identifier: AdvancedSettingsIdentifiers.pushNotification.rawValue),
+                        TableRowContent(type: .setting,
+                                        title: "Anchor",
+                                        details: "\(self.getDesiredAccuracy(AWARECore.shared().getAnchorAccuracy()))",
+                                        identifier: AdvancedSettingsIdentifiers.anchorAccuracy.rawValue),
                         TableRowContent(type: .setting,
                                         title: "Status Monitoring",
                                         details:  UserDefaults.standard.bool(forKey: AdvancedSettingsIdentifiers.statusMonitor.rawValue) ? "On":"Off",
@@ -517,6 +550,25 @@ extension AdvancedSettingsViewController {
             return "Hide All"
         default:
             return "Unknown"
+        }
+    }
+    
+    func getDesiredAccuracy(_ accuracy: CLLocationAccuracy ) -> String {
+        switch accuracy {
+        case kCLLocationAccuracyThreeKilometers:
+            return "3km"
+        case kCLLocationAccuracyKilometer:
+            return "1km"
+        case kCLLocationAccuracyHundredMeters:
+            return "100m"
+        case kCLLocationAccuracyNearestTenMeters:
+            return "10m"
+        case kCLLocationAccuracyBest:
+            return "Best"
+        case kCLLocationAccuracyBestForNavigation:
+            return "BestForNavigation"
+        default:
+            return "100m"
         }
     }
     
