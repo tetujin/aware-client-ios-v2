@@ -148,6 +148,11 @@ class ViewController: UIViewController {
             manager.add(AWAREStatusMonitor.shared())
             manager.createDBTablesOnAwareServer()
             manager.startAllSensors()
+            let alert = UIAlertController(title: "Your client configuration is refreshed.", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: { (action) in
+                
+            }))
+            self.present(alert, animated:true , completion: nil)
         } else {
             if let studyURL = study.getURL() {
                 study.join(withURL: studyURL) { (settings, status, error) in

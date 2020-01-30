@@ -11,6 +11,8 @@ import AWAREFramework
 
 class ContextCardViewController: UIViewController {
 
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
+    @IBOutlet weak var deleteButton:  UIBarButtonItem!
     @IBOutlet weak var mainStackView: UIStackView!
     var contextCards = Array<ContextCard>()
     
@@ -105,9 +107,17 @@ class ContextCardViewController: UIViewController {
                 break
             }
         }
+        
+        if contextCards.count == 0 {
+            refreshButton.isEnabled = false
+            deleteButton.isEnabled = false
+        }else{
+            refreshButton.isEnabled = true
+            deleteButton.isEnabled = true
+        }
     }
     
-    var possibleContextCards = [SENSOR_BATTERY,
+    var supportedContextCards = [SENSOR_BATTERY,
                                  SENSOR_BAROMETER,
                                  SENSOR_AMBIENT_NOISE,
                                  SENSOR_IOS_ACTIVITY_RECOGNITION,
@@ -164,15 +174,37 @@ class ContextCardViewController: UIViewController {
     }
     
     @IBAction func didPushAddButton(_ sender: UIBarButtonItem) {
+
+        var activeSensors = Array<String>();
+            
+        for sensor in AWARESensorManager.shared().getAllSensors() {
+            for supportedCardName in supportedContextCards {
+                if sensor.getName() ?? "" == supportedCardName {
+                    activeSensors.append(supportedCardName)
+                }
+            }
+        }
+
+        if activeSensors.count == 0 {
+            let alert = UIAlertController(title: "No active sensors",
+                                          message: "Please activate one or more sensors from Setting View",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return;
+        }
+        
         let alert = UIAlertController(title: "Which context-card do you add?",
                                       message: "Please select a context-card from the following items.",
                                       preferredStyle: .alert)
-        for item in possibleContextCards {
+        
+        for item in activeSensors {
             alert.addAction(UIAlertAction(title: item, style: .default, handler: { (action) in
                 self.setContextCard(name: item)
                 self.setupContextCards()
             }))
         }
+
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
             
         }))

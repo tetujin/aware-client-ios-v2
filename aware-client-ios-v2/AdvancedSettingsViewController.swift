@@ -56,6 +56,7 @@ enum AdvancedSettingsIdentifiers:String {
     case storage         = "STORAGE"
     case pushNotification = "PUSH_NOTIFICATION"
     case anchorAccuracy   = "ANCHOR_ACCURACY"
+    case privacy         = "PRIVACY"
 }
 
 
@@ -122,6 +123,8 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
                 
             }))
+            alert.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)?.contentView
+            alert.popoverPresentationController?.sourceRect = (tableView.cellForRow(at: indexPath)?.contentView.frame)!
             self.present(alert, animated: true, completion: nil)
         case AdvancedSettingsIdentifiers.autoSync.rawValue:
             let alert = UIAlertController(title: "Turn On or Off automatic data upload to a remote server?", message: "The current status is \(AWAREStudy.shared().isAutoDBSync() ? "On" :"Off" )", preferredStyle: .actionSheet)
@@ -138,6 +141,8 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 self.refresh()
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)?.contentView
+            alert.popoverPresentationController?.sourceRect = (tableView.cellForRow(at: indexPath)?.contentView.frame)!
             self.present(alert, animated: true, completion: nil)
             break
         // upload interval
@@ -403,7 +408,23 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 AWARECore.shared().reactivate()
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)?.contentView
+            alert.popoverPresentationController?.sourceRect = (tableView.cellForRow(at: indexPath)?.contentView.frame)!
             self.present(alert, animated: true, completion: nil)
+            break
+        case AdvancedSettingsIdentifiers.team.rawValue:
+            UIApplication.shared.open(URL(string:"https://awareframework.com/team/")!, options: [:]) { (isOpened) in
+                
+            }
+        case AdvancedSettingsIdentifiers.aboutAware.rawValue:
+            UIApplication.shared.open(URL(string: "https://awareframework.com/")!, options: [:]) { (isOpened) in
+                
+            }
+            break
+        case AdvancedSettingsIdentifiers.privacy.rawValue:
+            UIApplication.shared.open(URL(string: "https://awareframework.com/privacy/")!, options: [:]) { (isOpened) in
+                
+            }
             break
         default:
             break
@@ -500,7 +521,10 @@ extension AdvancedSettingsViewController {
                                         identifier: AdvancedSettingsIdentifiers.aboutAware.rawValue),
                         TableRowContent(type: .setting,
                                         title: "Team",
-                                        identifier: AdvancedSettingsIdentifiers.team.rawValue)
+                                        identifier: AdvancedSettingsIdentifiers.team.rawValue),
+                        TableRowContent(type: .setting,
+                                        title: "Privacy Policy",
+                                        identifier: AdvancedSettingsIdentifiers.privacy.rawValue)
         ]
         return settings;
     }

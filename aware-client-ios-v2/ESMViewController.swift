@@ -53,9 +53,9 @@ class ESMViewController: UIViewController {
             surveyButton.layer.borderColor = UIColor.system.cgColor
             surveyButton.layer.borderWidth  = 2
             surveyButton.layer.cornerRadius = 5
-            //surveyButton.isEnabled = true
+            surveyButton.isEnabled = true
         } else {
-            //surveyButton.isEnabled = false
+            surveyButton.isEnabled = false
             surveyButton.setTitle("No Pending Survey(s)", for: .normal)
             surveyButton.layer.borderColor = UIColor(white: 0, alpha: 0).cgColor
         }
