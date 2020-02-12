@@ -64,6 +64,7 @@ class ContextCardViewController: UIViewController {
     func setupContextCards(){
         self.removeAllContextCards()
         for name in getCurrentContextCardNames() {
+            // print(name)
             switch name {
             case SENSOR_ACCELEROMETER:
                 addAccelereomterCard()
@@ -89,9 +90,6 @@ class ContextCardViewController: UIViewController {
             case SENSOR_SCREEN:
                 addScreenEventCard()
                 break
-            case SENSOR_LOCATIONS:
-                addLocationCard()
-                break
             case SENSOR_PLUGIN_PEDOMETER:
                 addPedometerCard()
                 break
@@ -103,6 +101,13 @@ class ContextCardViewController: UIViewController {
                 break
             case SENSOR_SIGNIFICANT_MOTION:
                 addSignificantMotionCard()
+                break
+            case "locations":
+                addLocationCard()
+                break
+            case "google_fused_location":
+                addLocationCard()
+                break
             default:
                 break
             }
@@ -124,11 +129,12 @@ class ContextCardViewController: UIViewController {
                                  SENSOR_PLUGIN_OPEN_WEATHER,
                                  SENSOR_ACCELEROMETER,
                                  SENSOR_GYROSCOPE, SENSOR_SCREEN,
-                                 SENSOR_LOCATIONS,
                                  SENSOR_PLUGIN_PEDOMETER,
                                  SENSOR_HEALTH_KIT,
                                  SENSOR_PLUGIN_DEVICE_USAGE,
-                                 SENSOR_SIGNIFICANT_MOTION]
+                                 SENSOR_SIGNIFICANT_MOTION,
+                                 SENSOR_GOOGLE_FUSED_LOCATION,
+                                 "locations"]
     
     let key = "com.yuukinishiyama.app.aware-client-ios-v2.context-cards"
     
@@ -179,6 +185,7 @@ class ContextCardViewController: UIViewController {
             
         for sensor in AWARESensorManager.shared().getAllSensors() {
             for supportedCardName in supportedContextCards {
+                // print(sensor.getName(), supportedCardName)
                 if sensor.getName() ?? "" == supportedCardName {
                     activeSensors.append(supportedCardName)
                 }
@@ -306,11 +313,42 @@ class ContextCardViewController: UIViewController {
     func addActivityRecognitionCard(){
         if let sensor = AWARESensorManager.shared().getSensor(SENSOR_IOS_ACTIVITY_RECOGNITION) {
             let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
-            contextCard.yAxisMax = 1.1
-            contextCard.yAxisMin = 0.9
+            contextCard.setFilterHandler { (key, value) -> Dictionary<String, Any>? in
+                var val = value
+                if key == "stationary" {
+                    if val["stationary"] as? Double == 1.0 {
+                        val["stationary"] = 1.0
+                    }
+                }else if key == "walking" {
+                    if val["walking"] as? Double == 1.0{
+                        val["walking"] = 2.0
+                        val["stationary"] = 0
+                    }
+                }else if key == "running" {
+                    if val["running"] as? Double == 1.0{
+                        val["running"] = 3.0
+                        val["stationary"] = 0
+                    }
+                }else if key == "automotive" {
+                    if val["automotive"] as? Double == 1.0 {
+                        val["automotive"] = 4.0
+                        val["stationary"] = 0
+                    }
+                }else if key == "cycling" {
+                    if val["cycling"] as? Double == 1.0 {
+                        val["cycling"] = 5.0
+                        val["stationary"] = 0
+                    }
+                }
+                return val
+            }
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["stationary","walking","running","automotive","cycling"])
+//            contextCard.setWeeklyChart(sensor: sensor, yKeys: ["stationary","walking","running","automotive","cycling"])
             contextCard.titleLabel.text = "Activity Recognition"
             contextCard.isUserInteractionEnabled = false
+            contextCard.yAxisMax = 5.5
+            contextCard.yAxisMin = 0.5
+            contextCard.scatterChart?.leftAxis.enabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
         }
@@ -370,11 +408,12 @@ class ContextCardViewController: UIViewController {
     
     func addPedometerCard(){
         if let sensor = AWARESensorManager.shared().getSensor(SENSOR_PLUGIN_PEDOMETER) {
-            // let contextCard = BarChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
+//             let contextCard = BarChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
             let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
             contextCard.xAxisLabels = ["0","6","12","18","24"]
             contextCard.yAxisMin = 0
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["number_of_steps"])
+//            contextCard.setTodaysChart(sensor: sensor, keys: ["number_of_steps"])
             contextCard.titleLabel.text = "Pedometer"
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
@@ -405,6 +444,7 @@ class ContextCardViewController: UIViewController {
             contextCard.setTodaysChart(sensor: quantity, xKey:"timestamp_start", yKeys: ["value"])
             contextCard.titleLabel.text = "Heart Rate"
             contextCard.isUserInteractionEnabled = false
+            
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
             

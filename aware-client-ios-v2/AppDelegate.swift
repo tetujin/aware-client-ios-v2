@@ -177,7 +177,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         if let userInfo = notification.request.content.userInfo as? [String:Any]{
             print(userInfo)
         }
-        completionHandler([])
+        completionHandler([.alert])
     }
     
 

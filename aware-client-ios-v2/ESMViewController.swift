@@ -70,7 +70,6 @@ class ESMViewController: UIViewController {
             self.performSegue(withIdentifier: "toESMScrollView", sender: self)
             self.tabBarController?.tabBar.isHidden = true
         }
-        
     }
     
     // MARK: - Navigation

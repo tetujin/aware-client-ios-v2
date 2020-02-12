@@ -162,9 +162,9 @@ NSString* const AWARE_PREFERENCES_STATUS_DEVICE_USAGE = @"status_plugin_device_u
     uint32_t result = notify_cancel(_notifyTokenForDidChangeLockStatus);
     
     if (result == NOTIFY_STATUS_OK) {
-        // NSLog(@"[screen] OK --> %d", result);
+        NSLog(@"[screen] OK --> %d", result);
     } else {
-        // NSLog(@"[screen] NO --> %d", result);
+        NSLog(@"[screen] NO --> %d", result);
     }
 }
 

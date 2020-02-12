@@ -115,6 +115,9 @@ class SensorSettingViewController: UIViewController {
                 settings.append(SettingContent(type: .int,
                                                key: AWARE_PREFERENCES_FREQUENCY_IOS_ACTIVITY_RECOGNITION,
                                                defaultValue: "300"))
+                settings.append(SettingContent(type: .int,
+                                               key: AWARE_PREFERENCES_PREPERIOD_DAYS_IOS_ACTIVITY_RECOGNITION,
+                                               defaultValue: "0"))
                 break
             case SENSOR_PLUGIN_PEDOMETER:
                 settings.append(SettingContent(type: .bool,
@@ -123,6 +126,9 @@ class SensorSettingViewController: UIViewController {
                 settings.append(SettingContent(type: .int,
                                                key: AWARE_PREFERENCES_FREQUENCY_PEDOMETER,
                                                defaultValue: "180"))
+                settings.append(SettingContent(type: .int,
+                                               key: AWARE_PREFERENCES_PREPERIOD_DAYS_PEDOMETER,
+                                               defaultValue: "0"))
                 break
             case SENSOR_LOCATIONS:
                 settings.append(SettingContent(type: .bool,
@@ -291,6 +297,12 @@ class SensorSettingViewController: UIViewController {
                 settings.append(SettingContent(type: .bool,
                                                key: STATUS_SENSOR_HEALTH_KIT,
                                                defaultValue: "false"))
+                settings.append(SettingContent(type: .int,
+                                               key: AWARE_PREFERENCES_PLUGIN_HEALTHKIT_FREQUENCY,
+                                               defaultValue: "1800"))
+                settings.append(SettingContent(type: .int,
+                                               key: AWARE_PREFERENCES_PLUGIN_HEALTHKIT_PREPERIOD_DAYS,
+                                               defaultValue: "0"))
                 break
             case SENSOR_PLUGIN_CALENDAR_ESM_SCHEDULER:
                 settings.append(SettingContent(type: .bool,

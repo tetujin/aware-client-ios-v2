@@ -397,7 +397,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 self.refresh()
                 AWARECore.shared().reactivate()
             }))
-            alert.addAction(UIAlertAction(title: "100m (default)", style: .default, handler: { (action) in
+            alert.addAction(UIAlertAction(title: "100m", style: .default, handler: { (action) in
                 AWARECore.shared().setAnchorAccuracy(kCLLocationAccuracyHundredMeters)
                 self.refresh()
                 AWARECore.shared().reactivate()

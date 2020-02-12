@@ -119,6 +119,9 @@ class ScatterChartCard: ContextCard {
                 composedValue = sqrt(composedValue)
                 data.append(ChartDataEntry(x:result[xAxisKey] as! Double, y:composedValue))
             }
+            
+            // data.sort(by: { $0.x < $1.x })
+            
             let set = ScatterChartDataSet(entries: data, label: keyName)
 
             set.setScatterShape(scatterShape) //.square
@@ -161,6 +164,8 @@ class ScatterChartCard: ContextCard {
                         }
                     }
                 }
+                
+                data.sort(by: { $0.x < $1.x })
                 
                 let set = ScatterChartDataSet(entries: data, label: key)
                 set.setScatterShape(scatterShape) //.square
