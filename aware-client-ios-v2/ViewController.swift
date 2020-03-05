@@ -37,7 +37,12 @@ class ViewController: UIViewController {
         
         settings = getSettings()
         sensors.sort { (val1, val2) -> Bool in
-            return val1.identifier.localizedStandardCompare(val2.identifier) == .orderedAscending
+            
+            if Language().isJapanese() {
+                return val1.identifier.localizedStandardCompare(val2.identifier) == .orderedAscending
+            }else{
+                return val1.title.localizedStandardCompare(val2.title) == .orderedAscending
+            }
         }
         
         refreshTimer = Timer.scheduledTimer(withTimeInterval: refreshInterval, repeats: true, block: { (timer) in
@@ -728,4 +733,24 @@ extension UIColor {
         }
         return light
     }
+}
+
+public class Language {
+    
+    fileprivate func get() -> String {
+        let languages = NSLocale.preferredLanguages
+        if let type = languages.first {
+            return type
+        }
+        return ""
+    }
+    
+    func isJapanese() -> Bool {
+        return self.get().contains("ja") ? true : false
+    }
+    
+    func isEnglish() -> Bool {
+        return self.get().contains("en") ? true : false
+    }
+
 }
