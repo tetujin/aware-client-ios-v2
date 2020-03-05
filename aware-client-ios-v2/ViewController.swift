@@ -36,6 +36,9 @@ class ViewController: UIViewController {
         AWARECore.shared().checkCompliance(with: self, showDetail: true)
         
         settings = getSettings()
+        sensors.sort { (val1, val2) -> Bool in
+            return val1.identifier.localizedStandardCompare(val2.identifier) == .orderedAscending
+        }
         
         refreshTimer = Timer.scheduledTimer(withTimeInterval: refreshInterval, repeats: true, block: { (timer) in
             self.tableView.reloadData()
