@@ -123,13 +123,13 @@ class ViewController: UIViewController {
 
     
     @IBAction func didPushUploadButton(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Do you upload stored sensor data manually?",
-                                    message: "This upload process is executed without WiFi connection and battery charging. Please check these conditions again.",
+        let alert = UIAlertController(title: NSLocalizedString("setting_view_manual_upload_title", comment: ""),
+                                    message: NSLocalizedString("setting_view_manual_upload_msg", comment: ""),
                                     preferredStyle: .alert)
-        let execute = UIAlertAction.init(title: "Execute", style: .default) { (action) in
+        let execute = UIAlertAction(title: NSLocalizedString("Execute", comment: ""), style: .default) { (action) in
             self.startManualUpload()
         }
-        let cancel = UIAlertAction.init(title: "Cancel", style: .cancel) { (action) in
+        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { (action) in
             
         }
         alert.addAction(execute)
@@ -148,8 +148,9 @@ class ViewController: UIViewController {
             manager.add(AWAREStatusMonitor.shared())
             manager.createDBTablesOnAwareServer()
             manager.startAllSensors()
-            let alert = UIAlertController(title: "Your client configuration is refreshed.", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: { (action) in
+            let alert = UIAlertController(title: NSLocalizedString("setting_view_config_refresh_title", comment: ""),
+                                          message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action) in
                 
             }))
             self.present(alert, animated:true , completion: nil)
@@ -185,15 +186,15 @@ class ViewController: UIViewController {
                          details: AWAREStudy.shared().getURL() ?? "",
                          identifier: TableRowIdentifier.studyId.rawValue),
          TableRowContent(type: .setting,
-                         title: "Device ID",
+                         title: NSLocalizedString("device_id", comment: ""),
                          details: AWAREStudy.shared().getDeviceId(),
                          identifier: TableRowIdentifier.deviceId.rawValue),
          TableRowContent(type: .setting,
-                         title: "Device Name",
+                         title: NSLocalizedString("device_name", comment: ""),
                          details: AWAREStudy.shared().getDeviceName(),
                          identifier: TableRowIdentifier.deviceName.rawValue),
          TableRowContent(type: .setting,
-                         title: "Advanced Settings",
+                         title: NSLocalizedString("advanced_settings", comment: ""),
                          details: "",
                          identifier: TableRowIdentifier.advancedSettings.rawValue)]
     }
@@ -204,168 +205,168 @@ class ViewController: UIViewController {
             let bundle = Bundle(url: url)
             var contents = [
                 TableRowContent(type: .sensor,
-                                title: "Accelerometer",
-                                details: "Acceleration, including the force of gravity",
+                                title: NSLocalizedString("Accelerometer", comment: ""),
+                                details: NSLocalizedString("accelerometer_detail", comment:""),
                                 identifier: SENSOR_ACCELEROMETER,
                                 icon: UIImage(named: "ic_action_accelerometer", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Gyroscope",
-                                details: "Rate of rotation of device",
+                                title: NSLocalizedString("Gyroscope", comment:""),
+                                details: NSLocalizedString("gyro_detail", comment: ""),
                                 identifier: SENSOR_GYROSCOPE,
                                 icon: UIImage(named: "ic_action_gyroscope", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Magnetometer",
-                                details: "Geomagnetic field strength around the device",
+                                title: NSLocalizedString("Magnetometer", comment: ""),
+                                details: NSLocalizedString("mag_detail", comment: ""),
                                 identifier: SENSOR_MAGNETOMETER,
                                 icon: UIImage(named: "ic_action_magnetometer", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Rotation",
-                                details: "Orientation of the device in all axis",
+                                title: NSLocalizedString("Rotation", comment: ""),
+                                details: NSLocalizedString("rotation_detail", comment: ""),
                                 identifier: SENSOR_ROTATION,
                                 icon: UIImage(named: "ic_action_rotation", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Linear Accelerometer",
-                                details: "Acceleration applied to the sensor built-in into the device, excluding the force of gravity",
+                                title: NSLocalizedString("Linear Accelerometer", comment:""),
+                                details: NSLocalizedString("l_accelerometer_detail", comment: ""),
                                 identifier: SENSOR_LINEAR_ACCELEROMETER,
                                 icon: UIImage(named: "ic_action_linear_acceleration", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Activity Recognition",
-                                details: "iOS Activity Recognition",
+                                title: NSLocalizedString("Activity Recognition", comment:""),
+                                details: NSLocalizedString("activity_recognition_detail", comment: ""),
                                 identifier: SENSOR_IOS_ACTIVITY_RECOGNITION,
                                 icon: UIImage(named: "ic_action_running", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Pedometer",
-                                details: "This plugin collects user's daily steps.",
+                                title: NSLocalizedString("Pedometer", comment: ""),
+                                details: NSLocalizedString("pedometer_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_PEDOMETER,
                                 icon: UIImage(named: "ic_action_steps", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Location",
-                                details: "User's estimated location",
+                                title: NSLocalizedString("Location", comment: ""),
+                                details: NSLocalizedString("location_detail", comment: ""),
                                 identifier: SENSOR_LOCATIONS,
                                 icon: UIImage(named: "ic_action_locations", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Barometer",
-                                details: "Atomospheric air pressure",
+                                title: NSLocalizedString("Barometer", comment: ""),
+                                details: NSLocalizedString("barometer_detail", comment: ""),
                                 identifier: SENSOR_BAROMETER,
                                 icon: UIImage(named: "ic_action_barometer", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Battery",
-                                details: "Battery and power event",
+                                title: NSLocalizedString("Battery", comment: ""),
+                                details: NSLocalizedString("battery_detail", comment: ""),
                                 identifier: SENSOR_BATTERY,
                                 icon: UIImage(named: "ic_action_battery", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Network",
-                                details: "Network usage and traffic",
+                                title: NSLocalizedString("Network", comment: ""),
+                                details: NSLocalizedString("network_detail", comment: ""),
                                 identifier: SENSOR_NETWORK,
                                 icon: UIImage(named: "ic_action_network", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Communication",
-                                details: "The Communication sensor logs communication events such as calls, performed by or received by the user.",
+                                title: NSLocalizedString("Communication", comment: ""),
+                                details: NSLocalizedString("communication_detail", comment: ""),
                                 identifier: SENSOR_CALLS,
                                 icon: UIImage(named: "ic_action_communication", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Bluetooth",
-                                details: "Bluetooth sensing",
+                                title: NSLocalizedString("Bluetooth", comment: ""),
+                                details: NSLocalizedString("bluetooth_detail", comment: ""),
                                 identifier: SENSOR_BLUETOOTH,
                                 icon: UIImage(named: "ic_action_bluetooth", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Processor",
-                                details: "CPU workload for user, system and idle(%)",
+                                title: NSLocalizedString("Processor", comment: ""),
+                                details: NSLocalizedString("processor_detail", comment: ""),
                                 identifier: SENSOR_PROCESSOR,
                                 icon: UIImage(named: "ic_action_processor", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Timezone",
-                                details: "The timezone sensor keeps track of the user’s current timezone",
+                                title: NSLocalizedString("Timezone", comment: ""),
+                                details: NSLocalizedString("timezone_detail", comment: ""),
                                 identifier: SENSOR_TIMEZONE,
                                 icon: UIImage(named: "ic_action_timezone", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "WiFi",
-                                details: "Wi-Fi sensing",
+                                title: NSLocalizedString("WiFi", comment: ""),
+                                details: NSLocalizedString("wifi_detail", comment: ""),
                                 identifier: SENSOR_WIFI,
                                 icon: UIImage(named: "ic_action_wifi", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Screen",
-                                details: "Screen events (on/off, locked/unlocked)",
+                                title: NSLocalizedString("Screen", comment: ""),
+                                details: NSLocalizedString("screen_detail", comment: ""),
                                 identifier: SENSOR_SCREEN,
                                 icon: UIImage(named: "ic_action_screen", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Ambient Noise",
-                                details: "Anbient noise sensing by using a microphone on a smartphone.",
+                                title: NSLocalizedString("Ambient Noise", comment:""),
+                                details: NSLocalizedString("ambient_noise_detail", comment: ""),
                                 identifier: SENSOR_AMBIENT_NOISE,
                                 icon: UIImage(named: "ic_action_ambient_noise", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Heart Rate",
-                                details: "Collect heart rate data from an external heart rate sensor via BLE.",
+                                title: NSLocalizedString("Heart Rate", comment: ""),
+                                details: NSLocalizedString("heartrate_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_BLE_HR,
                                 icon: UIImage(named: "ic_action_heartrate", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Calendar",
-                                details: "This plugin gathers calendar events from Calendar",
+                                title: NSLocalizedString("Calendar", comment: ""),
+                                details: NSLocalizedString("calendar_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_CALENDAR,
                                 icon: UIImage(named: "ic_action_google_cal", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Contacts",
-                                details: "This plugin get your contacts",
+                                title: NSLocalizedString("Contacts", comment: ""),
+                                details: NSLocalizedString("contacts_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_CONTACTS,
                                 icon: UIImage(named: "ic_action_contacts", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Fitbit",
-                                details: "This plugin collects Fitbit",
+                                title: NSLocalizedString("Fitbit", comment: ""),
+                                details: NSLocalizedString("fitbit_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_FITBIT,
                                 icon: UIImage(named: "ic_action_fitbit", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Google Login",
-                                details: "Multi-device management using Google Account",
+                                title: NSLocalizedString("Google Login", comment:""),
+                                details: NSLocalizedString("google_login_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_GOOGLE_LOGIN,
                                 icon: UIImage(named: "google_logo", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "NTP Time",
-                                details: "Measure device's clock drift from an NTP server",
+                                title: NSLocalizedString("NTP", comment:""),
+                                details: NSLocalizedString("ntp_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_NTPTIME,
                                 icon: UIImage(named: "ic_action_ntptime", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Weather",
-                                details: "Weather information by OpenWeatherMap API",
+                                title: NSLocalizedString("Weather", comment:""),
+                                details: NSLocalizedString("weather_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_OPEN_WEATHER,
                                 icon: UIImage(named: "ic_action_openweather", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Conversation",
-                                details: "",
+                                title: NSLocalizedString("Conversation",comment:""),
+                                details: NSLocalizedString("conversation_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_STUDENTLIFE_AUDIO,
                                 icon: UIImage(named: "ic_action_conversation", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Fused Location",
-                                details: "Locations API provider. This plugin provides the user's current location in an energy efficient way.",
+                                title: NSLocalizedString("Fused Location", comment:""),
+                                details: NSLocalizedString("fused_location_detail", comment: ""),
                                 identifier: SENSOR_GOOGLE_FUSED_LOCATION,
                                 icon: UIImage(named: "ic_action_google_fused_location", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "HealthKit",
-                                details: "Collecting health related data from HealthKit API",
+                                title: NSLocalizedString("HealthKit", comment: ""),
+                                details: NSLocalizedString("healthkit_detail", comment: ""),
                                 identifier: SENSOR_HEALTH_KIT,
                                 icon: UIImage(named: "ic_action_health_kit", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Device Usage",
-                                details: "Device usage information based on smartphone lock/unlock events.",
+                                title: NSLocalizedString("Device Usage", comment: ""),
+                                details: NSLocalizedString("device_usage_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_DEVICE_USAGE,
                                 icon: UIImage(named: "ic_action_device_usage", in:bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "iOS ESM",
-                                details: "Setup ESM based on JSON confiugration on any URL",
+                                title: NSLocalizedString("iOS ESM", comment: ""),
+                                details: NSLocalizedString("ios_esm_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_IOS_ESM,
                                 icon: UIImage(named: "ic_action_web_esm", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Google Calendar ESM",
-                                details: "Schedule ESM based on configurations on Google Calendar",
+                                title: NSLocalizedString("Google Calendar ESM", comment: ""),
+                                details: NSLocalizedString("google_calendar_esm_detail", comment: ""),
                                 identifier: SENSOR_PLUGIN_CALENDAR_ESM_SCHEDULER,
                                 icon: UIImage(named: "ic_action_google_cal", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Significant Motion",
-                                details: "This sensor is used to track device significant motion",
+                                title: NSLocalizedString("Significant Motion",comment:""),
+                                details: NSLocalizedString("significant_motion_detail", comment: ""),
                                 identifier: SENSOR_SIGNIFICANT_MOTION,
                                 icon: UIImage(named: "ic_action_significant", in: bundle, compatibleWith: nil)),
                 TableRowContent(type: .sensor,
-                                title: "Push Notification",
-                                details: "",
+                                title:  NSLocalizedString("Push Notification", comment:""),
+                                details: NSLocalizedString("push_notification_detail", comment: ""),
                                 identifier: SENSOR_PUSH_NOTIFICATION,
                                 icon: UIImage(named: "ic_action_push_notification", in:bundle, compatibleWith: nil))
                 
@@ -513,7 +514,7 @@ extension ViewController {
         let alert = UIAlertController(title: "Completed reloading the study configuration from AWARE server.",
                                       message: study.getURL(),
                                       preferredStyle: .alert)
-        let close = UIAlertAction(title: "Close",
+        let close = UIAlertAction(title: NSLocalizedString("Close", comment: ""),
                                    style: .default,
                                    handler: { (action) in
                                     for sensor in self.sensors {
@@ -588,8 +589,10 @@ extension ViewController {
                 }
                 
                 if complete {
-                    let alert = UIAlertController(title: "Data upload is completed", message: nil, preferredStyle: .alert)
-                    let close = UIAlertAction(title: "Close", style: .default, handler: { (action) in
+                    let alert = UIAlertController(title: NSLocalizedString("setting_view_upload_comp_title", comment: ""),
+                                                  message: nil,
+                                                  preferredStyle: .alert)
+                    let close = UIAlertAction(title: NSLocalizedString("Close", comment: ""), style: .default, handler: { (action) in
                         for sensor in self.sensors {
                             sensor.syncProgress = 0
                             sensor.syncStatus = .unknown
@@ -626,7 +629,7 @@ extension UIViewController {
             textField.clearButtonMode = .whileEditing
             textField.text = AWAREStudy.shared().getURL()
         })
-        alert.addAction(UIAlertAction(title: "Update", style: .default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Update", comment: "") , style: .default, handler: { (action) in
             if let textFields = alert.textFields {
                 if textFields.count > 0 {
                     if let textField = textFields.first {
@@ -644,17 +647,19 @@ extension UIViewController {
                 }
             }
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler:nil))
         self.present(alert, animated: true, completion: {})
     }
     
     func showAlertForSettingDeviceName(){
-        let alert = UIAlertController(title:"Device Name", message:nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("device_name", comment: ""),
+                                      message:nil,
+                                      preferredStyle: .alert)
         alert.addTextField(configurationHandler: { textField in
             textField.clearButtonMode = .whileEditing
             textField.text = AWAREStudy.shared().getDeviceName()
         })
-        alert.addAction(UIAlertAction(title: "Update", style: .default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Update", comment: ""), style: .default, handler: { (action) in
             if let textFields = alert.textFields {
                 if textFields.count > 0 {
                     if let textField = textFields.first {
@@ -667,7 +672,7 @@ extension UIViewController {
                 }
             }
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler:nil))
         self.present(alert, animated: true, completion: {})
     }
 }

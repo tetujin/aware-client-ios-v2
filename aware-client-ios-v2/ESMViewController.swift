@@ -45,18 +45,16 @@ class ESMViewController: UIViewController {
         let schedules = esmManager.getValidSchedules()
         
         if(schedules.count > 0){
-            if schedules.count  == 1 {
-                surveyButton.setTitle("Tap to answer \(schedules.count) survey", for: .normal)
-            }else{
-                surveyButton.setTitle("Tap to answer \(schedules.count) surveys", for: .normal)
-            }
+            surveyButton.setTitle(NSLocalizedString("Tap to answer survey(s)", comment: ""),
+                                  for: .normal)
             surveyButton.layer.borderColor = UIColor.system.cgColor
             surveyButton.layer.borderWidth  = 2
             surveyButton.layer.cornerRadius = 5
             surveyButton.isEnabled = true
         } else {
             surveyButton.isEnabled = false
-            surveyButton.setTitle("No Pending Survey(s)", for: .normal)
+            surveyButton.setTitle(NSLocalizedString("No pending survey(s)", comment: ""),
+                                  for: .normal)
             surveyButton.layer.borderColor = UIColor(white: 0, alpha: 0).cgColor
         }
         

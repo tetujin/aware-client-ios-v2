@@ -193,16 +193,16 @@ class ContextCardViewController: UIViewController {
         }
 
         if activeSensors.count == 0 {
-            let alert = UIAlertController(title: "No active sensors",
-                                          message: "Please activate one or more sensors from Setting View",
+            let alert = UIAlertController(title: NSLocalizedString("context_card_no_active_sensors_title", comment: ""),
+                                          message: NSLocalizedString("context_card_no_active_sensors_msg", comment: ""),
                                           preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return;
         }
         
-        let alert = UIAlertController(title: "Which context-card do you add?",
-                                      message: "Please select a context-card from the following items.",
+        let alert = UIAlertController(title: NSLocalizedString("context_card_add_title" , comment: ""),
+                                      message: NSLocalizedString("context_card_add_msg", comment: ""),
                                       preferredStyle: .alert)
         
         for item in activeSensors {
@@ -212,18 +212,19 @@ class ContextCardViewController: UIViewController {
             }))
         }
 
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action) in
             
         }))
         self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func didPushRemoveButton(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Which context-card do you remove?",
-                                      message: "Please select a context-card from the following items.",
+        let alert = UIAlertController(title: NSLocalizedString("context_card_remove_title", comment: ""),
+                                      message: NSLocalizedString("context_card_remove_msg", comment: ""),
                                       preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Remove All", style: .destructive, handler: { (action) in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("context_card_item_remove_all", comment: ""),
+                                      style: .destructive, handler: { (action) in
             UserDefaults.standard.removeObject(forKey: self.key)
             UserDefaults.standard.synchronize()
             
@@ -236,7 +237,7 @@ class ContextCardViewController: UIViewController {
                 self.setupContextCards()
             }))
         }
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action) in
             
         }))
         self.present(alert, animated: true, completion: nil)
@@ -250,7 +251,7 @@ class ContextCardViewController: UIViewController {
             contextCard.yAxisMin = -6
             contextCard.granularitySecond = 10
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["double_values_0","double_values_1","double_values_2"])
-            contextCard.titleLabel.text = "Accelerometer"
+            contextCard.titleLabel.text = NSLocalizedString("Accelerometer", comment: "")
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
@@ -264,7 +265,7 @@ class ContextCardViewController: UIViewController {
             contextCard.yAxisMin = -6;
             contextCard.granularitySecond = 10
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["double_values_0","double_values_1","double_values_2"])
-            contextCard.titleLabel.text = "Gyroscope"
+            contextCard.titleLabel.text = NSLocalizedString("Gyroscope", comment: "")
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
@@ -278,7 +279,7 @@ class ContextCardViewController: UIViewController {
             contextCard.yAxisMax = 105;
             contextCard.yAxisMin = 0;
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["battery_level"])
-            contextCard.titleLabel.text = "Battery Level"
+            contextCard.titleLabel.text = NSLocalizedString("Battery", comment: "")
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
@@ -291,7 +292,7 @@ class ContextCardViewController: UIViewController {
             //contextCard.yAxisMax = 1300;
             //contextCard.yAxisMin = 800;
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["double_values_0"])
-            contextCard.titleLabel.text = "Air Pressure"
+            contextCard.titleLabel.text = NSLocalizedString("Barometer", comment: "")
             contextCard.granularitySecond = 60
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
@@ -303,7 +304,7 @@ class ContextCardViewController: UIViewController {
         if let sensor = AWARESensorManager.shared().getSensor(SENSOR_SCREEN){
             let contextCard = ScatterChartCard.init(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["screen_status"])
-            contextCard.titleLabel.text = "Screen"
+            contextCard.titleLabel.text = NSLocalizedString("Screen", comment: "")
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
@@ -344,7 +345,7 @@ class ContextCardViewController: UIViewController {
             }
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["stationary","walking","running","automotive","cycling"])
 //            contextCard.setWeeklyChart(sensor: sensor, yKeys: ["stationary","walking","running","automotive","cycling"])
-            contextCard.titleLabel.text = "Activity Recognition"
+            contextCard.titleLabel.text = NSLocalizedString("Activity Recognition", comment: "")
             contextCard.isUserInteractionEnabled = false
             contextCard.yAxisMax = 5.5
             contextCard.yAxisMin = 0.5
@@ -387,7 +388,7 @@ class ContextCardViewController: UIViewController {
             let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
             contextCard.xAxisLabels = ["0","6","12","18","24"];
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["temperature_min","temperature","temperature_max"])
-            contextCard.titleLabel.text = "Temperature"
+            contextCard.titleLabel.text = NSLocalizedString("Weather", comment: "")
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
@@ -399,7 +400,7 @@ class ContextCardViewController: UIViewController {
             let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
             contextCard.xAxisLabels = ["0","6","12","18","24"];
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["elapsed_device_on"])
-            contextCard.titleLabel.text = "Device Usage"
+            contextCard.titleLabel.text = NSLocalizedString("Device Usage", comment: "")
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
@@ -414,7 +415,7 @@ class ContextCardViewController: UIViewController {
             contextCard.yAxisMin = 0
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["number_of_steps"])
 //            contextCard.setTodaysChart(sensor: sensor, keys: ["number_of_steps"])
-            contextCard.titleLabel.text = "Pedometer"
+            contextCard.titleLabel.text = NSLocalizedString("Pedometer", comment: "")
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
@@ -426,7 +427,7 @@ class ContextCardViewController: UIViewController {
             let contextCard = ScatterChartCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:250))
             contextCard.xAxisLabels = ["0","6","12","18","24"];
             contextCard.setTodaysChart(sensor: sensor, yKeys: ["is_moving"])
-            contextCard.titleLabel.text = "Significant Motion"
+            contextCard.titleLabel.text = NSLocalizedString("Significant Motion", comment:"")
             contextCard.isUserInteractionEnabled = false
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
@@ -442,7 +443,7 @@ class ContextCardViewController: UIViewController {
                                                              height:250))
             contextCard.xAxisLabels = ["0","6","12","18","24"];
             contextCard.setTodaysChart(sensor: quantity, xKey:"timestamp_start", yKeys: ["value"])
-            contextCard.titleLabel.text = "Heart Rate"
+            contextCard.titleLabel.text = NSLocalizedString("Heart Rate", comment: "")
             contextCard.isUserInteractionEnabled = false
             
             self.contextCards.append(contextCard)
@@ -461,15 +462,15 @@ class ContextCardViewController: UIViewController {
         if let fusedLocationSensor = AWARESensorManager.shared().getSensor(SENSOR_GOOGLE_FUSED_LOCATION) as? FusedLocations{
             let contextCard = MapCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:400))
             contextCard.setMap(locationSensor: fusedLocationSensor.locationSensor)
-            contextCard.titleLabel.text = "Location"
+            contextCard.titleLabel.text = NSLocalizedString("Location", comment:"")
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
         }
         
-        if let locationSensor = AWARESensorManager.shared().getSensor(SENSOR_LOCATIONS) as? Locations{
+        if let locationSensor = AWARESensorManager.shared().getSensor("locations") as? Locations{
             let contextCard = MapCard(frame: CGRect.init(x:0,y:0, width: self.view.frame.width, height:400))
             contextCard.setMap(locationSensor: locationSensor)
-            contextCard.titleLabel.text = "Location"
+            contextCard.titleLabel.text = NSLocalizedString("Location", comment:"")
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
         }

@@ -17,6 +17,7 @@
 		4F1B11B322286E75006F3176 /* ScatterChartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B11AD22286E74006F3176 /* ScatterChartCard.swift */; };
 		4F1B11B422286E75006F3176 /* ContextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B11AE22286E74006F3176 /* ContextCard.swift */; };
 		4F1B11B522286E75006F3176 /* BarChartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B11AF22286E74006F3176 /* BarChartCard.swift */; };
+		4F530264240D4EEE008E3342 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F530266240D4EEE008E3342 /* Localizable.strings */; };
 		4FC60F4C2395E37D007740E4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC60F4B2395E37D007740E4 /* MapKit.framework */; };
 		4FDB55F4233C49B50095E7D7 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDB55F3233C49B50095E7D7 /* ExternalAccessory.framework */; };
 		4FEA0298237B8D1700CFDC2F /* OnboardingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA0297237B8D1700CFDC2F /* OnboardingManager.swift */; };
@@ -65,10 +66,14 @@
 		4F1B11AD22286E74006F3176 /* ScatterChartCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScatterChartCard.swift; sourceTree = "<group>"; };
 		4F1B11AE22286E74006F3176 /* ContextCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextCard.swift; sourceTree = "<group>"; };
 		4F1B11AF22286E74006F3176 /* BarChartCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarChartCard.swift; sourceTree = "<group>"; };
+		4F53025A240D4BB5008E3342 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		4F53025B240D4BB5008E3342 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		4F530267240D4EF2008E3342 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4F530268240D5A88008E3342 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4F530269240FB13D008E3342 /* aware-client-ios-v2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "aware-client-ios-v2.entitlements"; sourceTree = "<group>"; };
 		4FC60F4B2395E37D007740E4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4FDB55F3233C49B50095E7D7 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		4FEA0297237B8D1700CFDC2F /* OnboardingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManager.swift; sourceTree = "<group>"; };
-		4FFAC5ED222F0D2A00FE40B0 /* aware-client-ios-v2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "aware-client-ios-v2.entitlements"; sourceTree = "<group>"; };
 		4FFAC5EE2231089D00FE40B0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4FFAC5F022356FA500FE40B0 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		4FFE19732226A10B00C4715E /* aware-client-ios-v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "aware-client-ios-v2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +165,7 @@
 		4FFE196A2226A10B00C4715E = {
 			isa = PBXGroup;
 			children = (
+				4F530266240D4EEE008E3342 /* Localizable.strings */,
 				4FFE19752226A10B00C4715E /* aware-client-ios-v2 */,
 				4FFE198D2226A10D00C4715E /* aware-client-ios-v2Tests */,
 				4FFE19982226A10D00C4715E /* aware-client-ios-v2UITests */,
@@ -182,7 +188,7 @@
 		4FFE19752226A10B00C4715E /* aware-client-ios-v2 */ = {
 			isa = PBXGroup;
 			children = (
-				4FFAC5ED222F0D2A00FE40B0 /* aware-client-ios-v2.entitlements */,
+				4F530269240FB13D008E3342 /* aware-client-ios-v2.entitlements */,
 				4FFE19762226A10B00C4715E /* AppDelegate.swift */,
 				4FFE19782226A10B00C4715E /* ViewController.swift */,
 				4FFE19B12226D2C100C4715E /* AwareTableViewCell.swift */,
@@ -344,6 +350,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = 4FFE196A2226A10B00C4715E;
 			productRefGroup = 4FFE19742226A10B00C4715E /* Products */;
@@ -362,6 +369,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F530264240D4EEE008E3342 /* Localizable.strings in Resources */,
 				4FFE19842226A10D00C4715E /* LaunchScreen.storyboard in Resources */,
 				4FFE19812226A10D00C4715E /* Assets.xcassets in Resources */,
 				4FFE197C2226A10B00C4715E /* Main.storyboard in Resources */,
@@ -560,10 +568,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4F530266240D4EEE008E3342 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4F530267240D4EF2008E3342 /* ja */,
+				4F530268240D5A88008E3342 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		4FFE197A2226A10B00C4715E /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4FFE197B2226A10B00C4715E /* Base */,
+				4F53025A240D4BB5008E3342 /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -572,6 +590,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4FFE19832226A10D00C4715E /* Base */,
+				4F53025B240D4BB5008E3342 /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -583,6 +602,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -644,6 +664,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -703,7 +724,7 @@
 				CODE_SIGN_ENTITLEMENTS = "aware-client-ios-v2/aware-client-ios-v2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 62;
 				DEVELOPMENT_TEAM = FH352PYMNC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "aware-client-ios-v2/Info.plist";
@@ -712,7 +733,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.2;
+				MARKETING_VERSION = 1.10.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yuukinishiyama.app.aware-client-ios-v2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -731,7 +752,7 @@
 				CODE_SIGN_ENTITLEMENTS = "aware-client-ios-v2/aware-client-ios-v2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 62;
 				DEVELOPMENT_TEAM = FH352PYMNC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "aware-client-ios-v2/Info.plist";
@@ -740,7 +761,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.2;
+				MARKETING_VERSION = 1.10.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yuukinishiyama.app.aware-client-ios-v2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

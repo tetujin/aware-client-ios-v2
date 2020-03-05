@@ -31,10 +31,10 @@ class OnboardingManager: NSObject {
         let background = UIImage(named: "background")?.resized(toWidth: viewController.view.frame.width)
         
         // -- overview
-        let overviewPage = OnboardingContentViewController(title: "About AWARE",
-                                                           body: "AWARE is a sensing framework dedicated to an instrument, infer, log and share mobile context information, for smartphone users and researchers.",
+        let overviewPage = OnboardingContentViewController(title: NSLocalizedString("onbording_overview_title", comment: ""),
+                                                           body:  NSLocalizedString("onbording_overview_body",  comment: ""),
                                                            image: icon,
-                                                           buttonText: "Next") { () -> Void in
+                                                           buttonText: NSLocalizedString("Next", comment: "") ) { () -> Void in
                                                             if let page = self.onboardingVC?.pageControl.currentPage {
                                                                 AWAREEventLogger.shared().logEvent(["class":"OnboardingManager","event":"next","page":page])
                                                             }
@@ -45,14 +45,10 @@ class OnboardingManager: NSObject {
         overviewPage.movesToNextViewController = true
         
         // -- overview
-        let individualPage = OnboardingContentViewController(title: "Individuals:\n Record your data",
-                                                           body: """
-AWARE captures hardware-, software-, and human-based data in the background if you allow collecting these data. For instance, you can collect your location data in the background 24/7, and export the data as an SQLite database.
-\n
-AWARE will request permission to access the data if you need to use a sensors that required permission (e.g., HealthKit, Motion Activity, and Location).
-""",
+        let individualPage = OnboardingContentViewController(title: NSLocalizedString("onbording_data_title", comment: ""),
+                                                           body: NSLocalizedString("onbording_data_body", comment: ""),
                                                            image: icon,
-                                                           buttonText: "Next") { () -> Void in
+                                                           buttonText:  NSLocalizedString("Next", comment: "") ) { () -> Void in
 
         }
         individualPage.titleLabel.font = individualPage.titleLabel.font.withSize(30)
@@ -61,14 +57,10 @@ AWARE will request permission to access the data if you need to use a sensors th
         individualPage.movesToNextViewController = true
         
         // -- scientists
-        let scientistPage = OnboardingContentViewController(title: "Scientists: Run studies",
-                                                           body: """
-Running a mobile-related study has never been easier. Install AWARE on the participants' phone, select the data you want to collect and that is it.
-\n
-By using the AWARE Dashboard, you can easily enable or disable sensors remotely. Privacy is enforced by design, so AWARE does not log personal information, such as phone numbers or contacts information. Also, the data is saved locally on your mobile phone temporary. AWARE uploads the data to the AWARE server automatically if the device has a Wi-Fi network and is charged battery.
-""",
+        let scientistPage = OnboardingContentViewController(title: NSLocalizedString("onbording_study_title", comment: ""),
+                                                           body: NSLocalizedString("onbording_study_body", comment: ""),
                                                            image: icon,
-                                                           buttonText: "Next") { () -> Void in
+                                                           buttonText:  NSLocalizedString("Next", comment: "") ) { () -> Void in
                                                             if let page = self.onboardingVC?.pageControl.currentPage {
                                                                 AWAREEventLogger.shared().logEvent(["class":"OnboardingManager","event":"next","page":page])
                                                             }
@@ -80,15 +72,10 @@ By using the AWARE Dashboard, you can easily enable or disable sensors remotely.
                 
         
         // -- location
-        let locationPage = OnboardingContentViewController(title: "Permission: Location",
-                                                           body:
-"""
-For data collection in the background, AWARE needs to access a location sensor on your device always.
-\n
-(NOTE: AWARE **does not store** your location data until the location-related sensors are enabled.)
-""",
+        let locationPage = OnboardingContentViewController(title: NSLocalizedString("onboarding_permission_loc_title", comment: ""),
+                                                           body:NSLocalizedString("onboarding_permission_loc_body", comment: ""),
                                                            image: icon,
-                                                           buttonText: "Allow") { () -> Void in
+                                                           buttonText: NSLocalizedString("Allow", comment: "") ) { () -> Void in
             if let page = self.onboardingVC?.pageControl.currentPage {
                 AWAREEventLogger.shared().logEvent(["class":"OnboardingManager","event":"next","page":page])
             }
@@ -102,12 +89,10 @@ For data collection in the background, AWARE needs to access a location sensor o
 
         
         // -- notification
-        let notificationPage = OnboardingContentViewController(title: "Permission: Notification",
-                                                               body:
-"""
-For notifying the latest app information and reminders of mobile surveys, AWARE needs to use Push Notification.
-""",
-                                                               image: icon, buttonText: "Allow") {
+        let notificationPage = OnboardingContentViewController(title: NSLocalizedString("onboarding_permission_notif_title", comment: ""),
+                                                               body: NSLocalizedString("onboarding_permission_notif_body", comment: ""),
+                                                               image: icon,
+                                                               buttonText: NSLocalizedString("Allow", comment: "")) {
             if let page = self.onboardingVC?.pageControl.currentPage {
                 AWAREEventLogger.shared().logEvent(["class":"OnboardingManager","event":"next","page":page])
             }
@@ -120,8 +105,8 @@ For notifying the latest app information and reminders of mobile surveys, AWARE 
         notificationPage.movesToNextViewController = true
         
         // -- welcome
-        let welcomePage = OnboardingContentViewController(title: "Welcome to AWARE Framework",
-                                                          body: "You can get detail information about AWARE Framework from the following link.\nhttp://www.awareframework.com/",
+        let welcomePage = OnboardingContentViewController(title: NSLocalizedString("onboarding_welcome_title", comment: ""),
+                                                          body: NSLocalizedString("onboarding_welcome_body",   comment: ""),
                                                           image: icon,
                                                           buttonText: "OK") {
             if let page = self.onboardingVC?.pageControl.currentPage {
@@ -130,16 +115,17 @@ For notifying the latest app information and reminders of mobile surveys, AWARE 
             self.onboardingVC?.dismiss(animated: true) {
                 self.onboardingVC = nil
             }
+                                                            
             
         }
         welcomePage.titleLabel.font = welcomePage.titleLabel.font.withSize(30)
         welcomePage.bodyLabel.font  = welcomePage.bodyLabel.font.withSize(18)
-        welcomePage.movesToNextViewController = true
+        welcomePage.movesToNextViewController = false
         
         
         // -- setup an Onboarding View Controller
         onboardingVC = OnboardingViewController(backgroundImage: background, contents: [overviewPage, individualPage, scientistPage, locationPage, notificationPage, welcomePage])
-//        onboardingVC?.shouldBlurBackground = true;
+        onboardingVC?.shouldBlurBackground = false;
         onboardingVC?.swipingEnabled = false;
         onboardingVC?.allowSkipping = true;
         onboardingVC?.skipHandler = ({

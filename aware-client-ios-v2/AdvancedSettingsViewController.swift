@@ -102,7 +102,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 AWAREStudy.shared().setDebug(false)
                 self.refresh()
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
         // auto sync
@@ -120,7 +120,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 AWAREStudy.shared().setDBType(AwareDBTypeCSV)
                 self.refresh()
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action) in
                 
             }))
             alert.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)?.contentView
@@ -140,7 +140,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 AWARECore.shared().activate()
                 self.refresh()
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             alert.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)?.contentView
             alert.popoverPresentationController?.sourceRect = (tableView.cellForRow(at: indexPath)?.contentView.frame)!
             self.present(alert, animated: true, completion: nil)
@@ -153,7 +153,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 textField.text = row.details
                 textField.keyboardType = UIKeyboardType.numberPad
             })
-            alert.addAction(UIAlertAction(title: "Update", style: .default, handler: { (action) in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Update", comment: ""), style: .default, handler: { (action) in
                 if let textFields = alert.textFields {
                     if textFields.count > 0 {
                         if let textField = textFields.first {
@@ -166,7 +166,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                     }
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
         // wifi only
@@ -180,7 +180,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 AWAREStudy.shared().setAutoDBSyncOnlyWifi(false)
                 self.refresh()
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
         // battery only
@@ -194,7 +194,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 AWAREStudy.shared().setAutoDBSyncOnlyBatterChargning(false)
                 self.refresh()
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
         // fetch count
@@ -205,7 +205,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 textField.text = row.details
                 textField.keyboardType = UIKeyboardType.numberPad
             })
-            alert.addAction(UIAlertAction(title: "Update", style: .default, handler: { (action) in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Update", comment: ""), style: .default, handler: { (action) in
                 if let textFields = alert.textFields {
                     if textFields.count > 0 {
                         if let textField = textFields.first {
@@ -218,7 +218,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                     }
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         // db clean
         case AdvancedSettingsIdentifiers.dbCleanInterval.rawValue:
@@ -243,7 +243,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 AWAREStudy.shared().setCleanOldDataType(cleanOldDataTypeNever)
                 self.refresh()
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         // quit
         case AdvancedSettingsIdentifiers.quit.rawValue:
@@ -252,7 +252,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 AWAREStudy.shared().clearSettings()
                 self.refresh()
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         case AdvancedSettingsIdentifiers.export.rawValue:
             var activityItems = Array<URL>();
@@ -303,7 +303,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                     })
                     alert.addAction(action)
                 }
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             } catch {
                 print(error)
@@ -327,7 +327,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 AWAREStudy.shared().setUIMode(AwareUIModeHideAll)
                 self.refresh()
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
         case AdvancedSettingsIdentifiers.contextView.rawValue:
@@ -346,7 +346,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 }
                 self.refresh()
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
         case AdvancedSettingsIdentifiers.statusMonitor.rawValue:
@@ -363,7 +363,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 AWAREStatusMonitor.shared().deactivate()
                 self.refresh()
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
         case AdvancedSettingsIdentifiers.complianceCheck.rawValue:
@@ -380,7 +380,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                     push.uploadToken(token, toProvider: server, forcefully: true)
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
         case AdvancedSettingsIdentifiers.anchorAccuracy.rawValue:
@@ -407,7 +407,7 @@ extension AdvancedSettingsViewController:UITableViewDelegate{
                 self.refresh()
                 AWARECore.shared().reactivate()
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             alert.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)?.contentView
             alert.popoverPresentationController?.sourceRect = (tableView.cellForRow(at: indexPath)?.contentView.frame)!
             self.present(alert, animated: true, completion: nil)

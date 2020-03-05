@@ -353,7 +353,7 @@ extension SensorSettingViewController: UITableViewDataSource{
                 textField.text = content.currentValue
                 textField.keyboardType = UIKeyboardType.numbersAndPunctuation
             })
-            alert.addAction(UIAlertAction(title: "Update", style: .default, handler: { (action) in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Update", comment: ""), style: .default, handler: { (action) in
                 if let textFields = alert.textFields {
                     if textFields.count > 0 {
                         if let textField = textFields.first {
@@ -392,7 +392,7 @@ extension SensorSettingViewController: UITableViewDataSource{
             break
         }
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
         
         self.present(alert, animated: true) {}
     }

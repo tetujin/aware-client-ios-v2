@@ -1,0 +1,136 @@
+/* 
+  Localizable.strings
+  aware-client-ios-v2
+
+  Created by Yuuki Nishiyama on 2020/03/02.
+  Copyright © 2020 Yuuki Nishiyama. All rights reserved.
+*/
+
+
+/// settings
+"device_id" = "Device ID";
+"device_name" = "Device Name";
+"advanced_settings" = "Advanced Settings";
+
+/// sensors
+"Accelerometer" = "Accelerometer";
+"Gyroscope"     = "Gyroscope";
+"Magnetometer"  = "Magnetometer";
+"Rotation"      = "Rotation";
+"Linear Accelerometer" = "Linear Accelerometer";
+"Activity Recognition" = "Activity Recognition";
+"Location" = "Location";
+"Pedometer" = "Pedometer";
+"Barometer" = "Barometer";
+"Battery" = "Battery";
+"Network" = "Network";
+"Communication" = "Communication";
+"Bluetooth" = "Bluetooth";
+"Processor" = "Processor";
+"Timezone" = "Timezone";
+"WiFi" = "WiFi";
+"Screen" = "Screen";
+"Ambient Noise" = "Ambient Noise";
+"Heart Rate"= "Heart Rate";
+"Calendar" = "Calendar";
+"Contacts" = "Contacts";
+"Fitbit" = "Fitbit";
+"Google Login"="Google Login";
+"NTP" = "NTP";
+"Weather" = "Weather";
+"Conversation" = "Conversation";
+"Fused Location" = "Fused Location";
+"HealthKit" = "HealthKit";
+"Device Usage" = "Device Usage";
+"iOS ESM" = "iOS ESM";
+"Google Calendar ESM" = "Google Calendar ESM";
+"Significant Motion" = "Significant Motion";
+"Push Notification" = "Push Notification";
+
+/// sensors details
+"accelerometer_detail" = "Acceleration, including the force of gravity";
+"gyro_detail" = "Rotation rate of device";
+"mag_detail"  = "Geomagnetic field strength around the device";
+"rotation_detail"      = "Orientation of the device in all axis";
+"l_accelerometer_detail" = "Acceleration applied to the sensor built-in into the device, excluding the force of gravity";
+"activity_recognition_detail" = "User's estimated activity (e.g., stationary, walking, running, automotive, cycling, and unknown)";
+"pedometer_detail" = "User's step count";
+"location_detail" = "User's estimated location";
+"barometer_detail" = "Atomospheric air pressure";
+"battery_detail" = "Battery (0-100%) and power event";
+"network_detail" = "Network usage (e.g., mobile, wifi, and unknown)";
+"communication_detail" = "Communication events such as calls, performed by or received by the user";
+"bluetooth_detail" = "Bluetooth devices around the device";
+"processor_detail" = "CPU workload for user, system and idle(%)";
+"timezone_detail" = "User’s current timezone";
+"wifi_detail" = "Connected WiFi access point information";
+"screen_detail" = "Screen events (locked/unlocked)";
+"ambient_noise_detail" = "Ambient noise collected from a microphone on the device";
+"heartrate_detail"= "Collect heart rate data from an external heart rate sensor via BLE.";
+"calendar_detail" = "Calendar events on Calendar.app";
+"contacts_detail" = "Contact list on Contacts.app";
+"fitbit_detail" = "Fitbit data which is collected from Fitbit API";
+"google_login_detail"="Multi-device management using Google Account";
+"ntp_detail" = "Measure device's clock drift from an NTP server";
+"weather_detail" = "Weather information provided by OpenWeatherMap API";
+"conversation_detail" = "";
+"fused_location_detail" = "User's estimated location";
+"healthkit_detail" = "Health-related data on HealthKit";
+"device_usage_detail" = "Device usage time based on lock/unlock events";
+"ios_esm_detail" = "Scheduling an ESM based on a JSON format configuration file";
+"google_calendar_esm_detail" = "Scheduling an ESM based on a Google Calendar";
+"significant_motion_detail" = "Significant motion events based on Accelerometer";
+"push_notification_detail" = "";
+
+// onboarding
+"onbording_overview_title" = "About AWARE";
+"onbording_overview_body"  = "AWARE is a sensing framework dedicated to an instrument, infer, log and share mobile context information, for smartphone users and researchers.";
+
+"onbording_data_title" = "Individuals: Record your data";
+"onbording_data_body"  = "AWARE captures hardware-, software-, and human-based data in the background if you allow collecting these data. For instance, you can collect your location data in the background 24/7, and export the data as an SQLite database.\nAWARE will request permission to access the data if you need to use a sensors that required permission (e.g., HealthKit, Motion Activity, and Location).";
+
+"onbording_study_title" = "Scientists: Run studies";
+"onbording_study_body" = "Running a mobile-related study has never been easier. Install AWARE on the participants' phone, select the data you want to collect and that is it.\nBy using the AWARE Dashboard, you can easily enable or disable sensors remotely. Privacy is enforced by design, so AWARE does not log personal information, such as phone numbers or contacts information. Also, the data is saved locally on your mobile phone temporary. AWARE uploads the data to the AWARE server automatically if the device has a Wi-Fi network and is charged battery.";
+
+"onboarding_permission_loc_title" = "Permission: Location";
+"onboarding_permission_loc_body" = "For data collection in the background, AWARE needs to access a location sensor on your device always.\n(NOTE: AWARE **does not store** your location data until the location-related sensors are enabled.)";
+
+"onboarding_permission_notif_title" = "Permission: Notification";
+"onboarding_permission_notif_body" = "For notifying the latest app information and reminders of mobile surveys, AWARE needs to use Push Notification.";
+
+"onboarding_welcome_title" = "Welcome to AWARE Framework";
+"onboarding_welcome_body" = "You can get detail information about AWARE Framework from the following link.\nhttp://www.awareframework.com/";
+
+
+/// general
+"Next" = "Next";
+"Allow" = "Allow";
+"Cancel" = "Cancel";
+"Execute" = "Execute";
+"Update" = "Update";
+"Close" = "Close";
+
+
+/// setting view
+"setting_view_manual_upload_title" = "Do you upload stored sensor data manually?";
+"setting_view_manual_upload_msg"   = "This upload process is executed without WiFi connection and battery charging. Please check these conditions again.";
+"setting_view_config_refresh_title" = "Your client configuration is refreshed.";
+"setting_view_upload_comp_title"    = "Data upload is completed";
+
+
+/// context card
+"context_card_no_active_sensors_title" = "No active sensors";
+"context_card_no_active_sensors_msg"   = "Please activate one or more sensors from Setting View";
+"context_card_add_title"               = "Which context-card do you add?";
+"context_card_add_msg"                 = "Please select a context-card from the following items.";
+"context_card_remove_title"            = "Which context-card do you remove?";
+"context_card_remove_msg"              = "Please select a context-card from the following items.";
+"context_card_item_remove_all"         = "Remove all";
+
+/// terminate
+"terminate_title" = "Please Re-open AWARE Client V2";
+"terminate_msg"   = "For recording your activity stably, please do not remove this app from the background.";
+
+/// ESN
+"Tap to answer survey(s)" = "Tap to answer survey(s)";
+"No pending survey(s)" = "No pending survey(s)";

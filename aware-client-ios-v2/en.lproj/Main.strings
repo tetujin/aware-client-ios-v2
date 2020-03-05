@@ -1,0 +1,36 @@
+
+/* Class = "UINavigationItem"; title = "Context Card"; ObjectID = "083-Ua-o6n"; */
+"083-Ua-o6n.title" = "Context Card";
+
+/* Class = "UIButton"; normalTitle = "Close"; ObjectID = "A70-2x-e13"; */
+"A70-2x-e13.normalTitle" = "Close";
+
+/* Class = "UIButton"; normalTitle = "Please scan a QR Code"; ObjectID = "D0M-JQ-1oR"; */
+"D0M-JQ-1oR.normalTitle" = "Please scan a QR Code";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "FFP-Dc-506"; */
+"FFP-Dc-506.title" = "Item";
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "MGD-Px-WEh"; */
+"MGD-Px-WEh.title" = "Settings";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "PPR-I1-hT5"; */
+"PPR-I1-hT5.text" = "Title";
+
+/* Class = "UINavigationItem"; title = "Setting"; ObjectID = "Ufw-Yx-bJx"; */
+"Ufw-Yx-bJx.title" = "Setting";
+
+/* Class = "UINavigationItem"; title = "ESM"; ObjectID = "gDn-fd-MvS"; */
+"gDn-fd-MvS.title" = "ESM";
+
+/* Class = "UITabBarItem"; title = "ESM"; ObjectID = "m4h-sH-MRf"; */
+"m4h-sH-MRf.title" = "ESM";
+
+/* Class = "UITabBarItem"; title = "Context"; ObjectID = "mFL-Ah-OMP"; */
+"mFL-Ah-OMP.title" = "Context";
+
+/* Class = "UIButton"; normalTitle = "No Pending Survey(s)"; ObjectID = "okB-ki-1y4"; */
+"okB-ki-1y4.normalTitle" = "No Pending Survey(s)";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "pHK-P6-sZH"; */
+"pHK-P6-sZH.text" = "Details";

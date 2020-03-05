@@ -1,0 +1,138 @@
+/* 
+  Localizable.strings
+  aware-client-ios-v2
+
+  Created by Yuuki Nishiyama on 2020/03/02.
+  Copyright © 2020 Yuuki Nishiyama. All rights reserved.
+*/
+
+/// settings
+"device_id" = "デバイスID";
+"device_name" = "デバイス名";
+"advanced_settings" = "詳細設定";
+/// sensors
+"Accelerometer"         = "加速度計";
+"Gyroscope"             = "ジャイロスコープ";
+"Magnetometer"          = "地磁気計";
+"Rotation"              = "回転";
+"Linear Accelerometer"  = "線形加速度計";
+"Activity Recognition"  = "行動認識";
+"Location"              = "位置情報";
+"Pedometer"             = "歩数計";
+"Barometer"             = "気圧計";
+"Battery"               = "電池残量";
+"Network"               = "通信";
+"Communication"        = "連絡";
+"Bluetooth"             = "Bluetooth";
+"Processor" = "プロセッサ";
+"Timezone" = "タイムゾーン";
+"WiFi" = "WiFi";
+"Screen" = "スクリーン";
+"Ambient Noise" = "環境音";
+"Heart Rate" = "心拍数";
+"Calendar" = "カレンダー";
+"Contacts" = "連絡先";
+"Fitbit" = "Fitbit";
+"Google Login"="Googleログイン";
+"NTP" = "NTP";
+"Weather" = "天気";
+"Conversation" = "会話";
+"Fused Location" = "統合位置情報";
+"HealthKit"="HealthKit";
+"Device Usage"="デバイス使用時間";
+"iOS ESM" = "経験サンプリング法（ESM）";
+"Google Calendar ESM" = "GoogleカレンダーESM";
+"Significant Motion" = "動作イベント";
+"Push Notification" = "Push通知";
+
+
+/// sensor details
+"accelerometer_detail" = "重力加速度を含む加速度";
+"gyro_detail" = "デバイスの角速度";
+"mag_detail"  = "デバイス周辺の地磁気強度";
+"rotation_detail"      = "デバイスの回転";
+"l_accelerometer_detail" = "重力を除く加速度";
+"activity_recognition_detail" = "Motion Coprocessorが推定した行動\n（静止/歩行/走行/自動車/自転車/不明）";
+"pedometer_detail" = "Motion Coprocessorが検知した歩数";
+"location_detail" = "推定位置情報";
+"barometer_detail" = "大気圧";
+"battery_detail" = "バッテリ残量（0-100％）および電源イベント";
+"network_detail" = "ネットワークの使用状況（モバイル/WiFi/不明）";
+"communication_detail" = "ユーザが発信・受信した通話イベントやその時間";
+"bluetooth_detail" = "デバイス周辺のBluetoothデバイス情報";
+"processor_detail" = "CPU利用率（user/system/idle）";
+"timezone_detail" = "現在のタイムゾーン";
+"wifi_detail" = "接続中のWiFiアクセスポイントの情報";
+"screen_detail" = "スクリーンのイベント (locked/unlocked)";
+"ambient_noise_detail" = "マイクから収集された周辺ノイズ";
+"heartrate_detail"= "BLE心拍計より収集した心拍データ";
+"calendar_detail" = "Calendar上のカレンダーイベント";
+"contacts_detail" = "Contacts上の連絡先";
+"fitbit_detail" = "Fitbit Web APIより収集するFitbitデータ\n（心拍数/歩数/睡眠など）";
+"google_login_detail"="Googleアカウントを使用したマルチデバイス管理";
+"ntp_detail" = "デバイスのクロック誤差";
+"weather_detail" = "OpenWeatherMapより提供される天気情報";
+"conversation_detail" = "";
+"fused_location_detail" = "推定位置情報";
+"healthkit_detail" = "HealthKitの健康関連データ";
+"device_usage_detail" = "Lock/Unlockイベントに基づくデバイス使用時間";
+"ios_esm_detail" = "JSON形式の設定ファイル用いたESMスケジューリング";
+"google_calendar_esm_detail" = "Googleカレンダーを用いたESMスケジューリング";
+"significant_motion_detail" = "加速度データから検知した特徴的な動作イベント";
+"push_notification_detail" = "Push通知用トークンと定期的なSilent-Push通知";
+
+
+// onboarding
+"onbording_overview_title" = "AWAREについて";
+"onbording_overview_body"  = "AWAREはスマートフォンのセンサデータ及びコンテキストを手軽に記録・可視化し、必要に応じて研究者と共有するためのフレームワークです。";
+
+"onbording_data_title" = "個人利用：行動記録";
+"onbording_data_body"  = "AWAREを使えば、スマートフォンに搭載された物理・仮想センサのデータをアプリを使っていない時でも自動的に記録できます。例えば、あなたの位置情報を24時間記録し、後から振り返ることができます。データはあなたのスマートフォンの中（SQLite）に保存されています。\n一部のセンサ（HealthKitや環境音、位置情報、行動認識など）の利用には、許可が必要なため、必要に応じて許可を求めます。";
+
+"onbording_study_title" = "研究者：実験の実施";
+"onbording_study_body" = "スマートフォンを使った調査研究を3ステップで実施できます。（1）参加者のスマートフォンにAWAREをインストールし、（2）ウェブダッシュボードから収集するデータを選択、最後に（3）参加者にQRコードを配布し、AWAREで読み込むだけです。\n\n収集したデータは、一旦スマートフォン上のストレージに保存され、WiFiに接続・充電が行われている時に自動的にアップロードされます。また、AWAREはプライバシーに考慮した設計になっており、個人情報は保存しません。";
+
+"onboarding_permission_loc_title" = "許可：位置情報";
+"onboarding_permission_loc_body" = "バックグランドでデータ収集を行う為に、AWAREは「常に」位置情報センサを利用する必要があります。「許可」ボタンを押して位置情報センサの利用を許可して下さい。\n（注意：あなたが、位置情報センサへの利用を許可しない限り、AWAREはバックグランド状態の時にデータを収集できません。）";
+
+"onboarding_permission_notif_title" = "許可：Push通知";
+"onboarding_permission_notif_body" = "「アンケート調査のリマインド」や「実験の開始・終了」、「最新のアプリ情報」を受け取る為に、AWAREはPush通知を利用します。「許可」ボタンを押して、Push通知の利用を許可して下さい。";
+
+"onboarding_welcome_title" = "AWARE Frameworkへようこそ！";
+"onboarding_welcome_body" = "AWARE Framework の詳細は、以下のリンクからアクセスできます。\nhttp://www.awareframework.com/";
+
+
+/// general
+"Next" = "次へ";
+"Allow" = "許可";
+"Cancel" = "キャンセル";
+"Execute" = "実行";
+"Update" = "アップデート";
+"Close" = "閉じる";
+
+/// setting view
+"setting_view_manual_upload_title" = "デバイスに保存されたセンサデータをサーバにアップロードしますか？";
+"setting_view_manual_upload_msg"   = "（注意）このアップロードプロセスは、デバイスがWiFi未接続・電池が充電されていない状態でも実行されます。";
+"setting_view_config_refresh_title" = "設定が更新されました";
+"setting_view_upload_comp_title"    = "データアップロードが完了しました";
+
+
+
+/// context card
+"context_card_no_active_sensors_title" = "起動中のセンサがありません";
+"context_card_no_active_sensors_msg"   = "設定画面から一つ以上のセンサを起動して下さい。";
+"context_card_add_title"               = "どのデータを可視化しますか？";
+"context_card_add_msg"                 = "一つ選択してください。";
+"context_card_remove_title"            = "どのデータの可視化を取り消しますか？";
+"context_card_remove_msg"              = "一つ選択してください。";
+"context_card_item_remove_all"         = "全て取り消す";
+
+
+/// terminate
+"terminate_title" = "AWAREを再起動してください";
+"terminate_msg"   = "安定してあなたの活動を記録するために、できるだけ本アプリをバックグランドから削除しないでください。";
+
+
+/// ESN
+"Tap to answer survey(s)" = "タップして未回答の調査に回答";
+"No pending survey(s)" = "未回答の調査はありません";
