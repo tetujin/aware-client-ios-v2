@@ -74,6 +74,8 @@
 	<string>For collecting motion activity, this application needs to access your device motion API.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>For saving the taken photo into Photo Library, this application needs to access your photo library.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>For using photos, this application needs to access your Photo Library.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

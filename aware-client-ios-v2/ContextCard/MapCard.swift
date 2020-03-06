@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import AWAREFramework
 
-class MapCard: ContextCard {
+class MapCard: ContextCard{
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -21,6 +21,8 @@ class MapCard: ContextCard {
     */
     
     var mapView:MKMapView?
+    var polyline:MKPolyline?
+    var render:MKPolylineRenderer?
     
     override func setup() {
         super.setup()
@@ -32,6 +34,7 @@ class MapCard: ContextCard {
             self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
             self.spaceView.translatesAutoresizingMaskIntoConstraints = false
             self.baseStackView.insertArrangedSubview(mv, at: 1)
+            mv.delegate = self
         }
     }
     
@@ -46,20 +49,47 @@ class MapCard: ContextCard {
                         self.indicatorView.isHidden = true
                         mv.isHidden = false
                         
+                        var mapPoints:[CLLocationCoordinate2D] = Array()
+                        
                         for result in results as! Array<Dictionary<String, Any>> {
                             // double_latitude
                             // double_longitude
                             let latitude = result["double_latitude"] as! Double?
                             let longitude = result["double_longitude"] as! Double?
                             // show artwork on map
-                            let item = MKPointAnnotation.init()
-                            item.coordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
+                            let loc = CLLocationCoordinate2DMake(latitude!, longitude!)
+                            
+                            let item = MKPointAnnotation()
+                            item.coordinate = loc
                             mv.addAnnotation(item)
+                            
+                            mapPoints.append(loc)
                         }
-                        mv.showAnnotations(mv.annotations, animated: true)
+                         mv.showAnnotations(mv.annotations, animated: true)
+                        
+                        // remove a previous polyline
+                        if let polyline = self.polyline {
+                            self.mapView?.removeOverlay(polyline)
+                        }
+                        
+                        // create a polyline with all cooridnates
+                        self.polyline = MKPolyline(coordinates:mapPoints, count: mapPoints.count)
+                        // set the created polyline
+                        if let polyline = self.polyline {
+                            self.mapView?.addOverlay(polyline)
+                        }
                     }
                 }
             })
         }        
+    }
+}
+
+extension MapCard: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        self.render = MKPolylineRenderer(overlay: overlay)
+        self.render?.lineWidth = 5
+        self.render?.strokeColor = .gray
+        return self.render!
     }
 }
