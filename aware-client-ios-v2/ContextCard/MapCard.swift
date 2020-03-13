@@ -21,8 +21,10 @@ class MapCard: ContextCard{
     */
     
     var mapView:MKMapView?
-    var polyline:MKPolyline?
+    var polyline:MyPolyline?
     var render:MKPolylineRenderer?
+    
+    var lastLocation:CLLocationCoordinate2D?
     
     override func setup() {
         super.setup()
@@ -50,6 +52,9 @@ class MapCard: ContextCard{
                         mv.isHidden = false
                         
                         var mapPoints:[CLLocationCoordinate2D] = Array()
+                        self.lastLocation = nil
+                        var weight:Float = 0.1;
+                        var pins:[MyPointAnnotation] = Array<MyPointAnnotation>()
                         
                         for result in results as! Array<Dictionary<String, Any>> {
                             // double_latitude
@@ -59,13 +64,58 @@ class MapCard: ContextCard{
                             // show artwork on map
                             let loc = CLLocationCoordinate2DMake(latitude!, longitude!)
                             
-                            let item = MKPointAnnotation()
-                            item.coordinate = loc
-                            mv.addAnnotation(item)
-                            
-                            mapPoints.append(loc)
+                            // filter location data
+                            if let lastLoc = self.lastLocation {
+                                let a = CLLocation(latitude: lastLoc.latitude, longitude: lastLoc.longitude)
+                                let b = CLLocation(latitude: loc.latitude, longitude: loc.longitude)
+                                if a.distance(from: b) > 50 { // 50m
+                                    
+                                    if let lastPin = pins.last {
+                                        lastPin.pinTintColor = UIColor(red: 1, green: 0, blue: 0, alpha: CGFloat(weight))
+                                    }
+                                    // add an annotatiion
+                                    let item = MyPointAnnotation()
+                                    item.coordinate = loc
+                                    pins.append(item)
+                                    
+                                    mapPoints.append(loc)
+//                                    let context = CoreDataHandler.shared().managedObjectContext!
+//                                    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "EntityIOSActivityRecognition")
+//                                    if let t = timestamp {
+//                                        fetch.predicate = NSPredicate(format: "timestamp > %f and confidence == 2 and activities != \"\"", t)
+//                                        fetch.fetchLimit = 1
+//
+//                                        do {
+//                                            let fetched = try context.fetch(fetch) as! [EntityIOSActivityRecognition]
+//                                        } catch  {
+//                                            print("[ContextCard][Map] Error")
+//                                        }
+//                                    }
+
+                                    // save the current location as the last location
+                                    self.lastLocation = loc
+
+                                    weight = 0.1
+                                }else{
+                                    weight += 0.05
+                                    if weight > 1 {
+                                        weight = 1
+                                    }
+                                }
+                            }else{
+                                // add an annotatiion
+                                let item = MyPointAnnotation()
+                                item.coordinate = loc
+                                pins.append(item)
+                                // line
+                                 mapPoints.append(loc)
+                                // save the current location as the last location
+                                self.lastLocation = loc
+                            }
                         }
-                         mv.showAnnotations(mv.annotations, animated: true)
+
+                        mv.addAnnotations(pins)
+                        mv.showAnnotations(mv.annotations, animated: true)
                         
                         // remove a previous polyline
                         if let polyline = self.polyline {
@@ -73,7 +123,7 @@ class MapCard: ContextCard{
                         }
                         
                         // create a polyline with all cooridnates
-                        self.polyline = MKPolyline(coordinates:mapPoints, count: mapPoints.count)
+                        self.polyline = MyPolyline(coordinates:mapPoints, count: mapPoints.count)
                         // set the created polyline
                         if let polyline = self.polyline {
                             self.mapView?.addOverlay(polyline)
@@ -88,8 +138,42 @@ class MapCard: ContextCard{
 extension MapCard: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         self.render = MKPolylineRenderer(overlay: overlay)
-        self.render?.lineWidth = 5
-        self.render?.strokeColor = .gray
+        self.render?.lineWidth   = 5
+        self.render?.lineJoin    = .round
+        self.render?.lineCap     = .round
+        
+        if let myPolyline = overlay as? MyPolyline  {
+            if let color = myPolyline.strokeColor{
+                self.render?.strokeColor = color.withAlphaComponent(0.8)
+            }else{
+                self.render?.strokeColor = UIColor.gray.withAlphaComponent(0.5)
+            }
+        }
         return self.render!
     }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "myAnnotation") as? MKPinAnnotationView
+
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "myAnnotation")
+        } else {
+            annotationView?.annotation = annotation
+        }
+
+        if let annotation = annotation as? MyPointAnnotation {
+            annotationView?.pinTintColor = annotation.pinTintColor
+        }
+
+        return annotationView
+    }
 }
+
+class MyPointAnnotation : MKPointAnnotation {
+    var pinTintColor: UIColor?
+}
+
+class MyPolyline: MKPolyline {
+    var strokeColor: UIColor?
+}
+
