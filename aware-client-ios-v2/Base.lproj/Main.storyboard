@@ -214,7 +214,7 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="xvB-sn-WGt" firstAttribute="width" secondItem="jEK-je-Gf1" secondAttribute="width" id="0r4-NI-T1Q"/>
                                     <constraint firstAttribute="trailing" secondItem="xvB-sn-WGt" secondAttribute="trailing" id="CKI-iG-kHM"/>

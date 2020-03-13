@@ -27,7 +27,10 @@ class ScatterChartCard: ContextCard {
     var granularitySecond:Double = 0
     
     var xAxisKey      = "timestamp";
-    var xAxisLabels   = Array<String>();
+    var xAxisLabels   = Array<String>()
+    
+    var sensor:AWARESensor?
+    var yKeys:Array<String>?
     
     public typealias ScatterChartFilterHadler = (_ key:String, _ data:Dictionary<String, Any>) -> Dictionary<String,Any>?
     var filterHandler:ScatterChartFilterHadler?
@@ -35,15 +38,52 @@ class ScatterChartCard: ContextCard {
     override func setup() {
         super.setup()
         let chartHeight = frame.height - titleLabel.frame.height - spaceView.frame.height
-        self.scatterChart = ScatterChartView.init(frame:CGRect(x:0, y:0,  width:0, height:chartHeight))
+        self.scatterChart = ScatterChartView(frame:CGRect(x:0, y:0,  width:0, height:chartHeight))
         
         if let sc = self.scatterChart{
             sc.isHidden = true
             self.translatesAutoresizingMaskIntoConstraints = false
             self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
             self.spaceView.translatesAutoresizingMaskIntoConstraints = false
-            self.baseStackView.insertArrangedSubview(sc, at: 1)
-
+            /// insert the chart-view into the bottom of navigation-view
+            self.baseStackView.insertArrangedSubview(sc, at: 2)
+        }
+        
+        self.backwardHandler = {
+            let targetDateTime = self.currentDate.addingTimeInterval(-1*24*60*60)
+            self.setTitleToNavigationView(with: targetDateTime)
+            let fromDate:Date = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: false)
+            let toDate:Date   = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: true)
+            if let sensor = self.sensor, let yKeys = self.yKeys {
+                self.setScatterChart(sensor:sensor, from:fromDate, to:toDate, yKeys: yKeys)
+            }
+        }
+        
+        self.forwardHandler = {
+            let targetDateTime = self.currentDate.addingTimeInterval(24*60*60)
+            self.setTitleToNavigationView(with: targetDateTime)
+            let fromDate:Date = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: false)
+            let toDate:Date   = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: true)
+            if let sensor = self.sensor, let yKeys = self.yKeys {
+                self.setScatterChart(sensor:sensor, from:fromDate, to:toDate, yKeys: yKeys)
+            }
+        }
+    }
+    
+    func setScatterChart(sensor:AWARESensor, from fromDate:Date, to toDate:Date, xKey:String="timestamp", yKeys:Array<String>){
+        
+        self.scatterChart?.scatterData?.clearValues()
+        DispatchQueue.global().async {
+            sensor.storage?.fetchData(from: fromDate, to: toDate, handler: { (name, result, start, end, error) in
+                if let unwrappedResults = result as? Array<Dictionary<String, Any>>{
+                    self.setChart(sensor,
+                                  xKey: xKey,
+                                  yKeys: yKeys,
+                                  name: name,
+                                  results: unwrappedResults,
+                                  start:   start, end: end, error: error)
+                }
+            })
         }
     }
     
@@ -59,11 +99,13 @@ class ScatterChartCard: ContextCard {
         data.setValueFont(.systemFont(ofSize: 3, weight: .light))
 
         self.scatterChart?.data = data
+        self.scatterChart?.isUserInteractionEnabled = false
 
     }
 
     public func setTodaysChart(sensor:AWARESensor, xKey:String="timestamp", yKeys:Array<String>){
-
+        self.sensor = sensor
+        
         activityIndicatorView.isHidden = false;
         self.titleLabel.text = sensor.getName()
         
@@ -97,6 +139,9 @@ class ScatterChartCard: ContextCard {
     
     public func setChart(_ sensor:AWARESensor, xKey:String="timestamp", yKeys:Array<String>, name:String, results:Array<Dictionary<String, Any>>, start:Date?, end:Date?, error:Error?){
         // let results = sensor.storage.fetchTodaysData()
+        
+        self.yKeys = yKeys
+        
         var dataSets = Array<ScatterChartDataSet>()
         
         if self.needsComposite && yKeys.count > 1 {
@@ -208,8 +253,12 @@ class ScatterChartCard: ContextCard {
                     chart.xAxis.drawLabelsEnabled = false
                 }
                 
+                if #available(iOS 13.0, *) {
+                    chart.leftAxis.labelTextColor = UIColor.label
+                    chart.xAxis.labelTextColor = UIColor.label
+                    chart.legend.textColor = UIColor.label
+                }
             }
         }
-        
     }
 }

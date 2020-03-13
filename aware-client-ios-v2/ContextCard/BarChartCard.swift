@@ -27,7 +27,8 @@ class BarChartCard: ContextCard {
             self.translatesAutoresizingMaskIntoConstraints = false
             self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
             self.spaceView.translatesAutoresizingMaskIntoConstraints = false
-            self.baseStackView.insertArrangedSubview(sc, at: 1)
+            // insert the chart-view into the bottom of navigation-view
+            self.baseStackView.insertArrangedSubview(sc, at: 2)
             
         }
     }

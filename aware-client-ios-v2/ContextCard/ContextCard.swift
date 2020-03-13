@@ -18,12 +18,20 @@ import AWAREFramework
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var spaceView: UIView!
     @IBOutlet weak var indicatorHeightLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var navigatorView: UIStackView!
+    @IBOutlet weak var dateButton: UIButton!
+    @IBOutlet weak var backwardButton: UIButton!
+    @IBOutlet weak var forwardButton: UIButton!
+    
+    var backwardHandler:(()->Void)?
+    var forwardHandler:(()->Void)?
+    
+    var currentDate = Date()
     
     override init(frame:CGRect) {
         super.init(frame: frame)
         setup()
     }
-    
     
     required init(coder aCoder: NSCoder) {
         super.init(coder: aCoder)!
@@ -39,5 +47,31 @@ import AWAREFramework
         indicatorHeightLayoutConstraint.isActive = false
         self.heightAnchor.constraint(equalToConstant:height).isActive = true
         // indicatorView.frame = CGRect(x:0, y:0, width:frame.width, height:height)
+        
+        currentDate = Date()
+        self.setTitleToNavigationView(with: currentDate)
     }
+    
+    public func setTitleToNavigationView(with date:Date){
+        self.currentDate = date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        let dateString = dateFormatter.string(from: date)
+        dateButton.setTitle(dateString, for: .normal)
+    }
+    
+    @IBAction func pushedBackwardButton(_ sender: UIButton) {
+        if let handler = backwardHandler {
+            handler()
+        }
+    }
+    
+    @IBAction func pushedForwardButton(_ sender: UIButton) {
+        if let handler = forwardHandler {
+            handler()
+        }
+    }
+    
+    
 }

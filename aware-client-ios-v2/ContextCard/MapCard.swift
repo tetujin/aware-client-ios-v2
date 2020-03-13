@@ -28,14 +28,15 @@ class MapCard: ContextCard{
     
     override func setup() {
         super.setup()
-        let chartHeight = frame.height - titleLabel.frame.height - spaceView.frame.height
+        let chartHeight = 0 //  frame.height - titleLabel.frame.height - spaceView.frame.height
         mapView = MKMapView.init(frame:CGRect(x:0, y:0, width:0, height:chartHeight))
         if let mv = mapView{
             mv.isHidden = true
             self.translatesAutoresizingMaskIntoConstraints = false
             self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
             self.spaceView.translatesAutoresizingMaskIntoConstraints = false
-            self.baseStackView.insertArrangedSubview(mv, at: 1)
+            /// insert the chart-view into the bottom of navigation-view
+            self.baseStackView.insertArrangedSubview(mv, at: 2)
             mv.delegate = self
         }
     }
@@ -47,92 +48,122 @@ class MapCard: ContextCard{
         if let storage = locationSensor.storage {
             storage.fetchTodaysData(handler: { (name, results, start, end, error) in
                 DispatchQueue.main.sync {
-                    if let mv = self.mapView{
-                        self.indicatorView.isHidden = true
-                        mv.isHidden = false
-                        
-                        var mapPoints:[CLLocationCoordinate2D] = Array()
-                        self.lastLocation = nil
-                        var weight:Float = 0.1;
-                        var pins:[MyPointAnnotation] = Array<MyPointAnnotation>()
-                        
-                        for result in results as! Array<Dictionary<String, Any>> {
-                            // double_latitude
-                            // double_longitude
-                            let latitude = result["double_latitude"] as! Double?
-                            let longitude = result["double_longitude"] as! Double?
-                            // show artwork on map
-                            let loc = CLLocationCoordinate2DMake(latitude!, longitude!)
-                            
-                            // filter location data
-                            if let lastLoc = self.lastLocation {
-                                let a = CLLocation(latitude: lastLoc.latitude, longitude: lastLoc.longitude)
-                                let b = CLLocation(latitude: loc.latitude, longitude: loc.longitude)
-                                if a.distance(from: b) > 50 { // 50m
-                                    
-                                    if let lastPin = pins.last {
-                                        lastPin.pinTintColor = UIColor(red: 1, green: 0, blue: 0, alpha: CGFloat(weight))
-                                    }
-                                    // add an annotatiion
-                                    let item = MyPointAnnotation()
-                                    item.coordinate = loc
-                                    pins.append(item)
-                                    
-                                    mapPoints.append(loc)
-//                                    let context = CoreDataHandler.shared().managedObjectContext!
-//                                    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "EntityIOSActivityRecognition")
-//                                    if let t = timestamp {
-//                                        fetch.predicate = NSPredicate(format: "timestamp > %f and confidence == 2 and activities != \"\"", t)
-//                                        fetch.fetchLimit = 1
-//
-//                                        do {
-//                                            let fetched = try context.fetch(fetch) as! [EntityIOSActivityRecognition]
-//                                        } catch  {
-//                                            print("[ContextCard][Map] Error")
-//                                        }
-//                                    }
-
-                                    // save the current location as the last location
-                                    self.lastLocation = loc
-
-                                    weight = 0.1
-                                }else{
-                                    weight += 0.05
-                                    if weight > 1 {
-                                        weight = 1
-                                    }
-                                }
-                            }else{
-                                // add an annotatiion
-                                let item = MyPointAnnotation()
-                                item.coordinate = loc
-                                pins.append(item)
-                                // line
-                                 mapPoints.append(loc)
-                                // save the current location as the last location
-                                self.lastLocation = loc
-                            }
-                        }
-
-                        mv.addAnnotations(pins)
-                        mv.showAnnotations(mv.annotations, animated: true)
-                        
-                        // remove a previous polyline
-                        if let polyline = self.polyline {
-                            self.mapView?.removeOverlay(polyline)
-                        }
-                        
-                        // create a polyline with all cooridnates
-                        self.polyline = MyPolyline(coordinates:mapPoints, count: mapPoints.count)
-                        // set the created polyline
-                        if let polyline = self.polyline {
-                            self.mapView?.addOverlay(polyline)
-                        }
-                    }
+                    self.setPinsOnMapView(results)
                 }
             })
-        }        
+        }
+        
+        self.backwardHandler = {
+            let targetDateTime = self.currentDate.addingTimeInterval(-1*24*60*60)
+            self.setTitleToNavigationView(with: targetDateTime)
+            let fromDate:Date = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: false)
+            let toDate:Date   = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: true)
+            if let storage = locationSensor.storage {
+                storage.fetchData(from: fromDate, to: toDate) { (name, results, from, to, error) in
+                    DispatchQueue.main.sync {
+                        self.setPinsOnMapView(results)
+                    }
+                }
+            }
+        }
+        
+        self.forwardHandler = {
+            let targetDateTime = self.currentDate.addingTimeInterval(24*60*60)
+            self.setTitleToNavigationView(with: targetDateTime)
+            let fromDate:Date = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: false)
+            let toDate:Date   = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: true)
+            if let storage = locationSensor.storage {
+                storage.fetchData(from: fromDate, to: toDate) { (name, results, from, to, error) in
+                    DispatchQueue.main.sync {
+                        self.setPinsOnMapView(results)
+                    }
+                }
+            }
+
+        }
     }
+    
+    func setPinsOnMapView(_ results:Array<Any>?){
+        
+        if let mv = self.mapView{
+        
+            mv.removeAnnotations(mv.annotations)
+            if let polyline = self.polyline {
+                mv.removeOverlay(polyline)
+            }
+                
+            
+            self.indicatorView.isHidden = true
+            mv.isHidden = false
+            
+            var mapPoints:[CLLocationCoordinate2D] = Array()
+            self.lastLocation = nil
+            var weight:Float = 0.1;
+            var pins:[MyPointAnnotation] = Array<MyPointAnnotation>()
+            
+            for result in results as! Array<Dictionary<String, Any>> {
+                // double_latitude
+                // double_longitude
+                let latitude = result["double_latitude"] as! Double?
+                let longitude = result["double_longitude"] as! Double?
+                // show artwork on map
+                let loc = CLLocationCoordinate2DMake(latitude!, longitude!)
+                
+                // filter location data
+                if let lastLoc = self.lastLocation {
+                    let a = CLLocation(latitude: lastLoc.latitude, longitude: lastLoc.longitude)
+                    let b = CLLocation(latitude: loc.latitude, longitude: loc.longitude)
+                    if a.distance(from: b) > 50 { // 50m
+                        
+                        if let lastPin = pins.last {
+                            lastPin.pinTintColor = UIColor(red: 1, green: 0, blue: 0, alpha: CGFloat(weight))
+                        }
+                        // add an annotatiion
+                        let item = MyPointAnnotation()
+                        item.coordinate = loc
+                        pins.append(item)
+                        
+                        mapPoints.append(loc)
+
+                        // save the current location as the last location
+                        self.lastLocation = loc
+
+                        weight = 0.1
+                    }else{
+                        weight += 0.05
+                        if weight > 1 {
+                            weight = 1
+                        }
+                    }
+                }else{
+                    // add an annotatiion
+                    let item = MyPointAnnotation()
+                    item.coordinate = loc
+                    pins.append(item)
+                    // line
+                     mapPoints.append(loc)
+                    // save the current location as the last location
+                    self.lastLocation = loc
+                }
+            }
+
+            mv.addAnnotations(pins)
+            mv.showAnnotations(mv.annotations, animated: true)
+            
+            // remove a previous polyline
+            if let polyline = self.polyline {
+                self.mapView?.removeOverlay(polyline)
+            }
+            
+            // create a polyline with all cooridnates
+            self.polyline = MyPolyline(coordinates:mapPoints, count: mapPoints.count)
+            // set the created polyline
+            if let polyline = self.polyline {
+                self.mapView?.addOverlay(polyline)
+            }
+        }
+    }
+    
 }
 
 extension MapCard: MKMapViewDelegate {
