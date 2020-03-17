@@ -114,8 +114,8 @@ class OnboardingManager: NSObject {
             }
             self.onboardingVC?.dismiss(animated: true) {
                 self.onboardingVC = nil
+                _ = LocationPermissionManager().isAuthorizedAlways(with: viewController)
             }
-                                                            
             
         }
         welcomePage.titleLabel.font = welcomePage.titleLabel.font.withSize(30)
@@ -134,6 +134,7 @@ class OnboardingManager: NSObject {
             }
             self.onboardingVC?.moveNextPage()
         })
+        
         viewController.present(onboardingVC!, animated: true) {
             
         }
@@ -149,3 +150,4 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
 }
+

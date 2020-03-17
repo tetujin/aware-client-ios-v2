@@ -72,6 +72,7 @@ class ViewController: UIViewController {
         }
         
         self.hideContextViewIfNeeded()
+         _ = LocationPermissionManager().isAuthorizedAlways(with: self)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -89,6 +90,7 @@ class ViewController: UIViewController {
                 self.tableView.reloadData()
             })
         }
+        _ = LocationPermissionManager().isAuthorizedAlways(with: self)
     }
     
     @objc func didEnterBackgroundNotification(notification: NSNotification){

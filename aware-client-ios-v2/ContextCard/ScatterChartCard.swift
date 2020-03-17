@@ -54,8 +54,8 @@ class ScatterChartCard: ContextCard {
             self.setTitleToNavigationView(with: targetDateTime)
             let fromDate:Date = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: false)
             let toDate:Date   = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: true)
-            if let sensor = self.sensor, let yKeys = self.yKeys {
-                self.setScatterChart(sensor:sensor, from:fromDate, to:toDate, yKeys: yKeys)
+            if let sensor = self.sensor, let yKeys = self.yKeys{
+                self.setScatterChart(sensor:sensor, from:fromDate, to:toDate, xKey:self.xAxisKey, yKeys:yKeys)
             }
         }
         
@@ -65,7 +65,7 @@ class ScatterChartCard: ContextCard {
             let fromDate:Date = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: false)
             let toDate:Date   = AWAREUtils.getTargetNSDate(targetDateTime, hour: 0, nextDay: true)
             if let sensor = self.sensor, let yKeys = self.yKeys {
-                self.setScatterChart(sensor:sensor, from:fromDate, to:toDate, yKeys: yKeys)
+                self.setScatterChart(sensor:sensor, from:fromDate, to:toDate, xKey:self.xAxisKey, yKeys:yKeys)
             }
         }
     }
@@ -141,6 +141,7 @@ class ScatterChartCard: ContextCard {
         // let results = sensor.storage.fetchTodaysData()
         
         self.yKeys = yKeys
+        self.xAxisKey = xKey
         
         var dataSets = Array<ScatterChartDataSet>()
         

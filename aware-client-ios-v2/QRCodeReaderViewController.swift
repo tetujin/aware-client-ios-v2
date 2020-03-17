@@ -173,11 +173,6 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
                             manager.createDBTablesOnAwareServer()
                             self.dismiss(animated: true) {
                                 self.dismissIndicator()
-                                if let vc = UIApplication.shared.keyWindow?.rootViewController {
-                                    core.openSettingsApp(vc,
-                                                         title: "Please double-check permissions for this app on Settings",
-                                                         message: "AWARE Client V2 requires `Location = Always` for a background sensing. (Note: This alert might appear even if the setting is correct.)")
-                                }
                             }
                         }
                     }

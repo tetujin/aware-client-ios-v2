@@ -28,6 +28,7 @@ class ContextCardViewController: UIViewController {
         if contextCards.count == 0 {
             setupContextCards()
         }
+        _ = LocationPermissionManager().isAuthorizedAlways(with: self)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -51,6 +52,7 @@ class ContextCardViewController: UIViewController {
                 self.tabBarController?.selectedIndex = 0
             }
         }
+        _ = LocationPermissionManager().isAuthorizedAlways(with: self)
     }
     
     func removeAllContextCards(){
@@ -64,7 +66,7 @@ class ContextCardViewController: UIViewController {
     func setupContextCards(){
         self.removeAllContextCards()
         for name in getCurrentContextCardNames() {
-            // print(name)
+            print(name)
             switch name {
             case SENSOR_ACCELEROMETER:
                 addAccelereomterCard()
@@ -102,6 +104,9 @@ class ContextCardViewController: UIViewController {
             case SENSOR_SIGNIFICANT_MOTION:
                 addSignificantMotionCard()
                 break
+//            case SENSOR_IOS_ESM:
+//                addESMCard()
+//                break
             case "locations":
                 addLocationCard()
                 break
@@ -133,6 +138,7 @@ class ContextCardViewController: UIViewController {
                                  SENSOR_HEALTH_KIT,
                                  SENSOR_PLUGIN_DEVICE_USAGE,
                                  SENSOR_SIGNIFICANT_MOTION,
+                                 // SENSOR_IOS_ESM,
                                  SENSOR_GOOGLE_FUSED_LOCATION,
                                  "locations"]
     
@@ -462,5 +468,14 @@ class ContextCardViewController: UIViewController {
             self.mainStackView.addArrangedSubview(contextCard)
         }
     }
+    
+//    func addESMCard(){
+//        if let esm = AWARESensorManager.shared().getSensor(SENSOR_IOS_ESM) as? IOSESM {
+//            let chart = ScatterChartCard(frame:CGRect(x:0,y:0, width: self.view.frame.width, height:400))
+//            chart.setWeeklyChart(sensor: esm, xKey: "timestamp", yKeys: ["esm_user_answer"])
+//            self.contextCards.append(chart)
+//            self.mainStackView.addArrangedSubview(chart)
+//        }
+//    }
 
 }

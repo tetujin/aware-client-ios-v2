@@ -1,6 +1,14 @@
-
 /* Class = "UINavigationItem"; title = "Context Card"; ObjectID = "083-Ua-o6n"; */
 "083-Ua-o6n.title" = "コンテキスト";
+
+/* Class = "UILabel"; text = "Chose \"Always\" from the options "; ObjectID = "1fm-Eq-Z1o"; */
+"1fm-Eq-Z1o.text" = "「常に」許可を選択する";
+
+/* Class = "UILabel"; text = "Please give permission to AWARE for accessing your location \"Always\" for recording your activities in the background."; ObjectID = "4IM-LI-dIX"; */
+"4IM-LI-dIX.text" = "AWAREがあなたの活動を継続的に記録するために、位置情報の利用を「常に」許可していただく必要があります。";
+
+/* Class = "UILabel"; text = "For using AWARE, following operations are required:"; ObjectID = "6XA-zK-eJ9"; */
+"6XA-zK-eJ9.text" = "AWAREを利用するには、以下の手順が必要です：";
 
 /* Class = "UIButton"; normalTitle = "Close"; ObjectID = "A70-2x-e13"; */
 "A70-2x-e13.normalTitle" = "閉じる";
@@ -17,11 +25,23 @@
 /* Class = "UILabel"; text = "Title"; ObjectID = "PPR-I1-hT5"; */
 "PPR-I1-hT5.text" = "タイトル";
 
+/* Class = "UILabel"; text = "Tap \"Location\" on the Settings"; ObjectID = "TI5-Pj-1Ek"; */
+"TI5-Pj-1Ek.text" = "設定を開いたらい、「位置情報」を選択";
+
 /* Class = "UINavigationItem"; title = "Setting"; ObjectID = "Ufw-Yx-bJx"; */
 "Ufw-Yx-bJx.title" = "設定";
 
+/* Class = "UIButton"; normalTitle = "Open Application Settings"; ObjectID = "Vsj-dQ-MAy"; */
+"Vsj-dQ-MAy.normalTitle" = "アプリケーション設定を開く";
+
+/* Class = "UILabel"; text = "You can open the Settings by pushing \"Open Application Settings\" at the bottom."; ObjectID = "av5-SW-1Ng"; */
+"av5-SW-1Ng.text" = "この画面下にある「アプリケーション設定を開く」ボタンから、設定画面に移動できます。";
+
 /* Class = "UINavigationItem"; title = "ESM"; ObjectID = "gDn-fd-MvS"; */
 "gDn-fd-MvS.title" = "ESM";
+
+/* Class = "UILabel"; text = "2. "; ObjectID = "k0K-6h-dRl"; */
+"k0K-6h-dRl.text" = "2. ";
 
 /* Class = "UITabBarItem"; title = "ESM"; ObjectID = "m4h-sH-MRf"; */
 "m4h-sH-MRf.title" = "ESM";
@@ -29,8 +49,14 @@
 /* Class = "UITabBarItem"; title = "Context"; ObjectID = "mFL-Ah-OMP"; */
 "mFL-Ah-OMP.title" = "コンテキスト";
 
+/* Class = "UILabel"; text = "Open Application Settings"; ObjectID = "mHt-az-ZJ2"; */
+"mHt-az-ZJ2.text" = "アプリケーション設定を開く";
+
 /* Class = "UIButton"; normalTitle = "No Pending Survey(s)"; ObjectID = "okB-ki-1y4"; */
 "okB-ki-1y4.normalTitle" = "未回答の調査はありません";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "pHK-P6-sZH"; */
 "pHK-P6-sZH.text" = "詳細";
+
+/* Class = "UILabel"; text = "1."; ObjectID = "x9i-mJ-W4x"; */
+"x9i-mJ-W4x.text" = "1.";

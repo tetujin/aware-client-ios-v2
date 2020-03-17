@@ -19,7 +19,6 @@ class ESMViewController: UIViewController {
         if OnboardingManager.isFirstTime() {
             OnboardingManager().startOnboarding(with: self)
         }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -27,8 +26,7 @@ class ESMViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForegroundNotification(notification:)), name: UIApplication.willEnterForegroundNotification, object: nil)
         self.checkESMSchedules()
         self.hideContextViewIfNeeded()
-        
-        // AWARECore.shared().checkCompliance(with: self)
+        _ = LocationPermissionManager().isAuthorizedAlways(with: self)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -37,6 +35,7 @@ class ESMViewController: UIViewController {
     
     @objc func willEnterForegroundNotification(notification: NSNotification) {
         self.checkESMSchedules()
+        _ = LocationPermissionManager().isAuthorizedAlways(with: self)
     }
     
     func checkESMSchedules(){
