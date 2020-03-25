@@ -104,9 +104,9 @@ class ContextCardViewController: UIViewController {
             case SENSOR_SIGNIFICANT_MOTION:
                 addSignificantMotionCard()
                 break
-//            case SENSOR_IOS_ESM:
-//                addESMCard()
-//                break
+            case SENSOR_IOS_ESM:
+                addESMCard()
+                break
             case "locations":
                 addLocationCard()
                 break
@@ -138,7 +138,7 @@ class ContextCardViewController: UIViewController {
                                  SENSOR_HEALTH_KIT,
                                  SENSOR_PLUGIN_DEVICE_USAGE,
                                  SENSOR_SIGNIFICANT_MOTION,
-                                 // SENSOR_IOS_ESM,
+                                 SENSOR_IOS_ESM,
                                  SENSOR_GOOGLE_FUSED_LOCATION,
                                  "locations"]
     
@@ -469,13 +469,8 @@ class ContextCardViewController: UIViewController {
         }
     }
     
-//    func addESMCard(){
-//        if let esm = AWARESensorManager.shared().getSensor(SENSOR_IOS_ESM) as? IOSESM {
-//            let chart = ScatterChartCard(frame:CGRect(x:0,y:0, width: self.view.frame.width, height:400))
-//            chart.setWeeklyChart(sensor: esm, xKey: "timestamp", yKeys: ["esm_user_answer"])
-//            self.contextCards.append(chart)
-//            self.mainStackView.addArrangedSubview(chart)
-//        }
-//    }
+    func addESMCard(){
+        self.setupESMCard()
+    }
 
 }

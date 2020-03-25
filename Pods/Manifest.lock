@@ -27,6 +27,7 @@ PODS:
     - Charts/Core (= 3.4.0)
   - Charts/Core (3.4.0)
   - CocoaAsyncSocket (7.6.4)
+  - DynamicColor (4.2.0)
   - GoogleSignIn (5.0.2):
     - AppAuth (~> 1.2)
     - GTMAppAuth (~> 1.0)
@@ -52,22 +53,23 @@ PODS:
   - TPCircularBuffer (1.6.1)
 
 DEPENDENCIES:
-  - AWAREFramework (~> 1.10)
-  - AWAREFramework/Bluetooth (~> 1.10)
-  - AWAREFramework/Calendar (~> 1.10)
-  - AWAREFramework/Contact (~> 1.10)
-  - AWAREFramework/HealthKit (~> 1.10)
-  - AWAREFramework/Microphone (~> 1.10)
-  - AWAREFramework/MotionActivity (~> 1.10)
+  - AWAREFramework (from `../AWAREFramework-iOS`)
+  - AWAREFramework/Bluetooth (from `../AWAREFramework-iOS`)
+  - AWAREFramework/Calendar (from `../AWAREFramework-iOS`)
+  - AWAREFramework/Contact (from `../AWAREFramework-iOS`)
+  - AWAREFramework/HealthKit (from `../AWAREFramework-iOS`)
+  - AWAREFramework/Microphone (from `../AWAREFramework-iOS`)
+  - AWAREFramework/MotionActivity (from `../AWAREFramework-iOS`)
   - Charts
+  - DynamicColor
   - Onboard
 
 SPEC REPOS:
   trunk:
     - AppAuth
-    - AWAREFramework
     - Charts
     - CocoaAsyncSocket
+    - DynamicColor
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
@@ -77,11 +79,16 @@ SPEC REPOS:
     - SCNetworkReachability
     - TPCircularBuffer
 
+EXTERNAL SOURCES:
+  AWAREFramework:
+    :path: "../AWAREFramework-iOS"
+
 SPEC CHECKSUMS:
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
   AWAREFramework: 815c71d6a12631238a0ea083b6b6693ed46858a2
   Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
+  DynamicColor: c475f66bda1cabf602f2c54ac1171c0c07148a5a
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
@@ -91,6 +98,6 @@ SPEC CHECKSUMS:
   SCNetworkReachability: dbb0150b1a7a4579e148420132da19e718b955ce
   TPCircularBuffer: c13243556527551c4d320709c7b14a6d20cdc30a
 
-PODFILE CHECKSUM: 10c27b8679e57ca913bc1c263349532b9c4bbb18
+PODFILE CHECKSUM: 6f17c5c960b71960e0642cdb2bb949436f4e26eb
 
 COCOAPODS: 1.8.4

@@ -237,6 +237,15 @@ class ScatterChartCard: ContextCard {
                     chart.leftAxis.axisMaximum = yMax
                     chart.leftAxis.axisMinimum = yMin
                 }
+                
+                // set x-axis format
+                let formatter = DateFormatter()
+                formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "HH:mm", options: 0, locale: Locale.current)
+                let format = ChartFormatter()
+                format.dateFormatter = formatter
+                chart.xAxis.valueFormatter = format
+                
+                // hide the indicator view
                 self.indicatorView.isHidden = true
                 chart.isHidden = false
                 
@@ -246,13 +255,9 @@ class ScatterChartCard: ContextCard {
                 // hide description text
                 chart.chartDescription?.text = ""
                 
-                if self.xAxisLabels.count > 0 {
-                    chart.xAxis.valueFormatter = IndexAxisValueFormatter(values:self.xAxisLabels)
-                    chart.xAxis.setLabelCount(self.xAxisLabels.count, force: true)
-                    chart.xAxis.drawLabelsEnabled = true
-                }else{
-                    chart.xAxis.drawLabelsEnabled = false
-                }
+                chart.xAxis.labelPosition = .bottom
+                chart.xAxis.setLabelCount(5, force: true)
+                chart.xAxis.drawLabelsEnabled = true
                 
                 if #available(iOS 13.0, *) {
                     chart.leftAxis.labelTextColor = UIColor.label

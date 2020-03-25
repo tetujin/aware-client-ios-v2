@@ -19,12 +19,13 @@ import AWAREFramework
     @IBOutlet weak var spaceView: UIView!
     @IBOutlet weak var indicatorHeightLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var navigatorView: UIStackView!
-    @IBOutlet weak var dateButton: UIButton!
+    @IBOutlet weak var navigatorTitleButton: UIButton!
     @IBOutlet weak var backwardButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
     
     var backwardHandler:(()->Void)?
     var forwardHandler:(()->Void)?
+    var navigatorTitleButtonHandler:(()->Void)?
     
     var currentDate = Date()
     
@@ -58,7 +59,18 @@ import AWAREFramework
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         let dateString = dateFormatter.string(from: date)
-        dateButton.setTitle(dateString, for: .normal)
+        navigatorTitleButton.setTitle(dateString, for: .normal)
+    }
+    
+    public func setTitleToNavigationView(with string:String){
+        navigatorTitleButton.setTitle(string, for: .normal)
+    }
+    
+    
+    @IBAction func pushedNavigatorTitleButton(_ sender: Any) {
+        if let handler = navigatorTitleButtonHandler {
+            handler()
+        }
     }
     
     @IBAction func pushedBackwardButton(_ sender: UIButton) {

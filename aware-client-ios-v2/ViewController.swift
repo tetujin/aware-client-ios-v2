@@ -491,6 +491,15 @@ extension ViewController: UITableViewDelegate {
             case TableRowIdentifier.studyId.rawValue:
                 showAlertForSettingStudyId()
                 break
+            case TableRowIdentifier.deviceId.rawValue:
+                        let deviceId = AWAREStudy.shared().getDeviceId()
+                let activityVC = UIActivityViewController(activityItems: [deviceId], applicationActivities: nil)
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    activityVC.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)?.contentView
+                    activityVC.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+                }
+                self.present(activityVC, animated: true, completion: nil)
+                break
             case TableRowIdentifier.deviceName.rawValue:
                 showAlertForSettingDeviceName()
                 break

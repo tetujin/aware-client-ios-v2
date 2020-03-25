@@ -13,10 +13,10 @@
                 <outlet property="activityIndicatorView" destination="vZz-rh-PQW" id="R6C-gx-vwi"/>
                 <outlet property="backwardButton" destination="1rL-Z9-MhP" id="B68-0a-uE1"/>
                 <outlet property="baseStackView" destination="UzV-s6-h43" id="F9x-Ot-CJB"/>
-                <outlet property="dateButton" destination="a8c-mL-UDe" id="qS3-5R-wvs"/>
                 <outlet property="forwardButton" destination="Arp-jm-Xi1" id="rOV-be-Yvn"/>
                 <outlet property="indicatorHeightLayoutConstraint" destination="oD4-hC-s24" id="DGT-00-9iW"/>
                 <outlet property="indicatorView" destination="2Rb-F7-aYB" id="vsx-t2-Hcw"/>
+                <outlet property="navigatorTitleButton" destination="a8c-mL-UDe" id="6Kt-nE-e9b"/>
                 <outlet property="navigatorView" destination="dCR-e2-LHt" id="BsE-up-CH4"/>
                 <outlet property="spaceView" destination="ICQ-YP-nnj" id="rgi-Ds-4xw"/>
                 <outlet property="titleLabel" destination="j1F-YJ-yz4" id="k1h-VN-1lX"/>
@@ -30,7 +30,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UzV-s6-h43">
                     <rect key="frame" x="0.0" y="0.0" width="405" height="303"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j1F-YJ-yz4">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j1F-YJ-yz4">
                             <rect key="frame" x="0.0" y="0.0" width="405" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="cat-J1-ihc"/>
@@ -59,6 +59,9 @@
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                     <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                     <state key="normal" title="YYYY/MM/DD"/>
+                                    <connections>
+                                        <action selector="pushedNavigatorTitleButton:" destination="-1" eventType="touchUpInside" id="Ecn-Ab-Jbj"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Arp-jm-Xi1">
                                     <rect key="frame" x="325" y="0.0" width="80" height="20"/>
@@ -91,7 +94,7 @@
                             <constraints>
                                 <constraint firstItem="vZz-rh-PQW" firstAttribute="centerY" secondItem="2Rb-F7-aYB" secondAttribute="centerY" id="fyl-iV-Qp3"/>
                                 <constraint firstItem="vZz-rh-PQW" firstAttribute="centerX" secondItem="2Rb-F7-aYB" secondAttribute="centerX" id="m1x-6s-K4C"/>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="oD4-hC-s24"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="oD4-hC-s24"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ICQ-YP-nnj">

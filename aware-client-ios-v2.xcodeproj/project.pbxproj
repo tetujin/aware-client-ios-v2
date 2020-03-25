@@ -19,6 +19,7 @@
 		4F530264240D4EEE008E3342 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F530266240D4EEE008E3342 /* Localizable.strings */; };
 		4F70E8AD241DA28000A8AAA8 /* LocationPermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70E8AC241DA28000A8AAA8 /* LocationPermissionViewController.swift */; };
 		4FC60F4C2395E37D007740E4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC60F4B2395E37D007740E4 /* MapKit.framework */; };
+		4FDA1E4A2423B51C004F891F /* ESMCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDA1E492423B51C004F891F /* ESMCard.swift */; };
 		4FDB55F4233C49B50095E7D7 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDB55F3233C49B50095E7D7 /* ExternalAccessory.framework */; };
 		4FEA0298237B8D1700CFDC2F /* OnboardingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA0297237B8D1700CFDC2F /* OnboardingManager.swift */; };
 		4FFAC5EF2231089D00FE40B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FFAC5EE2231089D00FE40B0 /* QuartzCore.framework */; };
@@ -74,6 +75,7 @@
 		4F70E8AB241D9CB500A8AAA8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		4F70E8AC241DA28000A8AAA8 /* LocationPermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPermissionViewController.swift; sourceTree = "<group>"; };
 		4FC60F4B2395E37D007740E4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4FDA1E492423B51C004F891F /* ESMCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESMCard.swift; sourceTree = "<group>"; };
 		4FDB55F3233C49B50095E7D7 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		4FEA0297237B8D1700CFDC2F /* OnboardingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManager.swift; sourceTree = "<group>"; };
 		4FFAC5EE2231089D00FE40B0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -160,6 +162,7 @@
 				4F1B11AD22286E74006F3176 /* ScatterChartCard.swift */,
 				4F1B11AE22286E74006F3176 /* ContextCard.swift */,
 				4F1B11AF22286E74006F3176 /* BarChartCard.swift */,
+				4FDA1E492423B51C004F891F /* ESMCard.swift */,
 			);
 			path = ContextCard;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 			files = (
 				4F1B11B522286E75006F3176 /* BarChartCard.swift in Sources */,
 				4FFE19A82226A41900C4715E /* ContextCardViewController.swift in Sources */,
+				4FDA1E4A2423B51C004F891F /* ESMCard.swift in Sources */,
 				4FFE19B22226D2C100C4715E /* AwareTableViewCell.swift in Sources */,
 				4FFE19AC2226A47300C4715E /* QRCodeReaderViewController.swift in Sources */,
 				4F0BC9A1222D4952006348E4 /* AdvancedSettingsViewController.swift in Sources */,
@@ -728,7 +732,7 @@
 				CODE_SIGN_ENTITLEMENTS = "aware-client-ios-v2/aware-client-ios-v2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 69;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = FH352PYMNC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "aware-client-ios-v2/Info.plist";
@@ -737,7 +741,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.7;
+				MARKETING_VERSION = 1.10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yuukinishiyama.app.aware-client-ios-v2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -756,7 +760,7 @@
 				CODE_SIGN_ENTITLEMENTS = "aware-client-ios-v2/aware-client-ios-v2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 69;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = FH352PYMNC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "aware-client-ios-v2/Info.plist";
@@ -765,7 +769,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.7;
+				MARKETING_VERSION = 1.10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yuukinishiyama.app.aware-client-ios-v2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
