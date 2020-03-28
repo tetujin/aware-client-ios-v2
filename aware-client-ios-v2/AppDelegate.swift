@@ -107,6 +107,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let fitbit = manager.getSensor(SENSOR_PLUGIN_FITBIT) as? Fitbit {
                 fitbit.handle(url, sourceApplication: nil, annotation: options)
             }
+        } else if url.scheme == "aware-ssl" || url.scheme == "aware" {
+            var studyURL = url.absoluteString
+            if studyURL.prefix(9) == "aware-ssl" {
+                let range = studyURL.range(of: "aware-ssl")
+                if let range = range {
+                    studyURL = studyURL.replacingCharacters(in: range, with: "https")
+                }
+            } else if studyURL.prefix(5) == "aware" {
+                let range = studyURL.range(of: "aware")
+                if let range = range {
+                    studyURL = studyURL.replacingCharacters(in: range, with: "http")
+                }
+            }
+            let study = AWAREStudy.shared()
+             study.join(withURL: studyURL) { (settings, status, error) in
+                if status == AwareStudyStateUpdate || status == AwareStudyStateNew {
+                    let core = AWARECore.shared()
+                    core.requestPermissionForPushNotification { (notifState, error) in
+                        core.requestPermissionForBackgroundSensing{ (locStatus) in
+                            core.activate()
+                            let manager = AWARESensorManager.shared()
+                            manager.stopAndRemoveAllSensors()
+                            manager.addSensors(with: study)
+                            if let fitbit = manager.getSensor(SENSOR_PLUGIN_FITBIT) as? Fitbit {
+                                fitbit.viewController = self.window?.rootViewController
+                            }
+                            manager.add(AWAREEventLogger.shared())
+                            manager.add(AWAREStatusMonitor.shared())
+                            manager.startAllSensors()
+                            manager.createDBTablesOnAwareServer()
+                        }
+                    }
+                }else {
+                    // print("Error: ")
+                }
+            }
         }
         
         return true

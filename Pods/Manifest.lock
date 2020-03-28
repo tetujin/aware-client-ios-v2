@@ -4,24 +4,24 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.3.0)
   - AppAuth/Core (1.3.0)
   - AppAuth/ExternalUserAgent (1.3.0)
-  - AWAREFramework (1.10.4):
-    - AWAREFramework/Core (= 1.10.4)
-  - AWAREFramework/Bluetooth (1.10.4):
+  - AWAREFramework (1.10.5):
+    - AWAREFramework/Core (= 1.10.5)
+  - AWAREFramework/Bluetooth (1.10.5):
     - AWAREFramework/Core
-  - AWAREFramework/Calendar (1.10.4):
+  - AWAREFramework/Calendar (1.10.5):
     - AWAREFramework/Core
-  - AWAREFramework/Contact (1.10.4):
+  - AWAREFramework/Contact (1.10.5):
     - AWAREFramework/Core
-  - AWAREFramework/Core (1.10.4):
+  - AWAREFramework/Core (1.10.5):
     - GoogleSignIn (~> 5.0)
     - ios-ntp (~> 1.1)
     - SCNetworkReachability (~> 2.0)
     - TPCircularBuffer (~> 1.6)
-  - AWAREFramework/HealthKit (1.10.4):
+  - AWAREFramework/HealthKit (1.10.5):
     - AWAREFramework/Core
-  - AWAREFramework/Microphone (1.10.4):
+  - AWAREFramework/Microphone (1.10.5):
     - AWAREFramework/Core
-  - AWAREFramework/MotionActivity (1.10.4):
+  - AWAREFramework/MotionActivity (1.10.5):
     - AWAREFramework/Core
   - Charts (3.4.0):
     - Charts/Core (= 3.4.0)
@@ -53,13 +53,13 @@ PODS:
   - TPCircularBuffer (1.6.1)
 
 DEPENDENCIES:
-  - AWAREFramework (from `../AWAREFramework-iOS`)
-  - AWAREFramework/Bluetooth (from `../AWAREFramework-iOS`)
-  - AWAREFramework/Calendar (from `../AWAREFramework-iOS`)
-  - AWAREFramework/Contact (from `../AWAREFramework-iOS`)
-  - AWAREFramework/HealthKit (from `../AWAREFramework-iOS`)
-  - AWAREFramework/Microphone (from `../AWAREFramework-iOS`)
-  - AWAREFramework/MotionActivity (from `../AWAREFramework-iOS`)
+  - AWAREFramework (~> 1.10)
+  - AWAREFramework/Bluetooth (~> 1.10)
+  - AWAREFramework/Calendar (~> 1.10)
+  - AWAREFramework/Contact (~> 1.10)
+  - AWAREFramework/HealthKit (~> 1.10)
+  - AWAREFramework/Microphone (~> 1.10)
+  - AWAREFramework/MotionActivity (~> 1.10)
   - Charts
   - DynamicColor
   - Onboard
@@ -67,6 +67,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppAuth
+    - AWAREFramework
     - Charts
     - CocoaAsyncSocket
     - DynamicColor
@@ -79,13 +80,9 @@ SPEC REPOS:
     - SCNetworkReachability
     - TPCircularBuffer
 
-EXTERNAL SOURCES:
-  AWAREFramework:
-    :path: "../AWAREFramework-iOS"
-
 SPEC CHECKSUMS:
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
-  AWAREFramework: 815c71d6a12631238a0ea083b6b6693ed46858a2
+  AWAREFramework: 25996f2f32fb0b0ded5a500655857e96f83bed1c
   Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   DynamicColor: c475f66bda1cabf602f2c54ac1171c0c07148a5a
@@ -98,6 +95,6 @@ SPEC CHECKSUMS:
   SCNetworkReachability: dbb0150b1a7a4579e148420132da19e718b955ce
   TPCircularBuffer: c13243556527551c4d320709c7b14a6d20cdc30a
 
-PODFILE CHECKSUM: 6f17c5c960b71960e0642cdb2bb949436f4e26eb
+PODFILE CHECKSUM: 4e2b75f3f64db58357621bc9413923a635c46d31
 
 COCOAPODS: 1.8.4

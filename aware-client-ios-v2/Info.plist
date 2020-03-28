@@ -38,6 +38,24 @@
 				<string>com.googleusercontent.apps.513561083200-em3srmsc40a2q6cuh8o2hguvhd1umfll</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>aware-ssl</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>aware-ssl</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>https</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>

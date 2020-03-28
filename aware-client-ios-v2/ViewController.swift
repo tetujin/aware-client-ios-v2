@@ -84,6 +84,10 @@ class ViewController: UIViewController {
     }
     
     @objc func willEnterForegroundNotification(notification: NSNotification) {
+        DispatchQueue.main.async {
+            self.settings = self.getSettings()
+        }
+        
         self.checkESMSchedules()
         if refreshTimer == nil {
             refreshTimer = Timer.scheduledTimer(withTimeInterval: refreshInterval, repeats: true, block: { (timer) in
