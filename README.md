@@ -39,6 +39,22 @@ AWARE Client iOS (Version 2) is developed by [Yuuki Nishiyama](http://www.yuukin
 * [aware-client-ios-v1](https://github.com/tetujin/aware-client-ios)
 * [aware-client-Android](https://github.com/denzilferreira/aware-client)
 
+
+## Citation
+Please cite the following [paper](https://doi.org/10.1007/978-3-030-50344-4_17) in your publications if it helps your research. 
+
+```
+@InProceedings{aware_ios,
+    author={Nishiyama, Yuuki and Ferreira, Denzil and Eigen, Yusaku and Sasaki, Wataru and Okoshi, Tadashi and Nakazawa, Jin and Dey, Anind K. and Sezaki, Kaoru},
+    title={IOS Crowd--Sensing Won't Hurt a Bit!: AWARE Framework and Sustainable Study Guideline for iOS Platform},
+    booktitle={Distributed, Ambient and Pervasive Interactions},
+    year={2020},
+    pages={223--243},
+    isbn={978-3-030-50344-4},
+    doi={10.1007/978-3-030-50344-4_17},
+}
+```
+
 ## License
 Copyright (c) 2019 AWARE Mobile Context Instrumentation Middleware/Framework for iOS (http://www.awareframework.com)
 
