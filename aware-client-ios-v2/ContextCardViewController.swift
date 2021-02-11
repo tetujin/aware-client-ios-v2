@@ -349,7 +349,9 @@ class ContextCardViewController: UIViewController {
             contextCard.titleLabel.text = NSLocalizedString("Activity Recognition", comment: "")
             contextCard.yAxisMax = 5.5
             contextCard.yAxisMin = 0.5
-            contextCard.scatterChart?.leftAxis.enabled = false
+            if let chart = contextCard.scatterChart {
+                chart.leftAxis.enabled = false
+            }
             self.contextCards.append(contextCard)
             self.mainStackView.addArrangedSubview(contextCard)
         }

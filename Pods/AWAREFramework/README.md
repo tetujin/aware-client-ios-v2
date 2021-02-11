@@ -1,5 +1,6 @@
 # AWAREFramework
 
+![CI](https://github.com/tetujin/AWAREFramework-iOS/workflows/CI/badge.svg)
 [![CI Status](https://travis-ci.com/tetujin/AWAREFramework-iOS.svg?branch=master)](https://travis-ci.com/tetujin/AWAREFramework-iOS)
 [![Version](https://img.shields.io/cocoapods/v/AWAREFramework.svg?style=flat)](http://cocoapods.org/pods/AWAREFramework)
 [![License](https://img.shields.io/cocoapods/l/AWAREFramework.svg?style=flat)](http://cocoapods.org/pods/AWAREFramework)
@@ -30,6 +31,7 @@
 * Memory
 * [NTPTime](https://github.com/jbenet/ios-ntp)
 * [OpenWeatherMap](https://openweathermap.org/api)
+* Headphone Motion (iOS 14 or later)
 
 ### Extensions
 The following sensors can be used under extension(s)because these sensors need additional permission(s) into Info.plist and take a review by apple.
@@ -50,7 +52,7 @@ AWAREFramework-iOS is available through [CocoaPods](http://cocoapods.org).
 To install it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'AWAREFramework', '~> 1.10'
+pod 'AWAREFramework', '~> 1.12'
 ```
 And run `pod install` in your Xcode project.
 
@@ -223,6 +225,33 @@ We are providing several example applications. You can refer, or modify these ap
 ## Author
 
 Yuuki Nishiyama <yuukin@iis.u-tokyo.ac.jp>
+
+## Citation
+Please cite the following paper(s) in your publications if this library helps your research. 
+
+```
+@InProceedings{aware_ios,
+    author={Nishiyama, Yuuki and Ferreira, Denzil and Eigen, Yusaku and Sasaki, Wataru and Okoshi, Tadashi and Nakazawa, Jin and Dey, Anind K. and Sezaki, Kaoru},
+    title={IOS Crowd--Sensing Won't Hurt a Bit!: AWARE Framework and Sustainable Study Guideline for iOS Platform},
+    booktitle={Distributed, Ambient and Pervasive Interactions},
+    year={2020},
+    pages={223--243},
+    isbn={978-3-030-50344-4},
+    doi={10.1007/978-3-030-50344-4_17},
+}
+
+@inproceedings{aware_ios_in_the_wild,
+    author = {Nishiyama, Yuuki and Ferreira, Denzil and Sasaki, Wataru and Okoshi, Tadashi and Nakazawa, Jin and Dey, Anind K. and Sezaki, Kaoru},
+    title = {Using IOS for Inconspicuous Data Collection: A Real-World Assessment},
+    year = {2020},
+    doi = {10.1145/3410530.3414369},
+    booktitle = {Adjunct Proceedings of the 2020 ACM International Joint Conference on Pervasive and Ubiquitous Computing and Proceedings of the 2020 ACM International Symposium on Wearable Computers},
+    pages = {261–266},
+    numpages = {6},
+    series = {UbiComp-ISWC '20}
+}
+```
+
 
 ## License
 

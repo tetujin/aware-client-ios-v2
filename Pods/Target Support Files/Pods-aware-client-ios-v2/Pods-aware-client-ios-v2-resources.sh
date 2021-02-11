@@ -97,26 +97,28 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Assets/AWARE.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Accelerometer/ObjectModels/AWARE_Accelerometer.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Barometer/ObjectModels/AWARE_Barometer.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Gravity/ObjectModels/AWARE_Gravity.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Gyroscope/ObjectModels/AWARE_Gyroscope.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/LinearAccelerometer/ObjectModels/AWARE_LinearAccelerometer.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Magnetometer/ObjectModels/AWARE_Magnetometer.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Rotation/ObjectModels/AWARE_Rotation.xcdatamodeld"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Accelerometer.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Barometer.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Gravity.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Gyroscope.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_HeadphoneMotion.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_LinearAccelerometer.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Magnetometer.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Rotation.momd"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/AWAREFramework/AWAREFramework.bundle"
   install_resource "${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Assets/AWARE.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Accelerometer/ObjectModels/AWARE_Accelerometer.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Barometer/ObjectModels/AWARE_Barometer.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Gravity/ObjectModels/AWARE_Gravity.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Gyroscope/ObjectModels/AWARE_Gyroscope.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/LinearAccelerometer/ObjectModels/AWARE_LinearAccelerometer.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Magnetometer/ObjectModels/AWARE_Magnetometer.xcdatamodeld"
-  install_resource "${PODS_ROOT}/AWAREFramework/AWAREFramework/Classes/Sensors/Rotation/ObjectModels/AWARE_Rotation.xcdatamodeld"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Accelerometer.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Barometer.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Gravity.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Gyroscope.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_HeadphoneMotion.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_LinearAccelerometer.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Magnetometer.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Rotation.momd"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/AWAREFramework/AWAREFramework.bundle"
   install_resource "${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle"
 fi
@@ -132,7 +134,7 @@ rm -f "$RESOURCES_TO_COPY"
 if [[ -n "${WRAPPER_EXTENSION}" ]] && [ "`xcrun --find actool`" ] && [ -n "${XCASSET_FILES:-}" ]
 then
   # Find all other xcassets (this unfortunately includes those of path pods and other targets).
-  OTHER_XCASSETS=$(find "$PWD" -iname "*.xcassets" -type d)
+  OTHER_XCASSETS=$(find -L "$PWD" -iname "*.xcassets" -type d)
   while read line; do
     if [[ $line != "${PODS_ROOT}*" ]]; then
       XCASSET_FILES+=("$line")

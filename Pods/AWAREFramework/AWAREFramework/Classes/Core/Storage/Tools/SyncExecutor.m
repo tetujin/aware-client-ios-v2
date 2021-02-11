@@ -6,6 +6,7 @@
 //
 
 #import "SyncExecutor.h"
+#import "AWAREURLSessionManager.h"
 
 @implementation SyncExecutor{
     AWAREStudy * awareStudy;
@@ -41,7 +42,11 @@
         sessionConfig.timeoutIntervalForResource    = _timeoutIntervalForResource;
         sessionConfig.allowsCellularAccess          = YES;
         
+//        session = [AWAREURLSessionManager.shared getURLSession:baseSyncDataQueryIdentifier];
+//        if (session == nil) {
         session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:nil];
+//            [AWAREURLSessionManager.shared addURLSession:session];
+//        }
     }
     return self;
 }
@@ -79,6 +84,8 @@
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:mutablePostData];
+    
+    // NSLog(@"%@", [[NSString alloc] initWithData:mutablePostData encoding:NSUTF8StringEncoding]);
 
     session.configuration.timeoutIntervalForRequest     = _timeoutIntervalForRequest;
     session.configuration.HTTPMaximumConnectionsPerHost = _maximumConnectionsPerHost;
