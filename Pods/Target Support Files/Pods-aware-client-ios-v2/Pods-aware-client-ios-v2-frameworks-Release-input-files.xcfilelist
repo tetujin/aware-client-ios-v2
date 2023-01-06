@@ -2,11 +2,11 @@ ${PODS_ROOT}/Target Support Files/Pods-aware-client-ios-v2/Pods-aware-client-ios
 ${PODS_ROOT}/AWAREFramework/AWAREFramework/Frameworks/StudentLifeAudio.framework
 ${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework
 ${BUILT_PRODUCTS_DIR}/Charts/Charts.framework
-${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework
 ${BUILT_PRODUCTS_DIR}/DynamicColor/DynamicColor.framework
 ${BUILT_PRODUCTS_DIR}/GTMAppAuth/GTMAppAuth.framework
 ${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework
 ${BUILT_PRODUCTS_DIR}/Onboard/Onboard.framework
 ${BUILT_PRODUCTS_DIR}/SCNetworkReachability/SCNetworkReachability.framework
+${BUILT_PRODUCTS_DIR}/SwiftAlgorithms/Algorithms.framework
 ${BUILT_PRODUCTS_DIR}/TPCircularBuffer/TPCircularBuffer.framework
-${BUILT_PRODUCTS_DIR}/ios-ntp/ios_ntp.framework
+${BUILT_PRODUCTS_DIR}/TrueTime/TrueTime.framework

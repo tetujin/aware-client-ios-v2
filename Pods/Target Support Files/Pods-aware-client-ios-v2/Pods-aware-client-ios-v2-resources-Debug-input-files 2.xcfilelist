@@ -1,0 +1,12 @@
+${PODS_ROOT}/Target Support Files/Pods-aware-client-ios-v2/Pods-aware-client-ios-v2-resources.sh
+${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE.momd
+${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Accelerometer.momd
+${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Barometer.momd
+${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Gravity.momd
+${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Gyroscope.momd
+${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_HeadphoneMotion.momd
+${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_LinearAccelerometer.momd
+${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Magnetometer.momd
+${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Rotation.momd
+${PODS_CONFIGURATION_BUILD_DIR}/AWAREFramework/AWAREFramework.bundle
+${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle

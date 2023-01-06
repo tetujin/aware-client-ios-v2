@@ -1,18 +1,18 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '10.0'
+platform :ios, '12.0'
 
 target 'aware-client-ios-v2' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
   # Pods for aware-client-ios-v2
-  pod 'AWAREFramework', '~> 1.12.2'
-  pod 'AWAREFramework/Microphone' , '~> 1.12.2'
-  pod 'AWAREFramework/MotionActivity', '~> 1.12.2'
-  pod 'AWAREFramework/Bluetooth', '~> 1.12.2'
-  pod 'AWAREFramework/Calendar', '~> 1.12.2'
-  pod 'AWAREFramework/Contact', '~> 1.12.2'
-  pod 'AWAREFramework/HealthKit', '~> 1.12.2'
+  pod 'AWAREFramework', '~> 1.12.3'
+  pod 'AWAREFramework/Microphone' , '~> 1.12.3'
+  pod 'AWAREFramework/MotionActivity', '~> 1.12.3'
+  pod 'AWAREFramework/Bluetooth', '~> 1.12.3'
+  pod 'AWAREFramework/Calendar', '~> 1.12.3'
+  pod 'AWAREFramework/Contact', '~> 1.12.3'
+  pod 'AWAREFramework/HealthKit', '~> 1.12.3'
 
 #  pod 'AWAREFramework'               , :path => '../AWAREFramework-iOS'
 #  pod 'AWAREFramework/Microphone'    , :path => '../AWAREFramework-iOS'
@@ -22,9 +22,9 @@ target 'aware-client-ios-v2' do
 #  pod 'AWAREFramework/Contact'       , :path => '../AWAREFramework-iOS'
 #  pod 'AWAREFramework/HealthKit'     , :path => '../AWAREFramework-iOS'
 
-  pod 'Charts'
-  pod 'Onboard'
-  pod 'DynamicColor'
+  pod 'Charts', '~> 4.1.0'
+  pod 'Onboard', '~> 2.3.1'
+  pod 'DynamicColor', '~> 5.0.1'
   
   target 'aware-client-ios-v2Tests' do
     inherit! :search_paths

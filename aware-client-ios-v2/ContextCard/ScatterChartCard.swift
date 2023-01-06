@@ -91,7 +91,7 @@ class ScatterChartCard: ContextCard {
         self.filterHandler = handler
     }
     
-    public func setChart(dataSets:[IChartDataSet], title:String){
+    public func setChart(dataSets:[ChartDataSet], title:String){
 
         self.titleLabel.text = title
 
@@ -253,7 +253,7 @@ class ScatterChartCard: ContextCard {
                 chart.rightAxis.drawLabelsEnabled = false
                 
                 // hide description text
-                chart.chartDescription?.text = ""
+                chart.chartDescription.text = ""
                 
                 chart.xAxis.labelPosition = .bottom
                 chart.xAxis.setLabelCount(5, force: true)

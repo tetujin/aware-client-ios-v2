@@ -329,7 +329,7 @@ class ESMCard: ContextCard {
                         }
 
                         if let instruction = esm.esm_instructions {
-                             chart.chartDescription?.text = instruction
+                            chart.chartDescription.text = instruction
                             // instructionLabel.font = UIFont.systemFont(ofSize: 12)
                             // instructionLabel.textColor = UIColor.systemGray
                         }
@@ -339,7 +339,7 @@ class ESMCard: ContextCard {
                             chart.leftAxis.labelTextColor = UIColor.label
                             chart.xAxis.labelTextColor    = UIColor.label
                             chart.legend.textColor        = UIColor.label
-                            chart.chartDescription?.textColor = UIColor.label
+                            chart.chartDescription.textColor = UIColor.label
                         }
                         
                         charts.append(chart)
@@ -392,18 +392,19 @@ class ESMCard: ContextCard {
     }
 }
 
-public class ChartFormatter: NSObject, IAxisValueFormatter {
+public class ChartFormatter: IndexAxisValueFormatter {
     
     var dateFormatter = DateFormatter()
     var period:Period? = nil
     
     override init() {
+        super.init()
         let formatter = DateFormatter()
         formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "M/d", options: 0, locale: Locale.current)
         dateFormatter = formatter
     }
     
-    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+    public override func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         let date = Date(timeIntervalSince1970: value/1000)
         
         if let period = self.period{
@@ -432,11 +433,11 @@ public class ChartFormatter: NSObject, IAxisValueFormatter {
     }
 }
 
-public class BarChartFormatter: NSObject, IAxisValueFormatter{
+public class BarChartFormatter: IndexAxisValueFormatter {
     
     public var labels:[String]? = nil
     
-    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+    public override func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         if let labels = self.labels {
             if labels.count > Int(value) {
                 return labels[Int(value)]
