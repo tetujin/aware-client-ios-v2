@@ -34,14 +34,13 @@
 #import "AWAREDevice.h"
 #import "DeviceUsage.h"
 #import "FusedLocations.h"
-#import "Memory.h"
+#import "AWAREMemory.h"
 #import "NTPTime.h"
 #import "OpenWeather.h"
 #import "PushNotification.h"
 #import "IOSESM.h"
 #import "Fitbit.h"
 #import "BasicSettings.h"
-#import "GoogleLogin.h"
 #import "SignificantMotion.h"
 #import "PushNotification.h"
 
@@ -55,6 +54,7 @@
 #ifdef IMPORT_MOTION_ACTIVITY
 #import "Pedometer.h"
 #import "IOSActivityRecognition.h"
+#import "HeadphoneMotion.h"
 #endif
 
 #ifdef IMPORT_BLUETOOTH

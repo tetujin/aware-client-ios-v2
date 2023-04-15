@@ -44,7 +44,7 @@
 "Google Calendar ESM" = "GoogleカレンダーESM";
 "Significant Motion" = "動作イベント";
 "Push Notification" = "Push通知";
-
+"Headphone Motion" = "Headphone Motion";
 
 /// sensor details
 "accelerometer_detail" = "重力加速度を含む加速度";
@@ -80,7 +80,7 @@
 "google_calendar_esm_detail" = "Googleカレンダーを用いたESMスケジューリング";
 "significant_motion_detail" = "加速度データから検知した特徴的な動作イベント";
 "push_notification_detail" = "Push通知用トークンと定期的なSilent-Push通知";
-
+"headphone_motion_detail" = "ヘッドフォンに搭載されたモーションセンサのデータ";
 
 // onboarding
 "onbording_overview_title" = "AWAREについて";

@@ -44,17 +44,17 @@ class ESMViewController: UIViewController {
         let schedules = esmManager.getValidSchedules()
         
         if(schedules.count > 0){
-            surveyButton.setTitle(NSLocalizedString("Tap to answer survey(s)", comment: ""),
+            self.surveyButton.setTitle(NSLocalizedString("Tap to answer survey(s)", comment: ""),
                                   for: .normal)
-            surveyButton.layer.borderColor = UIColor.system.cgColor
-            surveyButton.layer.borderWidth  = 2
-            surveyButton.layer.cornerRadius = 5
-            surveyButton.isEnabled = true
+            self.surveyButton.layer.borderColor = UIColor.system.cgColor
+            self.surveyButton.layer.borderWidth  = 2
+            self.surveyButton.layer.cornerRadius = 5
+            self.surveyButton.isEnabled = true
         } else {
-            surveyButton.isEnabled = false
-            surveyButton.setTitle(NSLocalizedString("No pending survey(s)", comment: ""),
+            self.surveyButton.isEnabled = false
+            self.surveyButton.setTitle(NSLocalizedString("No pending survey(s)", comment: ""),
                                   for: .normal)
-            surveyButton.layer.borderColor = UIColor(white: 0, alpha: 0).cgColor
+            self.surveyButton.layer.borderColor = UIColor(white: 0, alpha: 0).cgColor
         }
         
         IOSESM.setESMAppearedState(true)

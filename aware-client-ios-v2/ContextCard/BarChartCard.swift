@@ -72,7 +72,7 @@ class BarChartCard: ContextCard {
     
     public func setChart(_ sensor:AWARESensor, keys:Array<String>, name:String, results:Array<Dictionary<String, Any>>, start:Date?, end:Date?, error:Error?){
         let results = sensor.storage?.fetchTodaysData() as! Array<Dictionary<String, Any>>
-        var datasets = Array<IChartDataSet>()
+        var datasets = Array<ChartDataSet>()
         var entries = Array<BarChartDataEntry>()
         
         for key in keys {
@@ -111,7 +111,7 @@ class BarChartCard: ContextCard {
             self.barChart?.isHidden = false
             self.indicatorView.isHidden = true
             
-            self.barChart?.chartDescription?.text = ""
+            self.barChart?.chartDescription.text = ""
             
             self.barChart?.xAxis.drawLabelsEnabled = false
             self.barChart?.xAxis.drawGridLinesEnabled = false

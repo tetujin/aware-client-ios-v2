@@ -325,6 +325,10 @@ class SensorSettingViewController: UIViewController {
                 settings.append(SettingContent(type: .string,
                                                key: AWARE_PREFERENCES_SERVER_PUSH_NOTIFICATION,
                                                defaultValue: ""))
+            case SENSOR_PLUGIN_HEADPHONE_MOTION:
+                settings.append(SettingContent(type: .bool,
+                                               key: AWARE_PREFERENCES_STATUS_PLUGIN_HEADPHONE_MOTION,
+                                               defaultValue: "false"))
             default:
                 break
             }
@@ -432,6 +436,11 @@ extension SensorSettingViewController: UITableViewDataSource{
         manager.createDBTablesOnAwareServer()
         if let fitbit = manager.getSensor(SENSOR_PLUGIN_FITBIT) as? Fitbit {
             fitbit.viewController = self
+        }
+        if let healthKit = manager.getSensor(SENSOR_HEALTH_KIT) as? AWAREHealthKit {
+            healthKit.requestAuthorization { result, errror in
+                // TODO
+            }
         }
         manager.startAllSensors()
         

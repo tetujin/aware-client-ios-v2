@@ -98,29 +98,27 @@ EOM
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_HeadphoneMotion.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Accelerometer.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Barometer.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Gravity.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Gyroscope.momd"
-  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_HeadphoneMotion.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_LinearAccelerometer.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Magnetometer.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Rotation.momd"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/AWAREFramework/AWAREFramework.bundle"
-  install_resource "${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE.momd"
+  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_HeadphoneMotion.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Accelerometer.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Barometer.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Gravity.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Gyroscope.momd"
-  install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_HeadphoneMotion.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_LinearAccelerometer.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Magnetometer.momd"
   install_resource "${BUILT_PRODUCTS_DIR}/AWAREFramework/AWAREFramework.framework/AWARE_Rotation.momd"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/AWAREFramework/AWAREFramework.bundle"
-  install_resource "${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

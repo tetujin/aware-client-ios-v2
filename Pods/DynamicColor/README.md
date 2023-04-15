@@ -8,10 +8,10 @@
   <a href="https://github.com/Carthage/Carthage"><img alt="Carthage compatible" src="https://img.shields.io/badge/Carthage-%E2%9C%93-brightgreen.svg?style=flat"/></a>
   <a href="https://github.com/apple/swift-package-manager"><img alt="Swift Package Manager compatible" src="https://img.shields.io/badge/SPM-%E2%9C%93-brightgreen.svg?style=flat"/></a>
   <a href="https://travis-ci.org/yannickl/DynamicColor"><img alt="Build status" src="https://travis-ci.org/yannickl/DynamicColor.svg?branch=master"/></a>
-  <a href="http://codecov.io/github/yannickl/DynamicColor"><img alt="Code coverage status" src="http://codecov.io/github/yannickl/DynamicColor/coverage.svg?branch=master"/></a>
+  <a href="https://codecov.io/gh/yannickl/DynamicColor"><img src="https://codecov.io/gh/yannickl/DynamicColor/branch/master/graph/badge.svg" /></a>
 </p>
 
-**DynamicColor** provides powerful methods to manipulate colors in an easy way in Swift.
+**DynamicColor** provides powerful methods to manipulate colors in an easy way in Swift and SwiftUI.
 
 <p align="center">
   <img src="http://yannickloriot.com/resources/dynamiccolor-sample-screenshot.png" alt="example screenshot" width="300" />
@@ -24,7 +24,7 @@
 
 ## Requirements
 
-- iOS 8.0+ / Mac OS X 10.9+ / tvOS 9.0+ / watchOS 2.0+
+- iOS 11.0+ / Mac OS X 10.11+ / tvOS 11.0+ / watchOS 4.0+
 - Xcode 10.2+
 - Swift 5.0+
 
@@ -51,6 +51,14 @@ let color = DynamicColor(hex: 0x3498db)
 ```
 
 You can also retrieve the RGBA value and components very easily using multiple methods like `toHexString`, `toHex`, `toRGBA`, etc.
+
+##### SwiftUI
+
+From the v5, DynamicColor also support basic methods to create and manipulate colors with SwiftUI.
+
+```swift
+let color = Color(hex: 0x3498db)
+```
 
 #### Darken & Lighten
 
@@ -91,7 +99,14 @@ let desaturatedColor = originalColor.desaturated()
 // equivalent to
 // desaturatedColor = originalColor.desaturated(amount: 0.2)
 
+// equivalent to
+// let grayscaledColor = originalColor.grayscaled(mode: .luminance)
 let grayscaledColor = originalColor.grayscaled()
+
+let grayscaledColorLuminance = originalColor.grayscaled(mode: .luminance)
+let grayscaledColorLightness = originalColor.grayscaled(mode: .lightness)
+let grayscaledColorAverage = originalColor.grayscaled(mode: .average)
+let grayscaledColorValue = originalColor.grayscaled(mode: .value)
 ```
 
 #### Adjust-hue & Complement
@@ -165,7 +180,7 @@ let mixedColor = originalColor.mixed(withColor: .blue)
 
 #### Gradients
 
-**DynamicColor** provides an useful object to work with gradients: **DynamicGradient**. It'll allow you to pick color from gradients, or to build to build a palette using different color spaces (.e.g.: *RGB*, *HSL*, *HSB*, *Cie L\*a\*b\**).
+**DynamicColor** provides an useful object to work with gradients: **DynamicGradient**. It'll allow you to pick color from gradients, or to build a palette using different color spaces (.e.g.: *RGB*, *HSL*, *HSB*, *Cie L\*a\*b\**).
 
 Let's define our reference colors and the gradient object:
 ```swift
@@ -238,7 +253,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
 use_frameworks!
-pod 'DynamicColor', '~> 4.2.0'
+pod 'DynamicColor', '~> 5.0.0'
 ```
 
 Install into your project:
@@ -269,7 +284,7 @@ $ brew install carthage
 To integrate `DynamicColor` into your Xcode project using Carthage, specify it in your `Cartfile` file:
 
 ```ogdl
-github "yannickl/DynamicColor" >= 4.2.0
+github "yannickl/DynamicColor" >= 5.0.0
 ```
 
 #### Swift Package Manager
@@ -281,7 +296,7 @@ let package = Package(
     name: "YOUR_PROJECT_NAME",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/yannickl/DynamicColor.git", versions: "4.2.0" ..< Version.max)
+        .package(url: "https://github.com/yannickl/DynamicColor.git", from: "5.0.0")
     ]
 )
 ```

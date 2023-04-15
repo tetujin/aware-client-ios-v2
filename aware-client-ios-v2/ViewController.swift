@@ -114,15 +114,15 @@ class ViewController: UIViewController {
     
     func login(){
         let glogin = AWARESensorManager.shared().getSensor(SENSOR_PLUGIN_GOOGLE_LOGIN)
-        if let login = glogin as? GoogleLogin{
-            if login.isNeedLogin(){
-                let loginViewController = AWAREGoogleLoginViewController()
-                loginViewController.googleLogin = login
-                self.present(loginViewController, animated: true, completion: {
-                    
-                })
-            }
-        }
+//        if let login = glogin as? GoogleLogin{
+//            if login.isNeedLogin(){
+//                let loginViewController = AWAREGoogleLoginViewController()
+//                loginViewController.googleLogin = login
+//                self.present(loginViewController, animated: true, completion: {
+//                    
+//                })
+//            }
+//        }
     }
     
     /// This method will be called when move to another UIViewController by segue.
@@ -382,8 +382,12 @@ class ViewController: UIViewController {
                                 title:  NSLocalizedString("Push Notification", comment:""),
                                 details: NSLocalizedString("push_notification_detail", comment: ""),
                                 identifier: SENSOR_PUSH_NOTIFICATION,
-                                icon: UIImage(named: "ic_action_push_notification", in:bundle, compatibleWith: nil))
-                
+                                icon: UIImage(named: "ic_action_push_notification", in:bundle, compatibleWith: nil)),
+                TableRowContent(type: .sensor,
+                                title: NSLocalizedString("Headphone Motion", comment:""),
+                                details: NSLocalizedString("headphone_motion_detail", comment:""),
+                                identifier: SENSOR_PLUGIN_HEADPHONE_MOTION,
+                                icon: UIImage(named: "ic_action_airpods", in:bundle, compatibleWith: nil))
             ]
             return contents
         }

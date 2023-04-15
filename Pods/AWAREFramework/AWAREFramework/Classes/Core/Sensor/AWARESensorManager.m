@@ -183,7 +183,7 @@ static AWARESensorManager * sharedSensorManager;
             }else if([setting isEqualToString:[NSString stringWithFormat:@"status_%@",SENSOR_PLUGIN_NTPTIME]]){
                 awareSensor = [[NTPTime alloc] initWithAwareStudy:awareStudy dbType:dbType];
             }else if([setting isEqualToString:[NSString stringWithFormat:@"status_%@",SENSOR_PLUGIN_GOOGLE_LOGIN]]){
-                awareSensor = [[GoogleLogin alloc] initWithAwareStudy:awareStudy dbType:dbType];
+//                awareSensor = [[GoogleLogin alloc] initWithAwareStudy:awareStudy dbType:dbType];
             }else if([setting isEqualToString:[NSString stringWithFormat:@"status_%@",SENSOR_GOOGLE_FUSED_LOCATION]]){
                 awareSensor = [[FusedLocations alloc] initWithAwareStudy:awareStudy dbType:dbType];
             }else if([setting isEqualToString:[NSString stringWithFormat:@"status_%@",SENSOR_PLUGIN_IOS_ESM]]){
@@ -220,6 +220,8 @@ static AWARESensorManager * sharedSensorManager;
                 awareSensor = [[IOSActivityRecognition alloc] initWithAwareStudy:awareStudy dbType:dbType];
             }else if([setting isEqualToString:[NSString stringWithFormat:@"status_%@",SENSOR_IOS_ACTIVITY_RECOGNITION ]] ) {
                 awareSensor = [[IOSActivityRecognition alloc] initWithAwareStudy:awareStudy dbType:dbType];
+            }else if([setting isEqualToString:[NSString stringWithFormat:@"status_%@",SENSOR_PLUGIN_HEADPHONE_MOTION ]] ) {
+                awareSensor = [[HeadphoneMotion alloc] initWithAwareStudy:awareStudy dbType:dbType];
             }
             #endif
             #ifdef IMPORT_CONTACT

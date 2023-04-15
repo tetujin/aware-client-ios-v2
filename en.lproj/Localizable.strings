@@ -46,6 +46,7 @@
 "Google Calendar ESM" = "Google Calendar ESM";
 "Significant Motion" = "Significant Motion";
 "Push Notification" = "Push Notification";
+"Headphone Motion" = "Headphone Motion";
 
 /// sensors details
 "accelerometer_detail" = "Acceleration, including the force of gravity";
@@ -81,6 +82,7 @@
 "google_calendar_esm_detail" = "Scheduling an ESM based on a Google Calendar";
 "significant_motion_detail" = "Significant motion events based on Accelerometer";
 "push_notification_detail" = "";
+"headphone_motion_detail" = "Motion data from a headphone (AirPods Air and AirPods Max)";
 
 // onboarding
 "onbording_overview_title" = "About AWARE";

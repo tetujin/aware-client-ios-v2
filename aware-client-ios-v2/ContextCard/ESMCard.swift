@@ -267,7 +267,7 @@ class ESMCard: ContextCard {
                         let xaxis = XAxis()
                         let formatter = BarChartFormatter()
                         formatter.labels = keys
-                        xaxis.valueFormatter = formatter
+                        xaxis.valueFormatter = formatter as? any AxisValueFormatter
                         chart.xAxis.setLabelCount(keys.count, force: true)
                         chart.xAxis.valueFormatter = xaxis.valueFormatter
                         chart.xAxis.labelRotationAngle = 45
@@ -329,7 +329,7 @@ class ESMCard: ContextCard {
                         }
 
                         if let instruction = esm.esm_instructions {
-                             chart.chartDescription?.text = instruction
+                             chart.chartDescription.text = instruction
                             // instructionLabel.font = UIFont.systemFont(ofSize: 12)
                             // instructionLabel.textColor = UIColor.systemGray
                         }
@@ -339,7 +339,7 @@ class ESMCard: ContextCard {
                             chart.leftAxis.labelTextColor = UIColor.label
                             chart.xAxis.labelTextColor    = UIColor.label
                             chart.legend.textColor        = UIColor.label
-                            chart.chartDescription?.textColor = UIColor.label
+                            chart.chartDescription.textColor = UIColor.label
                         }
                         
                         charts.append(chart)
@@ -392,7 +392,7 @@ class ESMCard: ContextCard {
     }
 }
 
-public class ChartFormatter: NSObject, IAxisValueFormatter {
+public class ChartFormatter: NSObject, AxisValueFormatter {
     
     var dateFormatter = DateFormatter()
     var period:Period? = nil
@@ -432,7 +432,7 @@ public class ChartFormatter: NSObject, IAxisValueFormatter {
     }
 }
 
-public class BarChartFormatter: NSObject, IAxisValueFormatter{
+public class BarChartFormatter: NSObject, AxisValueFormatter{
     
     public var labels:[String]? = nil
     
