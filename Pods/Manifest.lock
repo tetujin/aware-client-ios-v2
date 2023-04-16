@@ -14,13 +14,6 @@ PODS:
     - AWAREFramework/Core
   - AWAREFramework/MotionActivity (1.14.5):
     - AWAREFramework/Core
-  - Charts (4.1.0):
-    - Charts/Core (= 4.1.0)
-  - Charts/Core (4.1.0):
-    - SwiftAlgorithms (~> 1.0)
-  - DynamicColor (5.0.1)
-  - Onboard (2.3.3)
-  - SwiftAlgorithms (1.0.0)
 
 DEPENDENCIES:
   - AWAREFramework (~> 1.14.5)
@@ -30,25 +23,14 @@ DEPENDENCIES:
   - AWAREFramework/HealthKit (~> 1.14.5)
   - AWAREFramework/Microphone (~> 1.14.5)
   - AWAREFramework/MotionActivity (~> 1.14.5)
-  - Charts (~> 4.1.0)
-  - DynamicColor
-  - Onboard
 
 SPEC REPOS:
   trunk:
     - AWAREFramework
-    - Charts
-    - DynamicColor
-    - Onboard
-    - SwiftAlgorithms
 
 SPEC CHECKSUMS:
   AWAREFramework: d1849fb2d986317cf82e807eebd3ac709f470c48
-  Charts: 354f86803d11d9c35de280587fef50d1af063978
-  DynamicColor: d049834ef86d8ecf150b0ca1ebe54ee733a0ec22
-  Onboard: 4d6e943e20bdd6bc229df967a347dd7514bc2a6f
-  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
 
-PODFILE CHECKSUM: fea3fad29fa1298258189ac880ac24d218aae08a
+PODFILE CHECKSUM: b0e391b6e19c3a3e608f2d99faf5d3501992830e
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0

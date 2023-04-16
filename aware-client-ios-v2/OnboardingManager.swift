@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Onboard
 import AWAREFramework
 
 class OnboardingManager: NSObject {

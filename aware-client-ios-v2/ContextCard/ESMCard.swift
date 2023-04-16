@@ -267,7 +267,7 @@ class ESMCard: ContextCard {
                         let xaxis = XAxis()
                         let formatter = BarChartFormatter()
                         formatter.labels = keys
-                        xaxis.valueFormatter = formatter as? any AxisValueFormatter
+                        xaxis.valueFormatter = formatter // as? any AxisValueFormatter
                         chart.xAxis.setLabelCount(keys.count, force: true)
                         chart.xAxis.valueFormatter = xaxis.valueFormatter
                         chart.xAxis.labelRotationAngle = 45
@@ -392,18 +392,19 @@ class ESMCard: ContextCard {
     }
 }
 
-public class ChartFormatter: NSObject, AxisValueFormatter {
+public class ChartFormatter: IndexAxisValueFormatter {
     
     var dateFormatter = DateFormatter()
     var period:Period? = nil
     
     override init() {
+        super.init()
         let formatter = DateFormatter()
         formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "M/d", options: 0, locale: Locale.current)
         dateFormatter = formatter
     }
     
-    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+    public override func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         let date = Date(timeIntervalSince1970: value/1000)
         
         if let period = self.period{
@@ -432,11 +433,11 @@ public class ChartFormatter: NSObject, AxisValueFormatter {
     }
 }
 
-public class BarChartFormatter: NSObject, AxisValueFormatter{
-    
+public class BarChartFormatter: IndexAxisValueFormatter {
+
     public var labels:[String]? = nil
     
-    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+    public override func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         if let labels = self.labels {
             if labels.count > Int(value) {
                 return labels[Int(value)]

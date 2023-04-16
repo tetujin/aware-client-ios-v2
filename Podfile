@@ -13,7 +13,7 @@ target 'aware-client-ios-v2' do
   pod 'AWAREFramework/Calendar', '~> 1.14.5'
   pod 'AWAREFramework/Contact', '~> 1.14.5'
   pod 'AWAREFramework/HealthKit', '~> 1.14.5'
-
+  
 #  pod 'AWAREFramework'               , :path => '../AWAREFramework-iOS'
 #  pod 'AWAREFramework/Microphone'    , :path => '../AWAREFramework-iOS'
 #  pod 'AWAREFramework/MotionActivity', :path => '../AWAREFramework-iOS'
@@ -22,9 +22,9 @@ target 'aware-client-ios-v2' do
 #  pod 'AWAREFramework/Contact'       , :path => '../AWAREFramework-iOS'
 #  pod 'AWAREFramework/HealthKit'     , :path => '../AWAREFramework-iOS'
 
-  pod 'Charts', '~> 4.1.0'
-  pod 'Onboard'
-  pod 'DynamicColor'
+#  pod 'Charts', '~> 4.1.0'
+#  pod 'Onboard', '~> 2.3.3'
+#  pod 'DynamicColor', '~> 5.0.1'
   
   target 'aware-client-ios-v2Tests' do
     inherit! :search_paths
@@ -41,7 +41,7 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
     end
   end
 end
