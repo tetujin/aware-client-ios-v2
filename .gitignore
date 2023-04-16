@@ -85,4 +85,4 @@ iOSInjectionProject/
 *.pem
 *.pkey
 
-$.DS_Store
+.DS_Store
